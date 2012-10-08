@@ -44,7 +44,7 @@ test:
   database: notyourmom_test
   pool: 5
   username: notyourmom
-  password:
+  password: password
 
 production:
   adapter: postgresql
@@ -52,4 +52,4 @@ production:
   database: notyourmom_production
   pool: 5
   username: notyourmom
-  password:
+  password: password
