@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  percentage_owed: 1.5
+  paid: false
+  user: 
+  expense: 
+
+two:
+  percentage_owed: 1.5
+  paid: false
+  user: 
+  expense: 

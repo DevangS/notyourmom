@@ -1,4 +1,12 @@
 Notyourmom::Application.routes.draw do
+  resources :debts
+
+  resources :tags
+
+  resources :comments
+
+  resources :expenses
+
   resources :users
 
   resources :households

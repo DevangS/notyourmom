@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  price: 1.5
+  item: MyString
+  description: MyText
+  resolved: false
+  user: 
+
+two:
+  price: 1.5
+  item: MyString
+  description: MyText
+  resolved: false
+  user: 
