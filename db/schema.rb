@@ -43,7 +43,9 @@ ActiveRecord::Schema.define(:version => 20121031182127) do
   add_index "expenses", ["user_id"], :name => "index_expenses_on_user_id"
 
   create_table "households", :force => true do |t|
-    t.string "grp_name"
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "tags", :force => true do |t|
@@ -54,12 +56,14 @@ ActiveRecord::Schema.define(:version => 20121031182127) do
   add_index "tags", ["expense_id"], :name => "index_tags_on_expense_id"
 
   create_table "users", :force => true do |t|
-    t.string  "f_name"
-    t.string  "l_name"
-    t.string  "email"
-    t.string  "password"
-    t.string  "fb_key"
-    t.integer "household_id"
+    t.string   "firstName"
+    t.string   "lastName"
+    t.string   "email"
+    t.string   "password"
+    t.string   "fb_key"
+    t.integer  "household_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
 end

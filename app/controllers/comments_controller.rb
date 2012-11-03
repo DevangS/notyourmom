@@ -25,6 +25,8 @@ class CommentsController < ApplicationController
   # GET /comments/new.json
   def new
     @comment = Comment.new
+    @expenses = Expense.all
+    @users = User.all
 
     respond_to do |format|
       format.html # new.html.erb
@@ -35,6 +37,9 @@ class CommentsController < ApplicationController
   # GET /comments/1/edit
   def edit
     @comment = Comment.find(params[:id])
+    @expenses = Expense.all
+    @users = User.all
+
   end
 
   # POST /comments
