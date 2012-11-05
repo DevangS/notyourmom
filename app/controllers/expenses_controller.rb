@@ -79,6 +79,12 @@ class ExpensesController < ApplicationController
   # DELETE /expenses/1.json
   def destroy
     @expense = Expense.find(params[:id])
+
+    debts = @expense.debts
+    debts.each do |d|
+      d.destroy
+    end
+
     @expense.destroy
 
     respond_to do |format|
