@@ -4,6 +4,8 @@ class Expense < ActiveRecord::Base
   has_many :tags
   has_many :debts
 
+  accepts_nested_attributes_for :debts, :allow_destroy => true
+
   validates :price, presence: true
   validates :item, presence: true
 end

@@ -27,6 +27,11 @@ class ExpensesController < ApplicationController
     @expense = Expense.new
     @users = User.all
 
+    #need to do it so the debt fields appear for everyone in the household
+    3.times do
+      @expense.debts.build
+    end
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @expense }
