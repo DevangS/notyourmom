@@ -14,6 +14,7 @@ class HouseholdsController < ApplicationController
   # GET /households/1.json
   def show
     @household = Household.find(params[:id])
+    @users = User.where(:id => @household.id)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -35,6 +36,8 @@ class HouseholdsController < ApplicationController
   # GET /households/1/edit
   def edit
     @household = Household.find(params[:id])
+    @users = User.where(:id => @household.id)
+
   end
 
   # POST /households
@@ -80,4 +83,20 @@ class HouseholdsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def add_user=(email)
+    @household = Household.find(params[:id])
+    @user = User.where(:email => email)[0]
+    @user.household_id = @household.id
+    @user.save
+  end
+
+  def remove_user
+    @user = User.find(params[:user_id])
+    @user.household_id = nil
+    @user.save
+  end
+
+  helper_method :remove_user
+
 end
