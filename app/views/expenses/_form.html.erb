@@ -29,7 +29,7 @@
   </div>
   <div class="field">
     <%= f.label :user %><br />
-    <%= f.text_field :user %>
+    <%= f.select :user_id, @users.to_a.collect{|a| [a.firstName + " " + a.lastName, a.id]} %>
   </div>
   <div class="actions">
     <%= f.submit %>
