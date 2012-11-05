@@ -17,7 +17,7 @@
   </div>
   <div class="field">
     <%= f.label :expense %><br />
-    <%= f.select :expense_id, @expenses.to_a.collect{|a| [a.firstName + " " + a.lastName, a.id]} %>
+    <%= f.select :expense_id, @expenses.to_a.collect{|a| [a.item, a.id]} %>
   </div>
   <div class="field">
     <%= f.label :user %><br />

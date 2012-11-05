@@ -47,6 +47,8 @@ ActiveRecord::Schema.define(:version => 20121105022616) do
     t.text    "description"
     t.boolean "resolved"
     t.integer "user_id"
+
+    t.integer "household_id"
   end
 
   add_index "expenses", ["user_id"], :name => "index_expenses_on_user_id"
