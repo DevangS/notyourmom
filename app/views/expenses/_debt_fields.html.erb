@@ -1,0 +1,18 @@
+<p>
+<div class="field">
+	    <%= f.label :percentage_owed %><br />
+	    <%= f.text_field :percentage_owed %>
+	  </div>
+	  <div class="field">
+	    <%= f.label :paid %><br />
+	    <%= f.check_box :paid %>
+	  </div>
+	  <div class="field">
+	    <%= f.label :user %><br />
+		<%= f.select :user_id, @users.to_a.collect{|a| [a.firstName + " " + a.lastName, a.id]} %>
+	  </div>
+	  <div class="field">
+	    <%= f.label :expense %><br />
+	    <%= f.text_field :expense %>
+	  </div>
+</p>

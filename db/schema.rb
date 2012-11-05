@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121031182127) do
+ActiveRecord::Schema.define(:version => 20121105015030) do
 
   create_table "comments", :force => true do |t|
     t.text    "comment"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(:version => 20121031182127) do
     t.text    "description"
     t.boolean "resolved"
     t.integer "user_id"
+    t.integer "household_id"
   end
 
   add_index "expenses", ["user_id"], :name => "index_expenses_on_user_id"
