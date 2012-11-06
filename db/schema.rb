@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121105015030) do
+ActiveRecord::Schema.define(:version => 20121106173713) do
 
   create_table "comments", :force => true do |t|
     t.text    "comment"
@@ -33,12 +33,13 @@ ActiveRecord::Schema.define(:version => 20121105015030) do
   add_index "debts", ["user_id"], :name => "index_debts_on_user_id"
 
   create_table "expenses", :force => true do |t|
-    t.float   "price"
-    t.string  "item"
-    t.text    "description"
-    t.boolean "resolved"
-    t.integer "user_id"
-    t.integer "household_id"
+    t.float    "price"
+    t.string   "item"
+    t.text     "description"
+    t.boolean  "resolved"
+    t.integer  "user_id"
+    t.integer  "household_id"
+    t.datetime "created_at", :null => false
   end
 
   add_index "expenses", ["user_id"], :name => "index_expenses_on_user_id"
