@@ -14,7 +14,7 @@ class HouseholdsController < ApplicationController
   # GET /households/1.json
   def show
     @household = Household.find(params[:id])
-    @users = User.where(:id => @household.id)
+    @users = User.where(:household_id => @household.id)
 
     respond_to do |format|
       format.html # show.html.erb
