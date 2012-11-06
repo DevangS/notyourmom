@@ -87,7 +87,7 @@ class ExpensesController < ApplicationController
   def destroy
     @expense = Expense.find(params[:id])
 
-    debts = @expense.debts
+    debts = Debt.where(:expense_id => @expense.id)
     debts.each do |d|
       d.destroy
     end
