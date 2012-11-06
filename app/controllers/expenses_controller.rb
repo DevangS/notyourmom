@@ -28,8 +28,12 @@ class ExpensesController < ApplicationController
     @users = User.all
 
     #need to do it so the debt fields appear for everyone in the household
-    @users.count do
-      @expense.debts.build
+    #right now it generates one for each member
+    split = @users.count
+    @users.each do |u|
+      d = @expense.debts.build
+      d.user = u
+      d.percentage_owed = 100.0  / split
     end
 
     respond_to do |format|

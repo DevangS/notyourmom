@@ -5,8 +5,12 @@ class Expense < ActiveRecord::Base
   has_many :tags
   has_many :debts
 
-  accepts_nested_attributes_for :debts, :allow_destroy => true
+  accepts_nested_attributes_for :debts, :reject_if => :empty_Debt, :allow_destroy => true
 
   validates :price, presence: true
   validates :item, presence: true
+
+  def empty_Debt(d)
+  	d[:percentage_owed] == 0.0 || d[:percentage_owed].blank?
+  end
 end
