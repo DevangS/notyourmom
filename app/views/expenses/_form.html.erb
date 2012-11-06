@@ -21,7 +21,7 @@
   </div>
   <div class="field">
     <%= f.label :user %><br />
-    <%= f.select :user_id, @users.to_a.collect{|a| [a.firstName + " " + a.lastName, a.id]} %>
+    <%= f.select :user_id, @users.to_a.collect{|a| [a.full_name, a.id]} %>
   </div>
   <div class="field">
     <%= f.label :description %><br />
@@ -38,7 +38,7 @@
       <p>
         <div>
           <%= debt_builder.label :user %><br />
-          <%= debt_builder.select :user_id, @users.to_a.collect{|a| [a.firstName + " " + a.lastName, a.id]} %>
+          <%= debt_builder.select :user_id, @users.to_a.collect{|a| [a.full_name, a.id]} %>
           <%= debt_builder.label :percentage_owed %><br />
           <%= debt_builder.text_field :percentage_owed %>
           <%= debt_builder.label :paid %><br />
