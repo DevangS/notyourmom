@@ -28,7 +28,7 @@ class ExpensesController < ApplicationController
     @users = User.all
 
     #need to do it so the debt fields appear for everyone in the household
-    3.times do
+    @users.count do
       @expense.debts.build
     end
 
