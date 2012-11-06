@@ -52,6 +52,9 @@ class ExpensesController < ApplicationController
   def create
     @expense = Expense.new(params[:expense])
 
+    #should probably be done in new (need session)
+    @expense.household_id = User.find(@expense.user_id).household_id
+
     respond_to do |format|
       if @expense.save
         format.html { redirect_to @expense, notice: 'Expense was successfully created.' }

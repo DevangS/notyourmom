@@ -15,7 +15,8 @@ class HouseholdsController < ApplicationController
   def show
     @household = Household.find(params[:id])
     @users = User.where(:household_id => @household.id)
-
+    @expenses = Expense.where(:household_id => @household.id)
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @household }

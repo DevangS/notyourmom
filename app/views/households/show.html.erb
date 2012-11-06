@@ -7,6 +7,10 @@
   <% @users.each do |user| %>
      <%= user.firstName + " " + user.lastName + " " + user.email %><br/>
   <% end %>
+  <b>Expenses:</b><br/>
+  <% @expenses.each do |expense| %>
+  	<%= expense.price.to_s + " " + expense.item + " " + expense.created_at.to_s %> <br/>
+  <% end %>
 </p>
 
 
