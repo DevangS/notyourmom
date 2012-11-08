@@ -28,8 +28,12 @@ class ExpensesController < ApplicationController
     @users = User.all
 
     #need to do it so the debt fields appear for everyone in the household
-    3.times do
-      @expense.debts.build
+    #right now it generates one for each member
+    split = @users.count
+    @users.each do |u|
+      d = @expense.debts.build
+      d.user = u
+      d.percentage_owed = 100.0  / split
     end
 
     respond_to do |format|
@@ -47,6 +51,9 @@ class ExpensesController < ApplicationController
   # POST /expenses.json
   def create
     @expense = Expense.new(params[:expense])
+
+    #should probably be done in new (need session)
+    @expense.household_id = User.find(@expense.user_id).household_id
 
     respond_to do |format|
       if @expense.save
@@ -80,7 +87,7 @@ class ExpensesController < ApplicationController
   def destroy
     @expense = Expense.find(params[:id])
 
-    debts = @expense.debts
+    debts = Debt.where(:expense_id => @expense.id)
     debts.each do |d|
       d.destroy
     end

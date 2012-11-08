@@ -18,7 +18,7 @@
     <td><%= expense.item %></td>
     <td><%= expense.description %></td>
     <td><%= expense.resolved %></td>
-    <td><%= expense.user %></td>
+    <td><%= expense.user.full_name %></td>
     <td><%= link_to 'Show', expense %></td>
     <td><%= link_to 'Edit', edit_expense_path(expense) %></td>
     <td><%= link_to 'Destroy', expense, confirm: 'Are you sure?', method: :delete %></td>

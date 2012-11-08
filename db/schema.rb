@@ -42,19 +42,21 @@ ActiveRecord::Schema.define(:version => 20121105022616) do
   add_index "debts", ["user_id"], :name => "index_debts_on_user_id"
 
   create_table "expenses", :force => true do |t|
-    t.float   "price"
-    t.string  "item"
-    t.text    "description"
-    t.boolean "resolved"
-    t.integer "user_id"
-
-    t.integer "household_id"
+    t.float    "price"
+    t.string   "item"
+    t.text     "description"
+    t.boolean  "resolved"
+    t.integer  "user_id"
+    t.integer  "household_id"
+    t.datetime "created_at", :null => false
   end
 
   add_index "expenses", ["user_id"], :name => "index_expenses_on_user_id"
 
   create_table "households", :force => true do |t|
-    t.string "grp_name"
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "tags", :force => true do |t|
@@ -65,8 +67,8 @@ ActiveRecord::Schema.define(:version => 20121105022616) do
   add_index "tags", ["expense_id"], :name => "index_tags_on_expense_id"
 
   create_table "users", :force => true do |t|
-    t.string   "f_name"
-    t.string   "l_name"
+    t.string   "firstName"
+    t.string   "lastName"
     t.string   "email"
     t.string   "password"
     t.string   "fb_key"
@@ -80,6 +82,8 @@ ActiveRecord::Schema.define(:version => 20121105022616) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
