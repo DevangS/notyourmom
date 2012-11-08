@@ -5,6 +5,7 @@ describe Expense do
   it "has a valid factory" do
   	FactoryGirl.create(:expense).should be_valid
   end
+  #check validations
   it "is invalid without a user" do
   	FactoryGirl.build(:expense, user: nil).should_not be_valid
   end

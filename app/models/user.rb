@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
   has_many :expenses
   has_many :debts
 
+  validates_presence_of :firstName, :lastName, :email, :password
+
   def full_name
     [firstName, lastName].join(' ')
   end
