@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121105022616) do
+ActiveRecord::Schema.define(:version => 20121106173713) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -48,15 +48,13 @@ ActiveRecord::Schema.define(:version => 20121105022616) do
     t.boolean  "resolved"
     t.integer  "user_id"
     t.integer  "household_id"
-    t.datetime "created_at", :null => false
+    t.datetime "created_at"
   end
 
   add_index "expenses", ["user_id"], :name => "index_expenses_on_user_id"
 
   create_table "households", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string "grp_name"
   end
 
   create_table "tags", :force => true do |t|
@@ -82,8 +80,6 @@ ActiveRecord::Schema.define(:version => 20121105022616) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
