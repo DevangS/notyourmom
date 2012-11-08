@@ -92,6 +92,9 @@ class ExpensesController < ApplicationController
       d.destroy
     end
 
+    #TODO destory tags
+    #TODO destory comments
+
     @expense.destroy
 
     respond_to do |format|
