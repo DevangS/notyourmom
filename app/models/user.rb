@@ -7,11 +7,12 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :firstName, :lastName
+  validates_presence_of :firstName, :lastName, :email, :password
   belongs_to :household
   has_many :expenses
   has_many :debts
-
   has_many :authentications, :dependent => :delete_all
+  
   def apply_omniauth(auth)
     # In previous omniauth, 'user_info' was used in place of 'raw_info'
     self.email = auth['extra']['raw_info']['email']

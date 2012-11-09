@@ -15,7 +15,7 @@
   <tr>
     <td><%= debt.percentage_owed %></td>
     <td><%= debt.paid %></td>
-    <td><%= debt.user %></td>
+    <td><%= debt.user.full_name %></td>
     <td><%= debt.expense.item %></td>
     <td><%= link_to 'Show', debt %></td>
     <td><%= link_to 'Edit', edit_debt_path(debt) %></td>
