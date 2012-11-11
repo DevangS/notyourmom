@@ -16,3 +16,5 @@
 
 # Ignore IDE stuff
 /.idea
+*.sublime-project
+*.sublime-workspace
