@@ -16,6 +16,9 @@ Notyourmom::Application.configure do
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
 
+  # Define the default url
+  config.action_mailer.default_url_option = { :host => 'localhost:3000' }
+
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 

@@ -1,8 +1,16 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Name:</b>
-  <%= @household.name %>
+  <b>Name:</b><br/>
+  <%= @household.name %><br/>
+  <b>House Members:</b><br/>
+  <% @users.each do |user| %>
+     <%= user.firstName + " " + user.lastName + " " + user.email %><br/>
+  <% end %>
+  <b>Expenses:</b><br/>
+  <% @expenses.each do |expense| %>
+  	<%= expense.price.to_s + " " + expense.item + " " + expense.created_at.to_s %> <br/>
+  <% end %>
 </p>
 
 

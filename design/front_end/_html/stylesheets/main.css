@@ -1,0 +1,107 @@
+
+body {
+	margin: 0px;
+	padding: 0px;
+	background: #FFF url('../images/bg-x.png') top repeat-x;
+	font: 11pt Arial;
+}
+
+span {
+	font-size: 8pt;
+	color: #badef7;
+}
+
+#top {
+	background: url('../images/top-bg-x.png') repeat-x;
+	height: 53px;
+	text-align: right;
+	line-height: 12pt;	
+	color: #badef7;
+}
+
+#top a:link, #top a:visited, #top a:active {
+	text-decoration: none;
+	color:#94cff7;
+	font-weight: bold;
+}
+
+#top a:hover {
+	text-decoration: none;
+	color:#FFF;
+}
+
+#nav {
+	background: url('../images/nav-bg-x.png') repeat-x;
+	height: 92px;
+}
+
+#links {
+	padding-top: 40px;
+}
+
+#links a:link, #links a:visited, #links a:active {
+	text-decoration: none;
+	text-transform: uppercase;
+	padding: 0 0 0 45px;
+	//font-weight: bold;
+	letter-spacing: 0.5px;
+	color: #FFF;
+}
+
+#links a:hover {
+	color: #b4dbf6;
+}
+
+#banner {
+	background: url('../images/banner-bg-x.png') repeat-x;
+	height: 194px;
+}
+
+#container {
+	width: 850px;
+	text-align: left;
+}
+
+#left_content {
+	float:left;
+	width:200px;
+	border-right: 1px solid #A0A0A0;
+	min-height: 400px;
+}
+
+#right_content {
+	float:right;
+	width:620px;
+}
+
+input.login {
+	-moz-border-radius: 8px;
+  	-webkit-border-radius: 8px;
+  	border-radius: 8px;
+  	padding: 3px;
+  	margin-top: 8px;
+}
+
+h1 {
+	font-weight: normal;
+	font-size: 14pt;
+	border-bottom: 1px solid #D1D1D1;
+}
+
+h2 {
+	margin:12px 0 0 0;
+	padding-bottom: 3px;
+	font-weight: normal;
+	color: #2d2d2d;
+	letter-spacing: -.5px;
+	border-bottom: 1px solid #D1D1D1;
+}
+
+h3 {
+	margin:3px 0 10px 0;
+	text-align: right;
+	color: #2177b0;
+	font-size: 11pt;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}

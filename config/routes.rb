@@ -1,4 +1,6 @@
 Notyourmom::Application.routes.draw do
+  devise_for :users
+
   resources :debts
 
   resources :tags
@@ -16,6 +18,7 @@ Notyourmom::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   root :to => 'home#index'
+  match '/auth/:provider/callback' => 'authentications#create'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
