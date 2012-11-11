@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(:version => 20121106173713) do
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
   create_table "debts", :force => true do |t|
-    t.integer   "percentage_owed"
+    t.float   "percentage_owed"
     t.boolean "paid"
     t.integer "user_id"
     t.integer "expense_id"
@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(:version => 20121106173713) do
   add_index "debts", ["user_id"], :name => "index_debts_on_user_id"
 
   create_table "expenses", :force => true do |t|
-    t.integer    "price"
+    t.float    "price"
     t.string   "item"
     t.text     "description"
     t.boolean  "resolved"
