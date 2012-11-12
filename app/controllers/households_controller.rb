@@ -4,7 +4,7 @@ class HouseholdsController < ApplicationController
   # GET /households
   # GET /households.json
   def index
-    @households = Household.all
+    @households = Household.where(:id => current_user.household_id)
 
     respond_to do |format|
       format.html # index.html.erb

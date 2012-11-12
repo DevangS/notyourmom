@@ -4,7 +4,7 @@ class ExpensesController < ApplicationController
   # GET /expenses
   # GET /expenses.json
   def index
-    @expenses = Expense.where(:resolved => false)
+    @expenses = Expense.where(:resolved => false, :household_id => current_user.household_id)
 
     respond_to do |format|
       format.html # index.html.erb
