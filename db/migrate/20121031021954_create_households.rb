@@ -1,7 +1,7 @@
 class CreateHouseholds < ActiveRecord::Migration
   def change
     create_table :households do |t|
-      t.string :grp_name
+      t.string :name
     end
   end
 end
