@@ -16,7 +16,6 @@ class HouseholdsController < ApplicationController
   # GET /households/1.json
   def show
     @household = Household.find(params[:id])
-    @users = User.where(:household_id => @household.id)
     @expenses = Expense.where(:household_id => @household.id)
     
     respond_to do |format|
@@ -50,6 +49,8 @@ class HouseholdsController < ApplicationController
 
     respond_to do |format|
       if @household.save
+        #insecure way of joining household but devise doesn't let me have nice thigns
+        current_user.join_household(@household).save(:validate => false)
         format.html { redirect_to @household, notice: 'Household was successfully created.' }
         format.json { render json: @household, status: :created, location: @household }
       else
@@ -80,7 +81,8 @@ class HouseholdsController < ApplicationController
   def destroy
     @household = Household.find(params[:id])
     @household.destroy
-
+    #terrible way of leaving household, but devise doesn't let me have nice things
+    current_user.leave_household.save(:validate => false)
     respond_to do |format|
       format.html { redirect_to households_url }
       format.json { head :no_content }

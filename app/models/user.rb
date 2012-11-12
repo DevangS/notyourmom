@@ -6,19 +6,19 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :firstName, :lastName
+  attr_protected
   validates_presence_of :firstName, :lastName, :email, :password
   belongs_to :household
   has_many :expenses
   has_many :debts
   has_many :authentications, :dependent => :delete_all
-  
+
   def apply_omniauth(auth)
     # In previous omniauth, 'user_info' was used in place of 'raw_info'
     self.email = auth['extra']['raw_info']['email']
-    # Again, saving token is optional. If you haven't created the column in 
+    # Again, saving token is optional. If you haven't created the column in
     #authentications table, this will fail
-    authentications.build(:provider => auth['provider'], :uid => auth['uid'], 
+    authentications.build(:provider => auth['provider'], :uid => auth['uid'],
       :token => auth['credentials']['token'])
   end
 
@@ -32,12 +32,14 @@ class User < ActiveRecord::Base
     self.lastName = split.last
   end
 
-  def join_household=(house_id)
-    self.household_id = house_id
+  def join_household(household)
+    self.household_id = household.id
+    return self
   end
 
   def leave_household
     self.household_id = nil
+    return self
   end
-  
+
 end
