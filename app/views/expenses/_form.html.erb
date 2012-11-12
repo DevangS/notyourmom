@@ -21,7 +21,7 @@
   </div>
   <div class="field">
     <%= f.label :user %><br />
-    <%= f.select :user_id, @users.to_a.collect{|a| [a.full_name, a.id]} %>
+    <%= current_user.full_name %>
   </div>
   <div class="field">
     <%= f.label :description %><br />

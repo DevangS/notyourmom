@@ -53,9 +53,9 @@ class ExpensesController < ApplicationController
   # POST /expenses.json
   def create
     @expense = Expense.new(params[:expense])
-
+    @expense.user = current_user
     #should probably be done in new (need session)
-    @expense.household_id = User.find(@expense.user_id).household_id
+    @expense.household_id = current_user.household_id
 
     respond_to do |format|
       if @expense.save
