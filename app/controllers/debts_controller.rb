@@ -1,4 +1,6 @@
 class DebtsController < ApplicationController
+  before_filter :authenticate_user!
+
   # GET /debts
   # GET /debts.json
   def index
