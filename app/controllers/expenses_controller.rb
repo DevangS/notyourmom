@@ -2,7 +2,7 @@ class ExpensesController < ApplicationController
   # GET /expenses
   # GET /expenses.json
   def index
-    @expenses = Expense.all
+    @expenses = Expense.where(:resolved => false)
 
     respond_to do |format|
       format.html # index.html.erb
