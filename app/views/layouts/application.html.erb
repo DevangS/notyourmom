@@ -5,12 +5,63 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+	<link rel="stylesheet" type="text/css" href=<%= asset_path 'main.css'%>>
+	<script src="javascripts/jquery-1.6.1.min.js" type="text/javascript"></script>
 </head>
 <body>
 
-<%= yield %>
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
-
+<div align="center">
+	<div id="container">
+		<div id="top">
+			<% if user_signed_in? %>
+				Welcome <%=current_user.firstName %>! <br />
+	    		<%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+	    	<% else %>
+				<!-- LOGIN -->
+				<form id="login" action="/login">
+					<b>Please log in</b> 
+					<input type="text" class="login" size="14" placeholder="e-mail" />
+					<input type="text" class="login" size="14" placeholder="password" /><br />
+					<span>Not a member yet? <%= link_to "Signing up is easy!", new_user_registration_path %></span>
+				</form>
+			<% end %>
+		</div>
+		<div id="nav">
+			<img align="left" src=<%= asset_path 'noyomo2.png'%> />
+			<div id="links">
+				<a href="?">House</a> 
+				<a href="?">IOU-Overview</a> 
+				<a href="?">Bills</a> 
+				<a href="?">Agenda</a>
+				<a href="?">Calendar</a>  
+			</div>
+		</div>
+		<div id="banner">
+			<div style="float:left;width:230px;text-align:right">
+				<br />
+				<h2>Simplify your Life</h2><br />
+				Create, split, and manage expenses the easy way. <br /><br />
+				<a href="#">Read More</a>
+			</div>
+			<img class="hdr_icon" src=<%= asset_path 'user1.jpg'%> />
+			<img class="hdr_icon" src=<%= asset_path 'user2.jpg'%> />
+			<img class="hdr_icon" src=<%= asset_path 'user3.jpg'%> />
+		</div>
+		<div id="left_content">
+			<h1>Jump to</h1>
+			<%= link_to "Households", households_path %> <br />
+			<%= link_to "Users", users_path %> <br />
+			<%= link_to "Expenses", expenses_path %> <br />
+			<%= link_to "Debts", debts_path %> <br />
+			<%= link_to "Contest Expense", comments_path %>
+		</div>
+		<div id="right_content">	
+			<p class="notice"><%= notice %></p>
+			<p class="alert"><%= alert %></p>
+			<%= yield %>
+					
+		</div>
+	</div>
+</div>
 </body>
 </html>

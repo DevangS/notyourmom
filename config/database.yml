@@ -17,9 +17,10 @@ development:
   encoding: unicode
   database: notyourmom_development
   host: localhost
+  port: 5432
   pool: 5
-  username: notyourmom
-  password: password
+  username: postgres
+  password: noyomo
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
@@ -44,13 +45,13 @@ test:
   encoding: unicode
   database: notyourmom_test
   pool: 5
-  username: notyourmom
-  password: password
+  username: postgres
+  password: noyomo
 
 production:
   adapter: postgresql
   encoding: unicode
   database: notyourmom_production
   pool: 5
-  username: notyourmom
-  password: password
+  username: postgres
+  password: noyomo

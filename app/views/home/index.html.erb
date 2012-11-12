@@ -1,16 +1,36 @@
-<h1>Not Your Mom</h1>
-<div id="user_nav">
-  <% if user_signed_in? %>
-    Signed in as <%= current_user.email %>. Not you?
-    <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
-  <% else %>
-    <%= link_to "Sign up", new_user_registration_path %> or <%= link_to "sign in", new_user_session_path %> or
-    <%= link_to 'Login with Facebook', '/auth/facebook/' %>
-  <% end %>
-</div>
-<p>Hello? Yes this is dog.</p>
-<%= link_to "Households", households_path %>
-<%= link_to "Users", users_path %>
-<%= link_to "Expenses", expenses_path %>
-<%= link_to "Debts", debts_path %>
-<%= link_to "Contest Expense", comments_path %>
+<% if user_signed_in? %>
+
+	<h1>Dashboard</h1>
+	<h3>Debts that Need to be Resolved</h3>
+	<% if !@household_created %> 
+		<p class="notice"><%= flash[:notice] %> <%= link_to "Create one now?", households_path %></p> 
+	<% else %>
+
+		<% @debts.each do |debt| %>
+		<p>
+		  <b>Expense: <%=debt.expense_id%></b>
+		  <%= @expenses.find{|d| d.id==debt.expense_id}.item %>
+		</p>
+		<p>
+			<% total = @expenses.find{|e|e.id==debt.expense_id}.price %>
+		  	You owe <%= debt.percentage_owed*total %> out of <%=total%> 
+		</p>
+		<p><b>Paid: </b> <%=debt.paid%></p>
+
+		<% end %>
+	<% end %>
+<% else %>
+
+	<h1>Not Your Mom</h1>
+	<div id="user_nav">
+	  <% if user_signed_in? %>
+	    Signed in as <%= current_user.email %>. Not you?
+	    <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+	  <% else %>
+	    <%= link_to "Sign up", new_user_registration_path %> or <%= link_to "sign in", new_user_session_path %> or
+	    <%= link_to 'Login with Facebook', '/auth/facebook/' %>
+	  <% end %>
+	</div>
+	<p>Hello? Yes this is dog.</p>
+
+<% end %>
