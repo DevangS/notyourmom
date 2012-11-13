@@ -4,8 +4,8 @@
   <b>Name:</b><br/>
   <%= @household.name %><br/>
   <b>House Members:</b><br/>
-  <% @users.each do |user| %>
-     <%= user.firstName + " " + user.lastName + " " + user.email %><br/>
+  <% @household.users.each do |user| %>
+     <%= user.full_name %><br/>
   <% end %>
   <b>Expenses:</b><br/>
   <% @expenses.each do |expense| %>

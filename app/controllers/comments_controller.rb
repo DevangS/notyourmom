@@ -1,8 +1,10 @@
 class CommentsController < ApplicationController
+  before_filter :authenticate_user!
+
   # GET /comments
   # GET /comments.json
   def index
-    @comments = Comment.all
+    @comments = Comment.where(:user_id => current_user.id)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -25,8 +27,8 @@ class CommentsController < ApplicationController
   # GET /comments/new.json
   def new
     @comment = Comment.new
-    @expenses = Expense.all
-    @users = User.all
+    @expenses = Expense.where(:resolved => false, :household_id => current_user.household_id)
+    @user = current_user
 
     respond_to do |format|
       format.html # new.html.erb
@@ -37,9 +39,8 @@ class CommentsController < ApplicationController
   # GET /comments/1/edit
   def edit
     @comment = Comment.find(params[:id])
-    @expenses = Expense.all
-    @users = User.all
-
+    @expenses = Expense.where(:resolved => false, :household_id => current_user.household_id)
+    @user = current_user
   end
 
   # POST /comments

@@ -1,8 +1,10 @@
 class ExpensesController < ApplicationController
+  before_filter :authenticate_user!
+
   # GET /expenses
   # GET /expenses.json
   def index
-    @expenses = Expense.all
+    @expenses = Expense.where(:resolved => false, :household_id => current_user.household_id)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -51,9 +53,9 @@ class ExpensesController < ApplicationController
   # POST /expenses.json
   def create
     @expense = Expense.new(params[:expense])
-
+    @expense.user = current_user
     #should probably be done in new (need session)
-    @expense.household_id = User.find(@expense.user_id).household_id
+    @expense.household_id = current_user.household_id
 
     respond_to do |format|
       if @expense.save

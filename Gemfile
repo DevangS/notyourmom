@@ -25,6 +25,7 @@ gem 'devise'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'oauth2'
+gem 'squeel'
 
 group :development, :test do
   gem 'rspec-rails'

@@ -20,8 +20,7 @@
     <%= f.select :expense_id, @expenses.to_a.collect{|a| [a.item, a.id]} %>
   </div>
   <div class="field">
-    <%= f.label :user %><br />
-    <%= f.select :user_id, @users.to_a.collect{|a| [a.firstName + " " + a.lastName, a.id]} %>
+    <%= f.hidden_field :user_id, :value => @user.id %>
   </div>
   <div class="actions">
     <%= f.submit %>
