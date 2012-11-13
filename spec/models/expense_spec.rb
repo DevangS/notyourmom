@@ -9,6 +9,9 @@ describe Expense do
   it "is invalid without a user" do
   	FactoryGirl.build(:expense, user: nil).should_not be_valid
   end
+  it "is invalid without a household" do
+    FactoryGirl.build(:expense, household:nil).should_not be_valid
+  end
   it "is invalid without a price" do
   	FactoryGirl.build(:expense, price:nil).should_not be_valid
   end

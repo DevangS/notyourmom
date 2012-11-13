@@ -41,7 +41,9 @@
         <div>
           Housemate: 
           <%= debt_builder.object.user.full_name %>
-          <%= debt_builder.hidden_field :user_id %> <br/>
+          <%= debt_builder.hidden_field :user_id %> 
+
+          <br/>
           <%= debt_builder.label :percentage_owed %><br />
           <%= debt_builder.text_field :percentage_owed %>
           <%= debt_builder.label :paid %><br />

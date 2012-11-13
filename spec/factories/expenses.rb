@@ -6,5 +6,6 @@ FactoryGirl.define do
     price "100"
    	item "Food"
    	user
+   	household
   end
 end
