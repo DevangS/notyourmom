@@ -7,6 +7,41 @@
   <%= csrf_meta_tags %>
 	<link rel="stylesheet" type="text/css" href=<%= asset_path 'main.css'%>>
 	<script src="javascripts/jquery-1.6.1.min.js" type="text/javascript"></script>
+
+	<% content_for :banner do %>
+	<div id="banner_wrapper">
+		<div id="banner">
+			<div style="float:left;width:260px;text-align:right">
+				<br />
+				<h2>Simplify your Life</h2><br />
+				Create, split, and manage expenses the easy way. <br /><br />
+				<a href="#">Read More</a>
+			</div>
+			<img class="hdr_icon" src=<%= asset_path 'user1.jpg'%> />
+			<img class="hdr_icon" src=<%= asset_path 'user2.jpg'%> />
+			<img class="hdr_icon" src=<%= asset_path 'user3.jpg'%> />
+		</div>
+	</div>
+	<% end %>
+
+	<% content_for :side_bar do %>
+		<div id="left_content">
+			<br />
+			<h3>Recent Activity</h3>
+			Bulat paid you <b>$50.75</b> for <i>Utilities</i>
+			Theresa paid you <b>$350.00</b> for <i>Rent</i>
+			Tanya commented on <i>Rent</i> "Boo!!"
+
+			<br /> <br /> 
+			<h3>Jump to</h3>
+			<%= link_to "Households", households_path %> <br />
+			<%= link_to "Users", users_path %> <br />
+			<%= link_to "Expenses", expenses_path %> <br />
+			<%= link_to "Debts", debts_path %> <br />
+			<%= link_to "Contest Expense", comments_path %>
+		</div>
+	<% end %>
+
 </head>
 <body>
 
@@ -29,32 +64,21 @@
 		<div id="nav">
 			<img align="left" src=<%= asset_path 'noyomo2.png'%> />
 			<div id="links">
-				<a href="?">House</a> 
-				<a href="?">IOU-Overview</a> 
-				<a href="?">Bills</a> 
-				<a href="?">Agenda</a>
-				<a href="?">Calendar</a>  
+				<a href="/">Home</a>
+				<%= link_to "Household", households_path %> 
+				<%= link_to "Expenses", expenses_path %> 
+				<a href="?">Agenda</a>  
+				<%= link_to "Users", users_path %> 
 			</div>
 		</div>
-		<div id="banner">
-			<div style="float:left;width:230px;text-align:right">
-				<br />
-				<h2>Simplify your Life</h2><br />
-				Create, split, and manage expenses the easy way. <br /><br />
-				<a href="#">Read More</a>
-			</div>
-			<img class="hdr_icon" src=<%= asset_path 'user1.jpg'%> />
-			<img class="hdr_icon" src=<%= asset_path 'user2.jpg'%> />
-			<img class="hdr_icon" src=<%= asset_path 'user3.jpg'%> />
-		</div>
-		<div id="left_content">
-			<h1>Jump to</h1>
-			<%= link_to "Households", households_path %> <br />
-			<%= link_to "Users", users_path %> <br />
-			<%= link_to "Expenses", expenses_path %> <br />
-			<%= link_to "Debts", debts_path %> <br />
-			<%= link_to "Contest Expense", comments_path %>
-		</div>
+	</div>
+<%page=request.env['PATH_INFO']%>
+<%	if page == "/" || page == "/home/index" %>
+		<%=yield :banner %>
+<%	end %>
+
+	<div id="container">
+		<%=yield :side_bar %>
 		<div id="right_content">	
 			<p class="notice"><%= notice %></p>
 			<p class="alert"><%= alert %></p>

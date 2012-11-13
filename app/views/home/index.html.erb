@@ -1,3 +1,5 @@
+
+
 <% if user_signed_in? %>
 
 	<h1>Dashboard</h1>
@@ -8,14 +10,13 @@
 
 		<% @debts.each do |debt| %>
 		<p>
-		  <b>Expense: <%=debt.expense_id%></b>
-		  <%= @expenses.find{|d| d.id==debt.expense_id}.item %>
-		</p>
-		<p>
 			<% total = @expenses.find{|e|e.id==debt.expense_id}.price %>
-		  	You owe <%= debt.percentage_owed*total %> out of <%=total%> 
+			<% expense_created_by = @expenses.find{|d| d.id==debt.expense_id}.user_id %>
+			<% created_user = @users.find{|u| u.id==expense_created_by }%>
+		  	You owe <b><%= created_user.firstName %> <%= created_user.lastName %></b> 
+		  	<%= debt.percentage_owed*total %> for 
+		  	<b><%= @expenses.find{|d| d.id==debt.expense_id}.item %></b>
 		</p>
-		<p><b>Paid: </b> <%=debt.paid%></p>
 
 		<% end %>
 	<% end %>
