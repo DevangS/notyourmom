@@ -22,6 +22,8 @@
   <div class="field">
     <%= f.label :user %><br />
     <%= current_user.full_name %>
+    <%= f.hidden_field :user_id, :value => current_user.id %>
+    <%= f.hidden_field :household_id, :value => current_user.household_id %>
   </div>
   <div class="field">
     <%= f.label :description %><br />
@@ -37,8 +39,9 @@
     <%= f.fields_for :debts do |debt_builder| %>
       <p>
         <div>
-          <%= debt_builder.label :user %><br />
-          <%= debt_builder.select :user_id, @users.to_a.collect{|a| [a.full_name, a.id]} %>
+          Housemate: 
+          <%= debt_builder.object.user.full_name %>
+          <%= debt_builder.hidden_field :user_id %> <br/>
           <%= debt_builder.label :percentage_owed %><br />
           <%= debt_builder.text_field :percentage_owed %>
           <%= debt_builder.label :paid %><br />
