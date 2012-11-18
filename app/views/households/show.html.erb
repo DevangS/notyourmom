@@ -8,9 +8,11 @@
      <%= user.full_name %><br/>
   <% end %>
   <b>Expenses:</b><br/>
-  <% @expenses.each do |expense| %>
+  <% @household.expenses.each do |expense| %>
   	<%= expense.price.to_s + " " + expense.item + " " + expense.created_at.to_s %> <br/>
   <% end %>
+  <b>Head of Household:</b><br/>
+  <%= @household.head.full_name %>
 </p>
 
 

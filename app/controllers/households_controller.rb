@@ -16,8 +16,7 @@ class HouseholdsController < ApplicationController
   # GET /households/1.json
   def show
     @household = Household.find(params[:id])
-    @expenses = Expense.where(:household_id => @household.id)
-    
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @household }
@@ -46,6 +45,8 @@ class HouseholdsController < ApplicationController
   # POST /households.json
   def create
     @household = Household.new(params[:household])
+    #set head of household to be the creator of the household
+    @household.head = current_user
 
     respond_to do |format|
       if @household.save
