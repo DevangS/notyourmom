@@ -42,4 +42,8 @@ class User < ActiveRecord::Base
     return self
   end
 
+  def is_head_of_house
+    Household.find(self.household_id).head_id == self.id
+  end
+
 end

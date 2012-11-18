@@ -15,6 +15,11 @@
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </div>
+  <div class="field">
+    <%= f.label :head %><br/>
+    <%= f.select :head_id, @household.members.map {|member| [member.full_name, member.id] }  %>
+
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>

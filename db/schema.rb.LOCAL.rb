@@ -57,7 +57,6 @@ ActiveRecord::Schema.define(:version => 20121115180334) do
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.integer  "head_id"
   end
 
   create_table "taggings", :force => true do |t|
