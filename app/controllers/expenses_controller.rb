@@ -107,4 +107,12 @@ class ExpensesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def by_tag
+    if params[:tag].present? 
+      @expense = Expense.tagged_with(params[:tag])
+    else 
+      @expense = Expense.postall
+    end  
+  end
 end

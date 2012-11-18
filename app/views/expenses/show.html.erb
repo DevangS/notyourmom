@@ -24,6 +24,12 @@
   <b>User:</b>
   <%= @expense.user.full_name %>
 </p>
+<p>
+  <% @expense.tags.any? %>
+        <% @expense.tags.each do |tag| %>
+          <%= link_to tag.name, tag_path(tag.id) %>
+  <% end %>
+</p>
 
 
 <%= link_to 'Edit', edit_expense_path(@expense) %> |

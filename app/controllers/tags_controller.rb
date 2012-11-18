@@ -16,6 +16,7 @@ class TagsController < ApplicationController
   # GET /tags/1.json
   def show
     @tag = Tag.find(params[:id])
+    @expenses = Expense.tagged_with(@tag.name)
 
     respond_to do |format|
       format.html # show.html.erb
