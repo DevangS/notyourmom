@@ -15,6 +15,7 @@
   <%= @household.head.full_name %>
 </p>
 
-
-<%= link_to 'Edit', edit_household_path(@household) %> |
+<% if current_user.is_head_of_house %>
+    <%= link_to 'Edit', edit_household_path(@household) %> |
+<% end %>
 <%= link_to 'Back', households_path %>

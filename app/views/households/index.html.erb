@@ -12,8 +12,10 @@
   <tr>
     <td><%= household.name %></td>
     <td><%= link_to 'Show', household %></td>
-    <td><%= link_to 'Edit', edit_household_path(household) %></td>
-    <td><%= link_to 'Destroy', household, confirm: 'Are you sure?', method: :delete %></td>
+    <% if current_user.is_head_of_house %>
+        <td><%= link_to 'Edit', edit_household_path(household) %></td>
+        <td><%= link_to 'Destroy', household, confirm: 'Are you sure?', method: :delete %></td>
+    <%end%>
   </tr>
 <% end %>
 </table>
