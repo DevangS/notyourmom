@@ -37,8 +37,7 @@ class HouseholdsController < ApplicationController
   # GET /households/1/edit
   def edit
     @household = Household.find(params[:id])
-    @users = User.where(:id => @household.id)
-
+    #TODO: verify user is head of household before letting edit household
   end
 
   # POST /households
@@ -50,7 +49,7 @@ class HouseholdsController < ApplicationController
 
     respond_to do |format|
       if @household.save
-        #insecure way of joining household but devise doesn't let me have nice thigns
+        #insecure way of making current user join household but devise doesn't let me have nice thigns
         current_user.join_household(@household).save(:validate => false)
         format.html { redirect_to @household, notice: 'Household was successfully created.' }
         format.json { render json: @household, status: :created, location: @household }
@@ -67,7 +66,8 @@ class HouseholdsController < ApplicationController
     @household = Household.find(params[:id])
 
     respond_to do |format|
-      if @household.update_attributes(params[:household])
+      #verify selected head of household is actually member of that household
+      if @household.members.include?(User.find(params[:household]['head_id'])) and @household.update_attributes(params[:household])
         format.html { redirect_to @household, notice: 'Household was successfully updated.' }
         format.json { head :no_content }
       else
@@ -83,26 +83,11 @@ class HouseholdsController < ApplicationController
     @household = Household.find(params[:id])
     @household.destroy
     #terrible way of leaving household, but devise doesn't let me have nice things
-    current_user.leave_household.save(:validate => false)
+    @household.members {|member| member.leave_household.save(:validate=>false)}
     respond_to do |format|
       format.html { redirect_to households_url }
       format.json { head :no_content }
     end
   end
-
-  def add_user=(email)
-    @household = Household.find(params[:id])
-    @user = User.where(:email => email)[0]
-    @user.household_id = @household.id
-    @user.save
-  end
-
-  def remove_user
-    @user = User.find(params[:user_id])
-    @user.household_id = nil
-    @user.save
-  end
-
-  helper_method :remove_user
 
 end
