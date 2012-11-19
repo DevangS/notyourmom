@@ -7,4 +7,7 @@ FactoryGirl.define do
     expense
     user
   end
+  factory :invalid_debt, parent: :debt do
+    user nil
+  end
 end
