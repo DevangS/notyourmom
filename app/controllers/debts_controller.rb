@@ -5,6 +5,8 @@ class DebtsController < ApplicationController
   # GET /debts.json
   def index
     @debts = Debt.all
+    @debts = Debt.where(:user_id => current_user.id)
+
 
     respond_to do |format|
       format.html # index.html.erb
