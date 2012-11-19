@@ -54,8 +54,10 @@ ActiveRecord::Schema.define(:version => 20121119005853) do
   add_index "expenses", ["user_id"], :name => "index_expenses_on_user_id"
 
   create_table "households", :force => true do |t|
-    t.string  "name"
-    t.integer "head_id"
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "head_id"
   end
 
   create_table "taggings", :force => true do |t|
@@ -82,6 +84,8 @@ ActiveRecord::Schema.define(:version => 20121119005853) do
     t.string   "password"
     t.string   "fb_key"
     t.integer  "household_id"
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.string   "encrypted_password",     :default => "", :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"

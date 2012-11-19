@@ -1,17 +1,19 @@
 
 
 <% if @households.count > 0 %>
-  <% if current_user.is_head_of_house %>
+
     <div class="right">
-    <% @households.each do |household| %>
-      <h1>You are in <i><%= household.name %></i> House</h1>
-            <%= link_to 'Change House Name', edit_household_path(household) %> &nbsp;|&nbsp; 
-            <%= link_to 'Delete', household, confirm: 'Are you sure?', method: :delete %> 
+    <% if current_user.is_head_of_house %>
+        <% @households.each do |household| %>
+          <h1>You are in <i><%= household.name %></i> House</h1>
+                <%= link_to 'Change House Name', edit_household_path(household) %> &nbsp;|&nbsp;
+                <%= link_to 'Delete', household, confirm: 'Are you sure?', method: :delete %>
+        <% end %>
     <% end %>
     &nbsp;|&nbsp; <a href="#">Leave</a>
     </div>
 
-  <%end%>
+
   <br />
 <% else %>
   You are not yet part of a household. <%= link_to 'Create one', new_household_path %>?
@@ -28,7 +30,9 @@
       <tr>
         <td><%=member.firstName %> <%=member.lastName %></td>
         <td><%=member.email %></td>
-        <td><a href="#">Exile</a></td>
+        <% if current_user.is_head_of_house %>
+            <td><a href="#">Exile</a></td>
+        <% end %>
       </tr>
     <% end %>
   </table>
