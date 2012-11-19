@@ -11,11 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(:version => 20121106173713) do
-=======
 ActiveRecord::Schema.define(:version => 20121119005853) do
->>>>>>> 9b6f5e78928fcfe78c3250f2d41641e17f1fc123
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -58,12 +54,8 @@ ActiveRecord::Schema.define(:version => 20121119005853) do
   add_index "expenses", ["user_id"], :name => "index_expenses_on_user_id"
 
   create_table "households", :force => true do |t|
-<<<<<<< HEAD
-    t.string "name"
-=======
     t.string  "name"
     t.integer "head_id"
->>>>>>> 9b6f5e78928fcfe78c3250f2d41641e17f1fc123
   end
 
   create_table "taggings", :force => true do |t|

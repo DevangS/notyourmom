@@ -14,23 +14,25 @@
   <%end%>
   <br />
 <% else %>
-  You are not yet part of a household. Create one? <%= link_to 'New Household', new_household_path %>
+  You are not yet part of a household. <%= link_to 'Create one', new_household_path %>?
 <% end %>
 
-<table class="std_fmt">
-  <tr>
-    <th>Name</th>
-    <th>E-mail</th>
-    <th></th>
-  </tr>
-  <% @members.each do |member| %>
+<% if @members.length > 0 %>
+  <table class="std_fmt">
     <tr>
-      <td><%=member.firstName %> <%=member.lastName %></td>
-      <td><%=member.email %></td>
-      <td><a href="#">Exile</a></td>
+      <th>Name</th>
+      <th>E-mail</th>
+      <th></th>
     </tr>
-  <% end %>
-</table>
+    <% @members.each do |member| %>
+      <tr>
+        <td><%=member.firstName %> <%=member.lastName %></td>
+        <td><%=member.email %></td>
+        <td><a href="#">Exile</a></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
 
 <br /><br />
 <div class="dash_box" style="float:right;">

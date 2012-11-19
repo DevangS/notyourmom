@@ -67,7 +67,7 @@
 				<a href="/">Home</a>
 				<%= link_to "Household", households_path %> 
 				<%= link_to "Expenses", expenses_path %> 
-				<a href="?">Agenda</a>  
+				<%= link_to "My Debts", debts_path %> 
 				<%= link_to "Users", users_path %> 
 			</div>
 		</div>
@@ -79,7 +79,8 @@
 
 	<div id="container">
 		<%=yield :side_bar %>
-		<div id="right_content">	
+		<div id="right_content">
+			<p class="alert"><%= alert %></p>	
 			<%= yield %>
 					
 		</div>

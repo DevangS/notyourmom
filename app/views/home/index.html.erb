@@ -20,7 +20,10 @@
 		<div class="dash_box" style="float:left;">
 				<h3>You have <%=@debts.count%> Debts Outstanding!</h3>
 				<% if @debts.count == 0 %>
-					<span class="big_text">You're GOOD :)</span>
+					<div> 
+						<div style="float:left;padding-left:45px;"><span class="big_text">You're GOOD </span></div>
+						<div style="float:right;padding-right:45px;"><img src=<%= asset_path 'thumbs_up.gif'%> /></div>
+					</div>
 				<% elsif @debts.count > 0 %>
 					<ul>
 					<% @debts.each do |debt| %>

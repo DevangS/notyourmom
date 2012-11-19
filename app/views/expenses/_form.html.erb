@@ -40,6 +40,11 @@
       <%= f.label :has_been_resolved? %>
       <%= f.check_box :resolved %> &nbsp;&nbsp;
     </div>
+    <br />
+    <div class="field">
+      <%= f.label :tags %>
+      <%= f.text_field :tag_list, :size => 50 %>
+    </div>
 
     <h4>Deligate Payment Slices</h4>
     <div class="field">
@@ -59,7 +64,8 @@
           </div>
         </p>
       <% end %>
-    </div>  <br />
+    </div>
+    <br />
     <div class="actions">
       <%= f.submit %>
     </div>
@@ -67,68 +73,3 @@
 
 </div>
 </center>
-
-------------------- HELEN'S ----------------
-
-<%= form_for(@expense) do |f| %>
-  <% if @expense.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@expense.errors.count, "error") %> prohibited this expense from being saved:</h2>
-
-      <ul>
-      <% @expense.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :price %><br />
-    <%= f.text_field :price %>
-  </div>
-  <div class="field">
-    <%= f.label :item %><br />
-    <%= f.text_field :item %>
-  </div>
-  <div class="field">
-    <%= f.label :user %><br />
-    <%= current_user.full_name %>
-    <%= f.hidden_field :user_id, :value => current_user.id %>
-    <%= f.hidden_field :household_id, :value => current_user.household_id %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
-  </div>
-  <div class="field">
-    <%= f.label :resolved %><br />
-    <%= f.check_box :resolved %>
-  </div>
-
-  <h4> Debts </h4>
-  <div class="field">
-    <%= f.fields_for :debts do |debt_builder| %>
-      <p>
-        <div>
-          Housemate: 
-          <%= debt_builder.object.user.full_name %>
-          <%= debt_builder.hidden_field :user_id %> 
-
-          <br/>
-          <%= debt_builder.label :percentage_owed %><br />
-          <%= debt_builder.text_field :percentage_owed %>
-          <%= debt_builder.label :paid %><br />
-          <%= debt_builder.check_box :paid %>
-        </div>
-      </p>
-    <% end %>
-  </div>  
-  <div class="field">
-    <%= f.label :tags %>
-    <%= f.text_field :tag_list %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>

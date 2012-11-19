@@ -1,48 +1,55 @@
 <h1>Outstanding Household expenses</h1>
 
-<table class="std_fmt">
-  <tr>
-    <th>Item</th>
-    <th>Description</th>
-    <th>Price</th>
-    <th>By</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<% if @expenses.count > 0 %>
+    <table class="std_fmt">
+      <tr>
+        <th>Item</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>By</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
 
-<% @expenses.each do |expense| %>
-  <tr>
-    <td><%= expense.item %></td>
-    <td><%= expense.description %></td>
-    <td>$<%= expense.price %></td>
-    <td><%= expense.user.firstName %></td>
-    <td><%= link_to 'Details', expense %></td>
-    <td><%= link_to 'Edit', edit_expense_path(expense) %></td>
-    <td><%= link_to 'Delete', expense, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+    <% @expenses.each do |expense| %>
+      <tr>
+        <td><%= expense.item %></td>
+        <td><%= expense.description %></td>
+        <td>$<%= expense.price %></td>
+        <td><%= expense.user.firstName %></td>
+        <td><%= link_to 'Details', expense %></td>
+        <td><%= link_to 'Edit', edit_expense_path(expense) %></td>
+        <td><%= link_to 'Delete', expense, confirm: 'Are you sure?', method: :delete %></td>
+      </tr>
+    <% end %>
+    </table>
+<% else %>
+    <br />
+        <div style="text-align:center"><span class="big_link">You do not have any outstanding payments.</span></div>   
+    <br />
 <% end %>
-</table>
 
-<h1>Resolved</h1>
+<% if @expenses_done.count > 0 %>
+    <h1>Resolved</h1>
+    <table class="std_fmt">
+      <tr>
+        <th>Item</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Created By</th>
+      </tr>
 
-<table class="std_fmt">
-  <tr>
-    <th>Item</th>
-    <th>Description</th>
-    <th>Price</th>
-    <th>Created By</th>
-  </tr>
-
-<% @expenses_done.each do |expense| %>
-  <tr>
-    <td><%= expense.item %></td>
-    <td><%= expense.description %></td>
-    <td>$<%= expense.price %></td>
-    <td><%= expense.user.full_name %></td>
-  </tr>
+    <% @expenses_done.each do |expense| %>
+      <tr>
+        <td><%= expense.item %></td>
+        <td><%= expense.description %></td>
+        <td>$<%= expense.price %></td>
+        <td><%= expense.user.full_name %></td>
+      </tr>
+    <% end %>
+    </table>
 <% end %>
-</table>
 
 <br />
 <div class="dash_box" style="float:right;">
