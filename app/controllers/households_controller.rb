@@ -88,9 +88,13 @@ class HouseholdsController < ApplicationController
     @household.destroy
     #terrible way of leaving household, but devise doesn't let me have nice things
     @household.members {|member| member.leave_household.save(:validate=>false)}
+    current_user.leave_household.save(:validate=>false)
+    Expense.delete_all(:household_id => @household.id)
+
     respond_to do |format|
       format.html { redirect_to households_url }
-      format.json { head :no_content }
+    # format.json { head :no_content }
+      format.json { render json: @household, status: :deleted}
     end
   end
 

@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   end
 
   def leave_household
-    self.household_id = nil
+    self.household_id = 0
     return self
   end
 
