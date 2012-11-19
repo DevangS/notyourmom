@@ -3,6 +3,6 @@ require 'faker'
 
 FactoryGirl.define do
   factory :tag do
-    expense
+    name { Faker::Lorem.word }
   end
 end

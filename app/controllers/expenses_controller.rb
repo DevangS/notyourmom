@@ -1,3 +1,4 @@
+
 class ExpensesController < ApplicationController
   before_filter :authenticate_user!
 
@@ -108,5 +109,13 @@ class ExpensesController < ApplicationController
       format.html { redirect_to expenses_url }
       format.json { head :no_content }
     end
+  end
+
+  def by_tag
+    if params[:tag].present? 
+      @expense = Expense.tagged_with(params[:tag])
+    else 
+      @expense = Expense.postall
+    end  
   end
 end

@@ -19,6 +19,8 @@ Notyourmom::Application.routes.draw do
   # just remember to delete public/index.html.
   root :to => 'home#index'
   match '/auth/:provider/callback' => 'authentications#create'
+  #get 'tags/:tag', to: 'expenses#index', as: :tag
+  #match 'tags/:tag' to 'tags#index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

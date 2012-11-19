@@ -1,5 +1,3 @@
-class Tag < ActiveRecord::Base
-  belongs_to :expense
-
-  validates_presence_of :expense
+# app/models/tag.rb
+class Tag < ActsAsTaggableOn::Tag
 end

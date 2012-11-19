@@ -67,3 +67,6 @@ group :test do
   gem 'launchy'
 end
 
+#tagging system
+
+gem 'acts-as-taggable-on', '~> 2.3.1'

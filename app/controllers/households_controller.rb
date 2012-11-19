@@ -1,3 +1,4 @@
+
 class HouseholdsController < ApplicationController
   before_filter :authenticate_user!
 
@@ -13,6 +14,7 @@ class HouseholdsController < ApplicationController
       format.json { render json: @members }
     end
   end
+
 
   # GET /households/1
   # GET /households/1.json
