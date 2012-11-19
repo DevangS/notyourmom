@@ -36,12 +36,10 @@ class ExpensesController < ApplicationController
     #right now it generates one for each member
     split = @users.count
     @users.each do |u|
-      if u.id != current_user.id
         d = @expense.debts.build(:expense => @expense, :user => u)
         d.user_id = u.id
         d.expense_id = @expense.id
         d.percentage_owed = 100.0  / split
-      end
     end
 
     respond_to do |format|
