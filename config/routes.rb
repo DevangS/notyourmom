@@ -13,6 +13,11 @@ Notyourmom::Application.routes.draw do
 
   resources :households
 
+  resources :invitations
+
+  # match '/users/signup/:invitation_token' => "authentications#create"
+  # match 'devise/shared/links/:invitation_token' => "authentications#create"
+
   get "home/index"
 
   # You can have the root of your site routed with "root"

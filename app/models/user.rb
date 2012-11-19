@@ -12,6 +12,10 @@ class User < ActiveRecord::Base
   has_many :expenses
   has_many :debts
   has_many :authentications, :dependent => :delete_all
+  # Inviter
+  has_many :sent_invitations, :class_name => 'Invitation', :foreign_key => 'sender_id'
+  # Invitee
+  belongs_to :invitation
 
   def apply_omniauth(auth)
     # In previous omniauth, 'user_info' was used in place of 'raw_info'

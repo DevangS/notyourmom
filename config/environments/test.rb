@@ -18,6 +18,11 @@ Notyourmom::Application.configure do
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
 
+  # Define the delivery method : SMTP  
+  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+
   # Raise exceptions instead of rendering exception templates
   config.action_dispatch.show_exceptions = false
 

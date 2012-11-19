@@ -14,10 +14,30 @@ Notyourmom::Application.configure do
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send
-  config.action_mailer.raise_delivery_errors = false
+  # config.action_mailer.raise_delivery_errors = true
+
+  # Define the delivery method : SMTP  
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+
+  # ActionMailer settings
+  ActionMailer::Base.smtp_settings = {
+  :address  => "smtp.ucsd.edu",
+  :port  => 465,
+  :authentication => :plain,
+  :domain => ENV['GMAIL_SMTP_USER'],
+  :user_name => ENV['GMAIL_SMTP_USER'],
+  :password  => ENV['GMAIL_SMTP_PASSWORD']
+  }
+
+  # git checkout -b betaMailer
+  # 
 
   # Define the default url
-  config.action_mailer.default_url_option = { :host => 'localhost:3000' }
+  # config.action_mailer.default_url_option = { :host => 'localhost:3000' }
+  # GMAIL_SMTP_USER = noyomodotcom
+  # GMAIL_SMTP_PASSWORD = passwordasdfghjkl;'
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log

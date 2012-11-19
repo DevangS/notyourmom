@@ -1,0 +1,27 @@
+<% if !flash[:notice].blank? %>
+  <div class="notice2">
+  	<%= flash[:notice] %>
+  </div>
+<% end %>
+
+<h1> Invite users to your household </h1>
+<div class="invitation new">
+
+  <%= form_for(:invitation, :url => {:action => 'create'}) do |f| %>
+  
+    <div summary="Invitation form fields">
+        <%= f.label :recipient_email, "Friend's email address" %><br />
+        <%= f.text_field(:recipient_email) %>  
+    </div>
+    
+    <div class="form-buttons">
+      <%= submit_tag("Invite!") %>
+    </div>
+    
+  <% end %>
+
+</div>
+
+<%= link_to "<< Back to manage households", :controller => :households, :action => :show, :id => current_user.household_id %>
+
+

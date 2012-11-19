@@ -6,7 +6,8 @@ gem 'rails', '3.2.1'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'pg'
-
+gem 'devise',           '>= 2.0.0'
+gem 'devise_invitable', '~> 1.0.0'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -21,7 +22,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
-gem 'devise'
+# gem 'devise'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'oauth2'
