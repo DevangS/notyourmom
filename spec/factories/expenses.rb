@@ -8,4 +8,7 @@ FactoryGirl.define do
    	user
    	household
   end
+  factory :invalid_expense, parent: :expense do
+    user nil
+  end
 end
