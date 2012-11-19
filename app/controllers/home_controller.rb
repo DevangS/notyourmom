@@ -5,13 +5,16 @@ class HomeController < ApplicationController
 	#expenses = Expense.join(:debts).where("household_id = 1 AND resolved = FALSE")
 	if user_signed_in?	
 		
-		@expenses = Expense.joins(:debts).where("household_id = ? AND resolved = FALSE",current_user.household_id)
+		@head_id = Household.select("head_id").where("id = ?", current_user.household_id)
+		@house = User.where("household_id = ?", current_user.household_id)
+		@expenses = Expense.where("household_id = ? AND resolved = FALSE",current_user.household_id)
 		@debts = Debt.joins(:expense).where("debts.user_id = ?",current_user.id)
 		@users = User.all
 
 	    respond_to do |format|
 	    	format.html # index.html.erb
 	    	if current_user.household_id != nil
+	      		format.json { render json: @house }
 	      		format.json { render json: @expenses }
 	      		format.json { render json: @debts }
 	      		format.json { render json: @users }

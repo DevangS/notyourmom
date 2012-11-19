@@ -35,9 +35,8 @@
 			<br /> <br /> 
 			<h3>Jump to</h3>
 			<%= link_to "Households", households_path %> <br />
-			<%= link_to "Users", users_path %> <br />
-			<%= link_to "Expenses", expenses_path %> <br />
-			<%= link_to "Debts", debts_path %> <br />
+			<%= link_to "Household Expenses", expenses_path %> <br />
+			<%= link_to "My Debts", debts_path %> <br />
 			<%= link_to "Contest Expense", comments_path %>
 		</div>
 	<% end %>
@@ -80,8 +79,6 @@
 	<div id="container">
 		<%=yield :side_bar %>
 		<div id="right_content">	
-			<p class="notice"><%= notice %></p>
-			<p class="alert"><%= alert %></p>
 			<%= yield %>
 					
 		</div>

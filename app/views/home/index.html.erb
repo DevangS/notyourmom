@@ -2,24 +2,81 @@
 
 <% if user_signed_in? %>
 
-	<h1>Dashboard</h1>
-	<h3>Debts that Need to be Resolved</h3>
-	<% if !@household_created %> 
-		<p class="notice"><%= flash[:notice] %> <%= link_to "Create one now?", households_path %></p> 
-	<% else %>
+	<div style="margin-right: 35px;"><h1>Dashboard</h1></div>
 
-		<% @debts.each do |debt| %>
-		<p>
-			<% total = @expenses.find{|e|e.id==debt.expense_id}.price %>
-			<% expense_created_by = @expenses.find{|d| d.id==debt.expense_id}.user_id %>
-			<% created_user = @users.find{|u| u.id==expense_created_by }%>
-		  	You owe <b><%= created_user.firstName %> <%= created_user.lastName %></b> 
-		  	<%= debt.percentage_owed*total %> for 
-		  	<b><%= @expenses.find{|d| d.id==debt.expense_id}.item %></b>
-		</p>
+	<div class="wrap_box">
+		<div class="dash_box" style="float:left;">
+			<br />
+			<a class="big_link" href="/expenses/new">Create New Expense</a></span>
+		</div>
+		<div class="dash_box" style="float:right;">
+			<br />
+			<a class="big_link" href="/users/<%=current_user.id%>/edit">Edit Profile</a></span>
+		</div>
+	</div>
 
+	<div class="wrap_box">
+		<% if @household_created %>	
+		<div class="dash_box" style="float:left;">
+				<h3>You have <%=@debts.count%> Debts Outstanding!</h3>
+				<% if @debts.count == 0 %>
+					<span class="big_text">You're GOOD :)</span>
+				<% elsif @debts.count > 0 %>
+					<ul>
+					<% @debts.each do |debt| %>
+					<li>
+						<% total = @expenses.find{|e|e.id==debt.expense_id}.price %>
+						<% expense_created_by = @expenses.find{|d| d.id==debt.expense_id}.user_id %>
+						<% created_user = @users.find{|u| u.id==expense_created_by }%>
+					  	You owe <b><%= created_user.firstName %> <%= created_user.lastName %></b> 
+					  	<%= debt.percentage_owed*total/100 %> for 
+					  	<b><a href="/expenses/<%=debt.expense_id%>"><%= @expenses.find{|d| d.id==debt.expense_id}.item %></a></b>
+					</li>
+					<% end %>
+					</ul>
+				<% else %>
+					<p>You have no expenses yet! </p>
+				<% end %>
+		</div>
 		<% end %>
+		<div class="dash_box" style="float:right;">
+			<h3>Your Household</h3>
+			<% if !@household_created %> 
+				<p class="notice"><%= flash[:notice] %> <%= link_to "Create one now?", households_path %></p> 
+			<% else %> 
+				<p>
+					<ul>
+					<% @house.each do |member| %>
+						<li>
+						<% if member.id == @current_user.id %><b><%=member.firstName %> <%=member.lastName %>
+							<% if member.id == @head_id.first.head_id %>(BOSS)<% end %></b>
+						<% else %><%=member.firstName %> <%=member.lastName %> <% if member.id == @head_id.first.head_id %>(BOSS)<% end %>
+						<% end %>
+						</li>
+					<% end %>
+					</ul>
+				</p>
+			<% end %>
+		</div>
+	</div>
+
+	<div class="dash_box" style="float:left;width:570px;">
+	<% if @expenses.exists?(:user_id=>current_user.id) %>
+		<h3>Expenses You've Created</h3>
+		<p align="left">
+			<% @expenses.each do |expense| %>
+				<% if expense.user_id == @current_user.id %>
+				<b>$<%=expense.price%></b> FOR <span class="item" title="<%=expense.description%>"><%=expense.item%></span> on <%=expense.created_at.to_s[0,10]%> <br />
+				<% end %>
+			<% end %>
+		</p>
+	<% else %>
+		<br />
+		<span class="big_link">You have not created any expenses.</span>
 	<% end %>
+	</div>
+
+
 <% else %>
 
 	<h1>Not Your Mom</h1>
@@ -32,6 +89,5 @@
 	    <%= link_to 'Login with Facebook', '/auth/facebook/' %>
 	  <% end %>
 	</div>
-	<p>Hello? Yes this is dog.</p>
-
+	
 <% end %>

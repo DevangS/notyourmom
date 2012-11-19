@@ -5,10 +5,12 @@ class ExpensesController < ApplicationController
   # GET /expenses.json
   def index
     @expenses = Expense.where(:resolved => false, :household_id => current_user.household_id)
+    @expenses_done = Expense.where(:resolved => true, :household_id => current_user.household_id)
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @expenses }
+      format.json { render json: @expenses_done }
     end
   end
 

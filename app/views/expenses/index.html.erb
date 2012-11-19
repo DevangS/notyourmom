@@ -1,12 +1,11 @@
-<h1>Listing expenses</h1>
+<h1>Outstanding Household expenses</h1>
 
-<table>
+<table class="std_fmt">
   <tr>
-    <th>Price</th>
     <th>Item</th>
     <th>Description</th>
-    <th>Resolved</th>
-    <th>User</th>
+    <th>Price</th>
+    <th>By</th>
     <th></th>
     <th></th>
     <th></th>
@@ -14,18 +13,39 @@
 
 <% @expenses.each do |expense| %>
   <tr>
-    <td><%= expense.price %></td>
     <td><%= expense.item %></td>
     <td><%= expense.description %></td>
-    <td><%= expense.resolved %></td>
-    <td><%= expense.user.full_name %></td>
-    <td><%= link_to 'Show', expense %></td>
+    <td>$<%= expense.price %></td>
+    <td><%= expense.user.firstName %></td>
+    <td><%= link_to 'Details', expense %></td>
     <td><%= link_to 'Edit', edit_expense_path(expense) %></td>
-    <td><%= link_to 'Destroy', expense, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= link_to 'Delete', expense, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<h1>Resolved</h1>
+
+<table class="std_fmt">
+  <tr>
+    <th>Item</th>
+    <th>Description</th>
+    <th>Price</th>
+    <th>Created By</th>
+  </tr>
+
+<% @expenses_done.each do |expense| %>
+  <tr>
+    <td><%= expense.item %></td>
+    <td><%= expense.description %></td>
+    <td>$<%= expense.price %></td>
+    <td><%= expense.user.full_name %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
-
-<%= link_to 'New Expense', new_expense_path %>
+<div class="dash_box" style="float:right;">
+    <br />
+    <a class="big_link" href="/expenses/new">Create New Expense</a></span>
+</div>

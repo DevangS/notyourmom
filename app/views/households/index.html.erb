@@ -1,25 +1,40 @@
-<h1>Listing households</h1>
 
-<table>
+
+
+<% if @households.count > 0 %>
+  <% if current_user.is_head_of_house %>
+    <div class="right">
+    <% @households.each do |household| %>
+      <h1>You are in <i><%= household.name %></i> House</h1>
+            <%= link_to 'Change House Name', edit_household_path(household) %> &nbsp;|&nbsp; 
+            <%= link_to 'Delete', household, confirm: 'Are you sure?', method: :delete %> 
+    <% end %>
+    &nbsp;|&nbsp; <a href="#">Leave</a>
+    </div>
+
+  <%end%>
+  <br />
+<% else %>
+  You are not yet part of a household. Create one? <%= link_to 'New Household', new_household_path %>
+<% end %>
+
+<table class="std_fmt">
   <tr>
     <th>Name</th>
-    <th></th>
-    <th></th>
+    <th>E-mail</th>
     <th></th>
   </tr>
-
-<% @households.each do |household| %>
-  <tr>
-    <td><%= household.name %></td>
-    <td><%= link_to 'Show', household %></td>
-    <% if current_user.is_head_of_house %>
-        <td><%= link_to 'Edit', edit_household_path(household) %></td>
-        <td><%= link_to 'Destroy', household, confirm: 'Are you sure?', method: :delete %></td>
-    <%end%>
-  </tr>
-<% end %>
+  <% @members.each do |member| %>
+    <tr>
+      <td><%=member.firstName %> <%=member.lastName %></td>
+      <td><%=member.email %></td>
+      <td><a href="#">Exile</a></td>
+    </tr>
+  <% end %>
 </table>
 
-<br />
-
-<%= link_to 'New Household', new_household_path %>
+<br /><br />
+<div class="dash_box" style="float:right;">
+    <h3>Send an Invite!</h3>
+    <input type="text" name="email" placeholder="e-mail" size="30" /><a class="big_link" href="#"> GO</a></span>
+</div>

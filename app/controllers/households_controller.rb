@@ -5,10 +5,12 @@ class HouseholdsController < ApplicationController
   # GET /households.json
   def index
     @households = Household.where(:id => current_user.household_id)
+    @members = User.where("household_id = ? AND id <> ?",current_user.household_id,current_user.id)
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @households }
+      format.json { render json: @members }
     end
   end
 
