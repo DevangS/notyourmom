@@ -86,10 +86,10 @@ class HouseholdsController < ApplicationController
   # DELETE /households/1.json
   def destroy
     @household = Household.find(params[:id])
-    @household.destroy
     #terrible way of leaving household, but devise doesn't let me have nice things
     @household.members {|member| member.leave_household.save(:validate=>false)}
     Expense.delete_all(:household_id => @household.id)
+    @household.destroy
 
     respond_to do |format|
       format.html { redirect_to households_url }
