@@ -1,37 +1,43 @@
 <h1>Outstanding Debts</h1>
 
 <% if @debts.count > 0 %>
-    <table class="std_fmt">
-      <tr>
-        <th>Item</th>
-        <th>Description</th>
-        <th>Price</th>
-        <th>Percentage Owed</th>
-        <th>User</th>
-        <th>Paid</th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-
       <% @debts.each do |debt| %>
-          <tr>
-            <td><%= debt.expense.item %></td>
-            <td><%= debt.expense.description %></td>
-            <td>$<%= debt.expense.price %></td>
-            <td><%= debt.percentage_owed %>%</td>
-            <td><%= debt.user.full_name %></td>
-            <td><%= debt.paid %></td>
-            <td><%= link_to 'Details', debt %></td>
-            <td><%= link_to 'Edit', edit_debt_path(debt) %></td>
-            <td><%= link_to 'Destroy', debt, confirm: 'Are you sure?', method: :delete %></td>
-          </tr>
+        <div class="lg_dash_box float_left">
+          <div class="center">You owe <b><%= debt.expense.user.firstName %></b> 
+            $<%= (debt.percentage_owed*debt.expense.price/100).round(2)%> of $<%= debt.expense.price %> 
+            for <b><span title="<%= debt.expense.description %>"><%= debt.expense.item %></span></b>
+          </div>
+        </div>
+        <div class="float_right" style="margin-right:20px;margin-top:25px;">
+            <a href="#">Pay</a>&nbsp;&nbsp;or&nbsp;&nbsp;
+            <span id="text<%=debt.id %>" class="hand" onclick="toggleComment('<%=debt.id %>')">Contest</span>
+        </div>
+        <div id="debt<%=debt.id %>" class="float_right hidden">
+          <div class="float_left"><textarea id="box<%=debt.id %>" onfocus="setFocus('box<%=debt.id %>')" onblur="remFocus('box<%=debt.id %>')" class="expense_cmt_box"></textarea></div>
+          <div class="float_right">&nbsp;&nbsp;&nbsp;&nbsp;<input class="button big_link hand" type="button" value="POST" /></div>
+        </div> 
       <% end %>
-    </table>
 <% else %>
     <br />
     <div style="text-align:center"><span class="big_link">You do not have any outstanding debts.</span></div>
     <br />
 <% end %>
 
+<br />
+<% if @debts_paid.count > 0 %>
+  <div style="overflow:visible;display:inline-block;">
+  <h1>Debts Paid</h1>
+      <% @debts_paid.each do |debt| %>
+        <div class="lg_dash_box float_left">
+          <div class="center">You owe <b><%= debt.expense.user.firstName %></b> 
+            $<%= (debt.percentage_owed*debt.expense.price/100).round(2)%> of $<%= debt.expense.price %> 
+            for <b><span title="<%= debt.expense.description %>"><%= debt.expense.item %></span></b>
+          </div>
+        </div>
+        <div class="float_right" style="margin-right:20px;margin-top:25px;">
+            &nbsp;&nbsp;&nbsp;&nbsp;<%= link_to 'View Details', debt.expense %>
+        </div>
+      <% end %>
+  </div>
+<% end %>
 <br />
