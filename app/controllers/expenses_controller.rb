@@ -109,11 +109,17 @@ class ExpensesController < ApplicationController
     end
   end
 
-  def by_tag
-    if params[:tag].present? 
-      @expense = Expense.tagged_with(params[:tag])
-    else 
-      @expense = Expense.postall
-    end  
+  def search
+    @expenses = []
+    @tag = Tag.find_by_name( params[:search])
+    if ( !@tag.nil? )
+       @expenses = Expense.where(:household_id => current_user.household_id).tagged_with(@tag.name)
+    end
+
+
+    respond_to do |format|
+      format.html
+      format.json { head :no_content }
+    end
   end
 end
