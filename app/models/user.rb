@@ -38,12 +38,16 @@ class User < ActiveRecord::Base
   end
 
   def leave_household
-    self.household_id = 0
+    self.household_id = nil
     return self
   end
 
   def is_head_of_house
-    Household.find(self.household_id).head_id == self.id
+    if self.household_id != nil
+      Household.find(self.household_id).head_id == self.id
+    else
+      false
+    end
   end
 
 end
