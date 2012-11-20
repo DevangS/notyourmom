@@ -11,7 +11,9 @@ Notyourmom::Application.routes.draw do
 
   resources :users
 
-  resources :households
+  resources :households do
+    get 'leave', :on => :member, :action => 'leave'
+  end
 
   get "home/index"
 
