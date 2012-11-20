@@ -1,36 +1,36 @@
-<p id="notice"><%= notice %></p>
+<h1> Expense Lookup </h1>
 
-<p>
-  <b>Price:</b>
-  <%= @expense.price %>
-</p>
 
-<p>
-  <b>Item:</b>
-  <%= @expense.item %>
-</p>
+<table class="std_fmt">
+  <tr>
+    <th>Item</th>
+    <th>Description</th>
+    <th>Price</th>
+    <th>Resolved</th>
+    <th>User</th>
+    <th>Tags</th>
+    <th></th>
+    <th></th>
+  </tr>
 
-<p>
-  <b>Description:</b>
-  <%= @expense.description %>
-</p>
 
-<p>
-  <b>Resolved:</b>
-  <%= @expense.resolved %>
-</p>
+  <tr>
+    <td><%= @expense.item %></td>
+    <td><%= @expense.description %></td>
+    <td>$<%= @expense.price %></td>
+    <td><%= @expense.resolved %></td>
+    <td><%= @expense.user.full_name %> </td>
 
-<p>
-  <b>User:</b>
-  <%= @expense.user.full_name %>
-</p>
-<p>
-  <% @expense.tags.any? %>
-        <% @expense.tags.each do |tag| %>
+    <td>  <% @expense.tags.any? %>
+      <% @expense.tags.each do |tag| %>
           <%= link_to tag.name, tag_path(tag.id) %>
-  <% end %>
-</p>
+      <% end %>
+    </td>
+    <td><%= link_to 'Edit', edit_expense_path(@expense) %></td>
+  </tr>
 
+</table>
 
-<%= link_to 'Edit', edit_expense_path(@expense) %> |
-<%= link_to 'Back', expenses_path %>
+<br />
+<%= link_to 'Back', tags_path %>
+

@@ -1,28 +1,37 @@
-<h1>Listing debts</h1>
+<h1>Outstanding Debts</h1>
 
-<table>
-  <tr>
-    <th>Percentage owed</th>
-    <th>Paid</th>
-    <th>User</th>
-    <th>Expense</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<% if @debts.count > 0 %>
+    <table class="std_fmt">
+      <tr>
+        <th>Item</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Percentage Owed</th>
+        <th>User</th>
+        <th>Paid</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
 
-<% @debts.each do |debt| %>
-  <tr>
-    <td><%= debt.percentage_owed %></td>
-    <td><%= debt.paid %></td>
-    <td><%= debt.user.full_name %></td>
-    <td><%= debt.expense.item %></td>
-    <td><%= link_to 'Show', debt %></td>
-    <td><%= link_to 'Edit', edit_debt_path(debt) %></td>
-    <td><%= link_to 'Destroy', debt, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+      <% @debts.each do |debt| %>
+          <tr>
+            <td><%= debt.expense.item %></td>
+            <td><%= debt.expense.description %></td>
+            <td>$<%= debt.expense.price %></td>
+            <td><%= debt.percentage_owed %>%</td>
+            <td><%= debt.user.full_name %></td>
+            <td><%= debt.paid %></td>
+            <td><%= link_to 'Details', debt %></td>
+            <td><%= link_to 'Edit', edit_debt_path(debt) %></td>
+            <td><%= link_to 'Destroy', debt, confirm: 'Are you sure?', method: :delete %></td>
+          </tr>
+      <% end %>
+    </table>
+<% else %>
+    <br />
+    <div style="text-align:center"><span class="big_link">You do not have any outstanding debts.</span></div>
+    <br />
 <% end %>
-</table>
 
 <br />
-
