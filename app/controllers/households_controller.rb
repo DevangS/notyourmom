@@ -31,6 +31,7 @@ class HouseholdsController < ApplicationController
   # GET /households/new.json
   def new
     @household = Household.new
+    @household.head = current_user
 
     respond_to do |format|
       format.html # new.html.erb
