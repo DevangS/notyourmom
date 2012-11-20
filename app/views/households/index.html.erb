@@ -29,8 +29,8 @@
       <tr>
         <td><%=member.firstName %> <%=member.lastName %></td>
         <td><%=member.email %></td>
-        <% if current_user.is_head_of_house %>
-            <td><a href="#">Exile</a></td>
+        <% if current_user.is_head_of(@households[0]) %>
+            <td><%= link_to 'Exile', exile_household_path(@households[0], member.id), :method => :put %></td>
         <% end %>
       </tr>
     <% end %>

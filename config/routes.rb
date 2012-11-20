@@ -13,6 +13,7 @@ Notyourmom::Application.routes.draw do
 
   resources :households do
     get 'leave', :on => :member, :action => 'leave'
+    put 'exile/:user_id', :on => :member, :action => 'exile', :as => 'exile'
   end
 
   get "home/index"

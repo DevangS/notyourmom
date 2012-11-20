@@ -50,4 +50,12 @@ class User < ActiveRecord::Base
     end
   end
 
+  def is_head_of(household)
+    if self.household_id != nil
+      household.head_id == self.id
+    else
+      false
+    end
+  end
+
 end
