@@ -17,7 +17,22 @@ Notyourmom::Application.configure do
   config.action_mailer.raise_delivery_errors = false
 
   # Define the default url
-  config.action_mailer.default_url_option = { :host => 'localhost:3000' }
+  # config.action_mailer.default_url_option = { :host => 'localhost:3000' }
+
+  # Define the delivery method : SMTP  
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+
+  # ActionMailer settings
+  ActionMailer::Base.smtp_settings = {
+  :address  => "smtp.gmail.com",
+  :port  => 587,
+  :authentication => :plain,
+  :domain => ENV['GMAIL_SMTP_USER'],
+  :user_name => ENV['GMAIL_SMTP_USER'],
+  :password  => ENV['GMAIL_SMTP_PASSWORD']
+  }
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
