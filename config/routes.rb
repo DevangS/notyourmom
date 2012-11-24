@@ -8,10 +8,14 @@ Notyourmom::Application.routes.draw do
   resources :comments
 
   resources :expenses
+  match 'expenses/search'
 
   resources :users
 
-  resources :households
+  resources :households do
+    get 'leave', :on => :member, :action => 'leave'
+    put 'exile/:user_id', :on => :member, :action => 'exile', :as => 'exile'
+  end
 
   get "home/index"
 
@@ -19,7 +23,6 @@ Notyourmom::Application.routes.draw do
   # just remember to delete public/index.html.
   root :to => 'home#index'
   match '/auth/:provider/callback' => 'authentications#create'
-  #get 'tags/:tag', to: 'expenses#index', as: :tag
   #match 'tags/:tag' to 'tags#index'
 
   # The priority is based upon order of creation:

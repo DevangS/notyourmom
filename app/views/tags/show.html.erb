@@ -1,33 +1,37 @@
-<p id="notice"><%= notice %></p>
+<h1>Expenses Tagged with <%=@tag.name%> </h1>
 
-<p>
-  <h4>Expenses with tagged with <%= @tag.name %> </h4>
-	  <table>
-	  <tr>
-	    <th>Price</th>
-	    <th>Item</th>
-	    <th>Description</th>
-	    <th>Resolved</th>
-	    <th>User</th>
-	    <th></th>
-	    <th></th>
-	    <th></th>
-	  </tr>
+<% if @expenses.count > 0 %>
+    <table class="std_fmt">
+      <tr>
+        <th>Item</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Resolved</th>
+        <th>User</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
 
-	<% @expenses.each do |expense| %>
-	  <tr>
-	    <td><%= expense.price %></td>
-	    <td><%= expense.item %></td>
-	    <td><%= expense.description %></td>
-	    <td><%= expense.resolved %></td>
-	    <td><%= expense.user.full_name %></td>
-	    <td><%= link_to 'Show', expense %></td>
-	    <td><%= link_to 'Edit', edit_expense_path(expense) %></td>
-	    <td><%= link_to 'Destroy', expense, confirm: 'Are you sure?', method: :delete %></td>
-	  </tr>
-	<% end %>
-	</table>
-</p>
+      <% @expenses.each do |expense| %>
+          <tr>
+            <td><%= expense.item %></td>
+            <td><%= expense.description %></td>
+            <td>$<%= expense.price %></td>
+            <td><%= expense.resolved %></td>
+            <td><%= expense.user.full_name %> </td>
+            <td><%= link_to 'Details', expense %></td>
+            <td><%= link_to 'Edit', edit_expense_path(expense) %></td>
+            <td><%= link_to 'Destroy', expense, confirm: 'Are you sure?', method: :delete %></td>
+          </tr>
+      <% end %>
+    </table>
+<% else %>
+    <br />
+    <div style="text-align:center"><span class="big_link">There are no expenses with this tag.</span></div>
+    <br />
+<% end %>
 
-
+<br />
 <%= link_to 'Back', tags_path %>
+
