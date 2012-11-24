@@ -8,8 +8,8 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_protected
   validates_presence_of :firstName, :lastName, :email, :password
-  #validates_presence_of :invitation_id, :message => 'is required'
-  validates_uniqueness_of :invitation_id
+  # validates_presence_of :invitation_id, :message => 'is required'
+  # validates_uniqueness_of :invitation_id
   belongs_to :household
   has_many :expenses
   has_many :debts
