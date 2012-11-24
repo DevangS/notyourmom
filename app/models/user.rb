@@ -58,4 +58,45 @@ class User < ActiveRecord::Base
     end
   end
 
+  def asdfh(user)
+    my_expenses = Expense.where(:user_id => self.id, :resolved => false).select(:id)
+    debts_for_me = Debt.where(:paid => false, :user_id => user.id, :expense_id => my_expenses)
+    #debts_for_me = Debt.where{paid == false and user_id == user.id and expense_id.like_any (my_expenses)}
+    if debts_for_me then
+      owed_to_me = debts_for_me.map { |debt| debt.get_share }.reduce(:+)
+    else
+      owed_to_me = 0
+    end
+
+    their_expenses = Expense.where(:user_id => user.id, :resolved => false)
+    debts_by_me = their_expenses.map {|expense| expense.debts }.find{|debt| debt.first.user_id == self.id}
+    if debts_by_me then
+      owed_by_me = debts_by_me.map { |debt| debt.get_share }.reduce(:+)
+    else
+      owed_by_me = 0
+    end
+    owed_to_me - owed_by_me
+  end
+
+  def consolidated_debt_with(user)
+    owed_by_me = first_owes_second(self, user)
+    owed_to_me = first_owes_second(user, self)
+
+    owed_to_me - owed_by_me
+  end
+
+  def first_owes_second(borrower,lender)
+    expenses = Expense.where(:user_id => lender.id, :resolved => false).select(:id)
+    debts = Debt.where(:paid => false, :user_id => borrower.id, :expense_id => expenses)
+    if debts.count > 0
+      #calculate owed
+      debts.map { |debt| debt.get_share }.reduce(:+)
+    else
+      #default to 0
+      0
+    end
+  end
+
+
+
 end
