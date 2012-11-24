@@ -33,5 +33,21 @@
     <div style="text-align:center"><span class="big_link">You do not have any outstanding debts.</span></div>
     <br />
 <% end %>
+<h1>Consolidated Debts</h1>
+<% if @consolidated_debts.count > 0 %>
+    <table>
+      <tr>
+        <th>Person</th>
+        <th>Owed to me</th>
+      </tr>
+        <% @consolidated_debts.each do |debt| %>
+
+            <tr>
+              <td><%= debt[:member].full_name %></td>
+              <td><%= debt[:value] %></td>
+            </tr>
+        <% end %>
+    </table>
+<% end %>
 
 <br />

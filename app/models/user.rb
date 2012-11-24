@@ -64,4 +64,25 @@ class User < ActiveRecord::Base
     end
   end
 
+  def consolidated_debt_with(user)
+    owed_by_me = first_owes_second(self, user)
+    owed_to_me = first_owes_second(user, self)
+
+    owed_to_me - owed_by_me
+  end
+
+  def first_owes_second(borrower,lender)
+    expenses = Expense.where(:user_id => lender.id, :resolved => false).select(:id)
+    debts = Debt.where(:paid => false, :user_id => borrower.id, :expense_id => expenses)
+    if debts.count > 0
+      #calculate owed
+      debts.map { |debt| debt.get_share }.reduce(:+)
+    else
+      #default to 0
+      0
+    end
+  end
+
+
+
 end
