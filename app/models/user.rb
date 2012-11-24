@@ -8,10 +8,16 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_protected
   validates_presence_of :firstName, :lastName, :email, :password
+  #validates_presence_of :invitation_id, :message => 'is required'
+  validates_uniqueness_of :invitation_id
   belongs_to :household
   has_many :expenses
   has_many :debts
   has_many :authentications, :dependent => :delete_all
+  # Inviter
+  has_many :sent_invitations, :class_name => 'Invitation', :foreign_key => 'sender_id'
+  # Invitee
+  belongs_to :invitation
 
   def apply_omniauth(auth)
     # In previous omniauth, 'user_info' was used in place of 'raw_info'
