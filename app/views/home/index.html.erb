@@ -18,7 +18,8 @@
 	<div class="wrap_box">
 		<% if @household_created %>	
 		<div class="dash_box" style="float:left;">
-				<h3>You have <%=@debts.count%> Debts Outstanding!</h3>
+
+				<h3>You have  <%= pluralize(@debts.count, "debt") %> Outstanding!</h3>
 				<% if @debts.count == 0 %>
 					<div> 
 						<div style="float:left;padding-left:45px;"><span class="big_text">You're GOOD </span></div>
@@ -30,7 +31,8 @@
 					<li>
 					  	You owe <b><%= debt.expense.user.firstName %> <%=debt.expense.user.lastName%></b> 
 					  	<%= (debt.percentage_owed*debt.expense.price/100).round(2) %> for 
-					  	<b><%= link_to debt.expense.item,debt%></b>
+					  	<b><%= link_to debt.expense.item,debt%></b> (<%=debt.get_share %>)
+
 					</li>
 					<% end %>
 					</ul>
@@ -46,14 +48,18 @@
 			<% else %> 
 				<p>
 					<ul>
-					<% @house.each do |member| %>
-						<li>
-						<% if member.id == @current_user.id %><b><%=member.firstName %> <%=member.lastName %>
-							<% if member.id == @head_id.first.head_id %>(BOSS)<% end %></b>
-						<% else %><%=member.firstName %> <%=member.lastName %> <% if member.id == @head_id.first.head_id %>(BOSS)<% end %>
-						<% end %>
-						</li>
-					<% end %>
+
+                          <li>
+                            <%= @house_head.full_name %> <b>(BOSS)</b>
+                          </li>
+
+
+                      <% @house_member.each do |member| %>
+                          <li>
+                            <%= member.full_name %>
+                          </li>
+                      <% end %>
+
 					</ul>
 				</p>
 			<% end %>

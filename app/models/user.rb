@@ -8,10 +8,16 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_protected
   validates_presence_of :firstName, :lastName, :email, :password
+  # validates_presence_of :invitation_id, :message => 'is required'
+  # validates_uniqueness_of :invitation_id
   belongs_to :household
   has_many :expenses
   has_many :debts
   has_many :authentications, :dependent => :delete_all
+  # Inviter
+  has_many :sent_invitations, :class_name => 'Invitation', :foreign_key => 'sender_id'
+  # Invitee
+  belongs_to :invitation
 
   def apply_omniauth(auth)
     # In previous omniauth, 'user_info' was used in place of 'raw_info'
@@ -57,5 +63,26 @@ class User < ActiveRecord::Base
       false
     end
   end
+
+  def consolidated_debt_with(user)
+    owed_by_me = first_owes_second(self, user)
+    owed_to_me = first_owes_second(user, self)
+
+    owed_to_me - owed_by_me
+  end
+
+  def first_owes_second(borrower,lender)
+    expenses = Expense.where(:user_id => lender.id, :resolved => false).select(:id)
+    debts = Debt.where(:paid => false, :user_id => borrower.id, :expense_id => expenses)
+    if debts.count > 0
+      #calculate owed
+      debts.map { |debt| debt.get_share }.reduce(:+)
+    else
+      #default to 0
+      0
+    end
+  end
+
+
 
 end

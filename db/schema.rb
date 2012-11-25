@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121119005853) do
+ActiveRecord::Schema.define(:version => 20121124050441) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -60,6 +60,24 @@ ActiveRecord::Schema.define(:version => 20121119005853) do
     t.integer  "head_id"
   end
 
+  create_table "invitations", :force => true do |t|
+    t.integer  "sender_id"
+    t.string   "recipient_email"
+    t.string   "token"
+    t.datetime "sent_at"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  create_table "reminders", :force => true do |t|
+    t.integer  "expense_id"
+    t.datetime "date"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "reminders", ["expense_id"], :name => "index_reminders_on_expense_id"
+
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"
@@ -95,6 +113,8 @@ ActiveRecord::Schema.define(:version => 20121119005853) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.integer  "invitation_id"
+    t.integer  "invitation_limit"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
