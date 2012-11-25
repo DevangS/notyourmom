@@ -4,8 +4,8 @@ class DebtsController < ApplicationController
   # GET /debts
   # GET /debts.json
   def index
-    @debts = Debt.all
-    @debts = Debt.where(:user_id => current_user.id)
+    @debts = Debt.where(:user_id => current_user.id, :paid => false)
+    @debts_paid = Debt.where(:user_id => current_user.id, :paid => true)
 
 
     respond_to do |format|

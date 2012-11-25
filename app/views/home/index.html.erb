@@ -28,12 +28,9 @@
 					<ul>
 					<% @debts.each do |debt| %>
 					<li>
-						<% total = @expenses.find{|e|e.id==debt.expense_id}.price %>
-						<% expense_created_by = @expenses.find{|d| d.id==debt.expense_id}.user_id %>
-						<% created_user = @users.find{|u| u.id==expense_created_by }%>
-					  	You owe <b><%= created_user.firstName %> <%= created_user.lastName %></b> 
-					  	<%= debt.percentage_owed*total/100 %> for 
-					  	<b><a href="/expenses/<%=debt.expense_id%>"><%= @expenses.find{|d| d.id==debt.expense_id}.item %></a></b>
+					  	You owe <b><%= debt.expense.user.firstName %> <%=debt.expense.user.lastName%></b> 
+					  	<%= (debt.percentage_owed*debt.expense.price/100).round(2) %> for 
+					  	<b><%= link_to debt.expense.item,debt%></b>
 					</li>
 					<% end %>
 					</ul>

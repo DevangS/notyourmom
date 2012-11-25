@@ -8,7 +8,7 @@ class HomeController < ApplicationController
 		@head_id = Household.select("head_id").where("id = ?", current_user.household_id)
 		@house = User.where("household_id = ?", current_user.household_id)
 		@expenses = Expense.where("household_id = ? AND resolved = FALSE",current_user.household_id)
-		@debts = Debt.joins(:expense).where("debts.user_id = ?",current_user.id)
+		@debts = Debt.where(:user_id => current_user.id, :paid => false)
 		@users = User.all
 
 	    respond_to do |format|

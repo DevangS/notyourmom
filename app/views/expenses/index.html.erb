@@ -4,23 +4,19 @@
     <table class="std_fmt">
       <tr>
         <th>Item</th>
-        <th>Description</th>
         <th>Price</th>
         <th>By</th>
-        <th></th>
         <th></th>
         <th></th>
       </tr>
 
     <% @expenses.each do |expense| %>
       <tr>
-        <td><%= expense.item %></td>
-        <td><%= expense.description %></td>
+        <td><span title="<%= expense.description %>"><%= link_to expense.item, expense %></span></td>
         <td>$<%= expense.price %></td>
-        <td><%= expense.user.firstName %></td>
-        <td><%= link_to 'Details', expense %></td>
-        <td><%= link_to 'Edit', edit_expense_path(expense) %></td>
-        <td><%= link_to 'Delete', expense, confirm: 'Are you sure?', method: :delete %></td>
+        <td><% if expense.user_id == current_user.id %>You<%else%><%= expense.user.firstName %><%end%></td>
+        <td><% if expense.user_id == current_user.id %><%= link_to 'Edit', edit_expense_path(expense) %> <% end %></td>
+        <td><% if expense.user_id == current_user.id %><%= link_to 'Delete', expense, confirm: 'Are you sure?', method: :delete %> <% end %></td>
       </tr>
     <% end %>
     </table>
@@ -35,15 +31,13 @@
     <table class="std_fmt">
       <tr>
         <th>Item</th>
-        <th>Description</th>
         <th>Price</th>
         <th>Created By</th>
       </tr>
 
     <% @expenses_done.each do |expense| %>
       <tr>
-        <td><%= expense.item %></td>
-        <td><%= expense.description %></td>
+        <td title="<%= expense.description %>"><%= expense.item %></td>
         <td>$<%= expense.price %></td>
         <td><%= expense.user.full_name %></td>
       </tr>

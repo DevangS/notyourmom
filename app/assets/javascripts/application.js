@@ -13,3 +13,20 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+
+
+function toggleComment(target) {
+	$('#debt'+target).toggle();
+	if ($('#debt'+target).is(":visible"))
+		$('#text'+target).text('Hide');
+	else
+		$('#text'+target).text('Contest');
+}
+
+function setFocus(target) {
+	$('#'+target).addClass('expense_cmt_box_hover');
+}
+
+function remFocus(target) {
+	$('#'+target).removeClass('expense_cmt_box_hover');
+}
