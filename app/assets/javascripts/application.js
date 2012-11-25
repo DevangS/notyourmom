@@ -23,6 +23,10 @@ function toggleComment(target) {
 		$('#text'+target).text('Contest');
 }
 
+function togglePaid() {
+	$('#debtsPaid').toggle();
+}
+
 function setFocus(target) {
 	$('#'+target).addClass('expense_cmt_box_hover');
 }

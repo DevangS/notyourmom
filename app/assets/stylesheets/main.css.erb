@@ -110,14 +110,14 @@ a:hover {
 }
 
 .lg_dash_box {
-	-moz-border-radius: 25px;
-	border-radius: 15px;
-	border: 1px solid gray;
-	margin:5px;
-	padding: 17px 5px 3px 5px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	border: 1px solid #c0c0c0;
+	margin:3px;
+	padding: 8px 5px 3px 5px;
 	width: 500px;
 	text-align: center;
-	min-height: 35px;
+	min-height: 20px;
 }
 
 .dash_box {
@@ -157,6 +157,18 @@ a:hover {
 	color:green;
 }
 
+.debt_box {
+	background-color: #fafafa;
+	border-bottom: 1px solid #D1D1D1;
+	border-left: 1px solid #D1D1D1;
+	border-right: 1px solid #D1D1D1;
+	width: 600px;
+	margin:0px;
+}
+.debt_box td {
+	padding: 5px 10px;
+}
+
 input.login {
 	-moz-border-radius: 8px;
   	-webkit-border-radius: 8px;
@@ -184,14 +196,13 @@ h2 {
 	border-bottom: 1px solid #D1D1D1;
 }
 
-h3 {
+h3, h3 a:link,h3 a:active,h3 a:visited,h3 a:hover {
 	margin:0 5px 10px 0;
 	text-align: right;
 	color: #2177b0;
 	font-size: 10pt;
 	text-transform: uppercase;
 	letter-spacing: 0.5px;
-	border-bottom: 1px solid #DADADA;
 }
 
 h4 {
@@ -213,9 +224,18 @@ table {
 
 .std_fmt {
 	width: 660px;
+	border: 1px solid #d0d0d0;
 }
-.std_fmt td, .std_fmt th {
-	//border: 1px solid gray;
+
+.std_fmt th {
+	padding: 7px;
+	background-color: #52abe8;
+	border-bottom: 1px solid #d0d0d0;
+	color: #fff;
+	font-weight: normal;
+}
+
+.std_fmt th,.std_fmt td {
 	padding: 7px;
 	border-bottom: 1px solid #d0d0d0;
 }
@@ -269,4 +289,9 @@ table {
 
 .hand {
 	cursor: pointer;
+}
+
+.block {
+	overflow:visible;
+	display:inline-block;
 }

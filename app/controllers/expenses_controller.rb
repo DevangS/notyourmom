@@ -19,10 +19,12 @@ class ExpensesController < ApplicationController
   # GET /expenses/1.json
   def show
     @expense = Expense.find(params[:id])
+    @debts = Debt.where(:expense_id => params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @expense }
+      format.json { render json: @debts }
     end
   end
 

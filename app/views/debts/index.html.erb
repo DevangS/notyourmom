@@ -8,7 +8,7 @@
             for <b><span title="<%= debt.expense.description %>"><%= debt.expense.item %></span></b>
           </div>
         </div>
-        <div class="float_right" style="margin-right:20px;margin-top:25px;">
+        <div class="float_right" style="margin-right:20px;margin-top:10px;">
             <a href="#">Pay</a>&nbsp;&nbsp;or&nbsp;&nbsp;
             <span id="text<%=debt.id %>" class="hand" onclick="toggleComment('<%=debt.id %>')">Contest</span>
         </div>
@@ -23,10 +23,13 @@
     <br />
 <% end %>
 
-<br />
+<br /><br />
+<br /><br />
+<br /><br />
 <% if @debts_paid.count > 0 %>
-  <div style="overflow:visible;display:inline-block;">
-  <h1>Debts Paid</h1>
+  <div class="block float_right">
+  <div onclick="togglePaid()"><h1>Debts Paid<h3>(Click to view)</h3></h1></div>
+      <div id="debtsPaid" class="hidden">
       <% @debts_paid.each do |debt| %>
         <div class="lg_dash_box float_left">
           <div class="center">You owe <b><%= debt.expense.user.firstName %></b> 
@@ -34,10 +37,11 @@
             for <b><span title="<%= debt.expense.description %>"><%= debt.expense.item %></span></b>
           </div>
         </div>
-        <div class="float_right" style="margin-right:20px;margin-top:25px;">
+        <div class="float_right" style="margin-right:20px;margin-top:10px;">
             &nbsp;&nbsp;&nbsp;&nbsp;<%= link_to 'View Details', debt.expense %>
         </div>
       <% end %>
+    </div>
   </div>
 <% end %>
 <br />

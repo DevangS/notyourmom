@@ -1,36 +1,39 @@
-<h1> Expense Lookup </h1>
-
+<h1> Expense Lookup : <%=@expense.item%></h1>
+<h3>Tags: <% @expense.tags.any? %>
+      <% @expense.tags.each do |tag| %>
+          <%= link_to tag.name, tag_path(tag.id) %>
+<% end %></h3>
 
 <table class="std_fmt">
   <tr>
-    <th>Item</th>
     <th>Description</th>
     <th>Price</th>
     <th>Resolved</th>
     <th>User</th>
-    <th>Tags</th>
     <th></th>
     <th></th>
   </tr>
-
-
   <tr>
-    <td><%= @expense.item %></td>
     <td><%= @expense.description %></td>
     <td>$<%= @expense.price %></td>
-    <td><%= @expense.resolved %></td>
+    <td><% if @expense.resolved %>Yes<%else%>No<%end%></td>
     <td><%= @expense.user.full_name %> </td>
-
-    <td>  <% @expense.tags.any? %>
-      <% @expense.tags.each do |tag| %>
-          <%= link_to tag.name, tag_path(tag.id) %>
-      <% end %>
-    </td>
-    <td><%= link_to 'Edit', edit_expense_path(@expense) %></td>
+    <td><% if @expense.user.id == current_user.id %><%= link_to 'Edit', edit_expense_path(@expense) %><%end%></td>
   </tr>
-
 </table>
-
-<br />
-<%= link_to 'Back', expenses_path %>
-
+  <div class="float_right block"> 
+  <table class="debt_box">
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+<% @debts.each do |debt| %>
+    <tr>
+      <td><%=debt.user.firstName%> <%=debt.user.lastName%> </td>
+      <td><b>$<%=(debt.percentage_owed*debt.expense.price/100).round(2)%></b></td>
+      <td><% if(debt.paid)%>Unpaid <% else%> Paid <%end %></td>
+    </tr>
+<% end %>
+  </table>
+  </div>
