@@ -107,8 +107,10 @@ class ExpensesController < ApplicationController
       d.destroy
     end
 
-    #TODO destory tags
-    #TODO destory comments
+    comments = Comment.where(:expense_id => @expense.id)
+    comments.each do |c|
+      c.destroy
+    end
 
     @expense.destroy
 
