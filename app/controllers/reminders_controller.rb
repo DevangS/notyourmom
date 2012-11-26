@@ -4,7 +4,6 @@ class RemindersController < ApplicationController
   # GET /reminders
   # GET /reminders.json
   def index
-    end
   end
 
   # GET /reminders/1
