@@ -129,7 +129,7 @@ class ExpensesController < ApplicationController
     end
 
     @expenses += Expense.where('item LIKE ? AND household_id = ?', "%"+params[:search]+"%", current_user.household_id)
-
+    @expenses.uniq!
 
     respond_to do |format|
       format.html
