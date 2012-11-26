@@ -15,7 +15,6 @@ class AuthenticationsController < ActionController::Base
     elsif current_user
       current_user.authentications.create!(:provider => omniauth['provider'],
         :uid => omniauth['uid'])
-      render :text => "You were already logged in but added facebook authen"
       sign_in_and_redirect(:user, authentication.user)
     else
       # Authentication not found, thus a new user.
