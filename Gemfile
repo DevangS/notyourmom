@@ -26,6 +26,7 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'oauth2'
 gem 'squeel'
+gem 'fb_graph', '~> 2.5.8'
 
 group :development, :test do
   gem 'rspec-rails'
