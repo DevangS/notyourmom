@@ -8,6 +8,24 @@ class ExpensesController < ApplicationController
     @expenses = Expense.where(:resolved => false, :household_id => current_user.household_id)
     @expenses_done = Expense.where(:resolved => true, :household_id => current_user.household_id)
 
+    if !params[:filter].nil?
+      case params[:filter]
+      when "7"
+        @date = Date.today - 7
+      when "30"
+        @date = Date.today.at_beginning_of_month
+      when "180"
+        @date = Date.today.at_beginning_of_month << 6
+      when "365"
+        @date = Date.today.at_beginning_of_month << 12
+      end
+
+      if !@date.nil?
+        @expenses = @expenses.where('created_at >= ?', @date)
+        @expenses_done = @expenses_done.where('created_at >= ?', @date)
+      end
+    end
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @expenses }
