@@ -5,7 +5,6 @@ task :send_reminder => :environment do
 		expense = r.expense
 		expense.debts.each do |d|
 			mail = Mailer.reminder(d.user, d.get_share, expense)
-			puts mail.to.to_s
 			mail.deliver
 		end
 	end

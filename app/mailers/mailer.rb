@@ -29,7 +29,7 @@ class Mailer < ActionMailer::Base
     @debtor = debtor
     @debt = debt
     @expense = expense
-    mail(:to => "cgtheresa@gmail.com",
+    mail(:to => debtor.email,
     :from => "debt-reminder@notyourmom.com",
     :subject => "You have an upcoming debt to pay!")
   end

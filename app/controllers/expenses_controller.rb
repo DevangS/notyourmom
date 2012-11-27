@@ -57,7 +57,9 @@ class ExpensesController < ApplicationController
   # GET /expenses/1/edit
   def edit
     @expense = Expense.find(params[:id])
+    @no_reminder = false
     if @expense.reminder.blank?
+      @no_reminder = true
       @expense.build_reminder
     end
   end
