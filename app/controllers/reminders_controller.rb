@@ -1,3 +1,4 @@
+require 'date'
 class RemindersController < ApplicationController
   before_filter :authenticate_user!
 
@@ -30,6 +31,7 @@ class RemindersController < ApplicationController
   # POST /reminders
   # POST /reminders.json
   def create
+    #params[:reminder][:date] = DateTime.parse(params[:reminder][:date])
     @reminder = Reminder.new(params[:reminder])
 
     respond_to do |format|

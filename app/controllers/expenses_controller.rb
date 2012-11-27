@@ -38,10 +38,7 @@ class ExpensesController < ApplicationController
     #right now it generates one for each member
     @split = 100.0 / @users.count
 
-    @expense.reminder = Reminder.new
-    @reminder = @expense.reminder
-    @reminder.expense = @expense
-    @reminder.expense_id = @expense.id
+    @expense.build_reminder(:expense => @expense, :expense_id => @expense.id)
 
     @users.each do |u|
         d = @expense.debts.build(:expense => @expense, :user => u)
@@ -60,6 +57,9 @@ class ExpensesController < ApplicationController
   # GET /expenses/1/edit
   def edit
     @expense = Expense.find(params[:id])
+    if @expense.reminder.blank?
+      @expense.build_reminder
+    end
   end
 
   # POST /expenses
