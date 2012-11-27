@@ -36,7 +36,7 @@ class ExpensesController < ApplicationController
 
     #need to do it so the debt fields appear for everyone in the household
     #right now it generates one for each member
-    split = @users.count
+    @split = 100.0 / @users.count
 
     @expense.reminder = Reminder.new
     @reminder = @expense.reminder
@@ -47,7 +47,7 @@ class ExpensesController < ApplicationController
         d = @expense.debts.build(:expense => @expense, :user => u)
         d.user_id = u.id
         d.expense_id = @expense.id
-        d.percentage_owed = 100.0  / split
+        d.percentage_owed = @split
     end
 
 
