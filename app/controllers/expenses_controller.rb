@@ -45,6 +45,7 @@ class ExpensesController < ApplicationController
         d.user_id = u.id
         d.expense_id = @expense.id
         d.percentage_owed = @split
+        d.paid = false
     end
 
 
@@ -121,6 +122,7 @@ class ExpensesController < ApplicationController
   end
 
   def search
+    @searchterm = params[:search]
     @expenses = []
     #@tag = Tag.find_by_name(params[:search])
     @tag = Tag.where('LOWER(name) LIKE ?', "%"+params[:search].downcase+"%" )

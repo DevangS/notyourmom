@@ -32,7 +32,7 @@
     <tr>
       <td><%=debt.user.firstName%> <%=debt.user.lastName%> </td>
       <td><b>$<%=(debt.percentage_owed*debt.expense.price/100).round(2)%></b></td>
-      <td><% if(debt.paid)%>Unpaid <% else%> Paid <%end %></td>
+      <td><% if(!debt.paid)%>Unpaid <% else%> Paid <%end %></td>
     </tr>
 <% end %>
   </table>
