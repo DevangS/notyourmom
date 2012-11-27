@@ -32,11 +32,11 @@ class ExpensesController < ApplicationController
   # GET /expenses/new.json
   def new
     @expense = Expense.new
-    @users = User.where(:household_id => current_user.household_id)
+    @users = User.where("household_id = ? AND id != ?", current_user.household_id, current_user.id)
 
     #need to do it so the debt fields appear for everyone in the household
     #right now it generates one for each member
-    @split = 100.0 / @users.count
+    @split = 100.0 / (@users.count+1)
 
     @expense.build_reminder(:expense => @expense, :expense_id => @expense.id)
 
