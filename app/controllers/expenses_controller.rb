@@ -107,8 +107,10 @@ class ExpensesController < ApplicationController
       d.destroy
     end
 
-    #TODO destory tags
-    #TODO destory comments
+    comments = Comment.where(:expense_id => @expense.id)
+    comments.each do |c|
+      c.destroy
+    end
 
     @expense.destroy
 
@@ -120,11 +122,16 @@ class ExpensesController < ApplicationController
 
   def search
     @expenses = []
-    @tag = Tag.find_by_name( params[:search])
+    #@tag = Tag.find_by_name(params[:search])
+    @tag = Tag.where('LOWER(name) LIKE ?', "%"+params[:search].downcase+"%" )
     if ( !@tag.nil? )
-       @expenses = Expense.where(:household_id => current_user.household_id).tagged_with(@tag.name)
+      @tag.each do |t|
+        @expenses += Expense.where(:household_id => current_user.household_id).tagged_with(t.name)
+      end
     end
 
+    @expenses += Expense.where('LOWER(item) LIKE ? AND household_id = ?', "%"+params[:search].downcase+"%", current_user.household_id)
+    @expenses.uniq!
 
     respond_to do |format|
       format.html
