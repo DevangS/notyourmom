@@ -48,3 +48,14 @@
 
 <%= link_to "Back to Expenses", expenses_path %>
   </div>
+
+<% if @expense.comments.any? %>
+  <ul id="comments">
+    <% @expense.comments.each do |c| %>
+      <li><%= c.comment %></li>
+    <% end %>
+  </ul>
+<% end %>
+<form id="comment-form">
+  <input type="text" placeholder="talk some shit here" />
+</form>
