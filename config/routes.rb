@@ -10,7 +10,7 @@ Notyourmom::Application.routes.draw do
   resources :comments
 
   resources :expenses
-  match 'expenses/search'
+  match 'expenses/search' 
 
   resources :users
 
@@ -18,6 +18,11 @@ Notyourmom::Application.routes.draw do
     get 'leave', :on => :member, :action => 'leave'
     put 'exile/:user_id', :on => :member, :action => 'exile', :as => 'exile'
   end
+
+  match '/reminders/send_now' => 'reminders#send_now'
+  match '/reminders/send_later' => 'reminders#send_later'
+  match '/reminder/delete_button' => 'reminders#delete_button'
+  resources :reminders
 
   get "home/index"
 
