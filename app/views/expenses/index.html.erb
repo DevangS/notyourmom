@@ -1,21 +1,23 @@
-<div id="search">
-    <%= render :partial => 'expenses/searchbar' %>
-</div>
-<div id="filter">
+<div class="nice_box float_left">
+    <a class="big_link" href="/expenses/new">Create New Expense</a>
+  </div>
+
+<div id="search" class="float_right">
+  <%= render :partial => 'expenses/searchbar' %>
   <%= form_tag '', :method=>:get do %>
     <%= select_tag(:filter, 
         options_for_select([['All',0], ['Past 7 days',7], ['This Month',30], ['Last 6 months', 180,], ['This Year',365]])) %>
     <%= submit_tag "Filter" %> 
   <% end %>
 </div>
-
 <div>
   <% if !@date.nil? %>
   Showing expenses since <%= @date %>
   <% end %>
 </div>
-
-
+<br><br>
+<br><br>
+<br>
 
 <h1>Outstanding Household expenses</h1>
 
@@ -63,9 +65,4 @@
     <% end %>
     </table>
 <% end %>
-
 <br />
-<div class="dash_box" style="float:right;">
-    <br />
-    <a class="big_link" href="/expenses/new">Create New Expense</a></span>
-</div>
