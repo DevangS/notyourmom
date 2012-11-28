@@ -9,11 +9,11 @@ class HomeController < ApplicationController
 		@house = User.where("household_id = ?", current_user.household_id)
 		@expenses = Expense.where("household_id = ? AND resolved = FALSE",current_user.household_id)
 		@debts = Debt.where(:user_id => current_user.id, :paid => false)
-
 		@users = User.all
-    #@house_member = User.where(:household_id => current_user.household_id).where(['users.id <> ?', current_user.household.head_id])
+
+    @house_member = User.where(:household_id => current_user.household_id).where(['users.id <> ?', current_user.household.head_id])
     #@house_head = User.find(:id => current_user.household.head_id)
-    #@house_head = current_user.household.head
+    @house_head = current_user.household.head
 
 	    respond_to do |format|
 	    	format.html # index.html.erb

@@ -53,7 +53,7 @@ a:hover {
 #links a:link, #links a:visited, #links a:active {
 	text-decoration: none;
 	text-transform: uppercase;
-	padding: 0 0 0 40px;
+	padding: 0 0 0 30px;
 	letter-spacing: 0.5px;
 	color: #FFF;
 	background: none;
@@ -80,6 +80,8 @@ a:hover {
 #container {
 	width: 850px;
 	text-align: left;
+	display: inline-block;
+	overflow: auto;
 }
 
 #left_content {
@@ -94,6 +96,15 @@ a:hover {
 #right_content {
 	float:right;
 	width:660px;
+}
+
+#footer {
+	//position: absolute;
+	//bottom:0;
+	margin-top: 50px;
+	background: url(<%= asset_path 'top-bg-x.png'%>) repeat;
+	height: 90px;
+	width: 100%;
 }
 
 .item {
@@ -148,6 +159,17 @@ a:hover {
 	color: gray;
 }
 .big_link:hover {
+	color: #2177b0;
+	text-decoration: none;
+}
+
+.big_button {
+	font-size:16pt;
+	color: gray;
+	background: none;
+	border:none;
+}
+.big_button:hover {
 	color: #2177b0;
 	text-decoration: none;
 }
@@ -233,6 +255,7 @@ table {
 	border-bottom: 1px solid #d0d0d0;
 	color: #fff;
 	font-weight: normal;
+	font-size: 9pt;
 }
 
 .std_fmt th,.std_fmt td {
@@ -294,4 +317,18 @@ table {
 .block {
 	overflow:visible;
 	display:inline-block;
+}
+
+.red {
+	font-weight: bold;
+	color:red;
+}
+.green {
+	font-weight: bold;
+	color:green;
+}
+
+textarea {
+	font-family: Arial;
+	font-size: 10pt;
 }

@@ -4,11 +4,13 @@ class CommentsController < ApplicationController
   # GET /comments
   # GET /comments.json
   def index
-    @comments = Comment.where(:user_id => current_user.id)
+    @expenses = Expense.where(:household_id => current_user.household_id)
+    @comments = Comment.all
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @comments }
+      format.json { render json: @expenses }
     end
   end
 

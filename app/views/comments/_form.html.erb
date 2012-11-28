@@ -1,28 +1,36 @@
-<%= form_for(@comment) do |f| %>
-  <% if @comment.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+<center>
+<p align="left">Have a problem with an expense? Or do you just want to make a comment? Post it here!<br /><br /> 
+</p>
+<div style="text-align:left;width:60%;">
 
-      <ul>
-      <% @comment.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+    <%= form_for(@comment) do |f| %>
+    <% if @comment.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+
+        <ul>
+        <% @comment.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :comment %><br />
+      <%= f.text_area :comment, :rows =>6 %>
+    </div>
+    <div class="field">
+      <%= f.label :expense %><br />
+      <%= f.select :expense_id, @expenses.to_a.collect{|a| [a.item, a.id]} %>
+    </div>
+    <div class="field">
+      <%= f.hidden_field :user_id, :value => @user.id %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :comment %><br />
-    <%= f.text_area :comment %>
-  </div>
-  <div class="field">
-    <%= f.label :expense %><br />
-    <%= f.select :expense_id, @expenses.to_a.collect{|a| [a.item, a.id]} %>
-  </div>
-  <div class="field">
-    <%= f.hidden_field :user_id, :value => @user.id %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</div>
+</center>

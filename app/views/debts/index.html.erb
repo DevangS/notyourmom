@@ -1,3 +1,4 @@
+View <%= link_to "Consolidated Debts", households_path %> 
 <h1>Outstanding Debts</h1>
 
 <% if @debts.count > 0 %>
@@ -12,8 +13,9 @@
             <a href="#">Pay</a>&nbsp;&nbsp;or&nbsp;&nbsp;
             <span id="text<%=debt.id %>" class="hand" onclick="toggleComment('<%=debt.id %>')">Contest</span>
         </div>
-        <div id="debt<%=debt.id %>" class="float_right hidden">
-          <div class="float_left"><textarea id="box<%=debt.id %>" onfocus="setFocus('box<%=debt.id %>')" onblur="remFocus('box<%=debt.id %>')" class="expense_cmt_box"></textarea></div>
+        <div id="debt<%=debt.id %>" class="float_right hidden" style="width:650px;">
+          <br />
+          <div class="float_left" style="margin:0 0 30px 130px;"><textarea id="box<%=debt.id %>" onfocus="setFocus('box<%=debt.id %>')" onblur="remFocus('box<%=debt.id %>')" class="expense_cmt_box"></textarea></div>
           <div class="float_right">&nbsp;&nbsp;&nbsp;&nbsp;<input class="button big_link hand" type="button" value="POST" /></div>
         </div> 
       <% end %>
@@ -22,28 +24,11 @@
     <div style="text-align:center"><span class="big_link">You do not have any outstanding debts.</span></div>
     <br />
 <% end %>
-<h1>Consolidated Debts</h1>
-<% if @consolidated_debts.count > 0 %>
-    <table>
-      <tr>
-        <th>Person</th>
-        <th>Owed to me</th>
-      </tr>
-        <% @consolidated_debts.each do |debt| %>
-
-            <tr>
-              <td><%= debt[:member].full_name %></td>
-              <td><%= debt[:value] %></td>
-            </tr>
-        <% end %>
-    </table>
-<% end %>
 
 <br /><br />
-<br /><br />
-<br /><br />
+<br />
 <% if @debts_paid.count > 0 %>
-  <div class="block float_right">
+  <div class="block float_right" style="width:650px;">
   <div onclick="togglePaid()"><h1>Debts Paid<h3>(Click to view)</h3></h1></div>
       <div id="debtsPaid" class="hidden">
       <% @debts_paid.each do |debt| %>
@@ -60,4 +45,7 @@
     </div>
   </div>
 <% end %>
-<br />
+
+
+
+<br /><br />

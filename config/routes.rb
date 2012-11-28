@@ -4,6 +4,9 @@ Notyourmom::Application.routes.draw do
   devise_for :users
 
   resources :debts
+  match 'debts/consolidate' => 'debts#consolidate'
+  #match 'debts/consolidate' => 'debts#consolidate', :controller => "debts", :action => "consolidate"
+  #match 'debts/:id', :controller => "debts", :id =>  /\d+/, :action => "show"
 
   resources :tags
 

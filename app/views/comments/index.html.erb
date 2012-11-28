@@ -1,27 +1,57 @@
 <h1>Listing contested expenses</h1>
 
-<table>
-  <tr>
-    <th>Comment</th>
-    <th>Expense</th>
-    <th>User</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+  <% @expenses.each do |expense| %>
+    <% if expense.comments.count > 0 %>
+        <h3>Tags: <% expense.tags.any? %>
+              <% expense.tags.each do |tag| %>
+                  <%= link_to tag.name, tag_path(tag.id) %><% if tag != expense.tags.last %>,<% end %>
+        <% end %></h3>
 
-<% @comments.each do |comment| %>
-  <tr>
-    <td><%= comment.comment %></td>
-    <td><%= comment.expense.item %></td>
-    <td><%= comment.user.full_name %></td>
-    <td><%= link_to 'Show', comment %></td>
-    <td><%= link_to 'Edit', edit_comment_path(comment) %></td>
-    <td><%= link_to 'Destroy', comment, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
+        <table class="std_fmt">
+          <tr>
+            <th>Expense</th>
+            <th>Price</th>
+            <th>Resolved</th>
+            <th>Created By</th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr>
+            <td><%= expense.item %></td>
+            <td>$<%= expense.price %></td>
+            <td><% if expense.resolved %>Yes<%else%>No<%end%></td>
+            <td><%= expense.user.full_name %> </td>
+            <td><% if expense.user.id == current_user.id %><%= link_to 'Edit', edit_expense_path(expense) %><%end%></td>
+          </tr>
+        </table>
+          <div class=" block"> 
+          <table class="debt_box">
+            <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+            <% expense.comments.each do |comment| %>
+            <tr>
+              <td colspan="4"><span class="big_link"><%= comment.user.full_name %></span>: <i>"<%= comment.comment %>"</i> </td>
+              <td><% if current_user.id == comment.user_id %><%= link_to 'Delete', comment, confirm: 'Are you sure?', method: :delete %> <%end%></td>
+            </tr>
+            <% end %>
+          </table>
+          </div>
+    <% end %>
+  <% end %>
 
+    <% if @comments.count == 0 %>
+        <br />
+        <div style="text-align:center"><span class="big_link">There are no comments. <%= link_to 'Make one?', new_comment_path %></span></div>
+        <br />
+    <% end %>
+
+<br />
+<br />
 <br />
 
 <%= link_to 'New Comment', new_comment_path %>
+
+

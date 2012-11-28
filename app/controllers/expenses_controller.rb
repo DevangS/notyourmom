@@ -124,7 +124,7 @@ class ExpensesController < ApplicationController
     if ( !@tag.nil? )
        @expenses = Expense.where(:household_id => current_user.household_id).tagged_with(@tag.name)
     end
-
+    @keyword = params[:search];
 
     respond_to do |format|
       format.html
