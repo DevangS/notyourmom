@@ -1,0 +1,22 @@
+<h1>Consolidated Debts</h1>
+<% if @consolidated_debts.count > 0 %>
+    <table>
+      <tr>
+        <th>Person</th>
+        <th>Owed to me</th>
+      </tr>
+        <% @consolidated_debts.each do |debt| %>
+
+            <tr>
+              <td><%= debt[:member].full_name %></td>
+              <td><%= debt[:value] %></td>
+            </tr>
+        <% end %>
+    </table>
+<% end %>
+
+
+
+<br />
+<%= link_to 'Back', debts_path %>
+

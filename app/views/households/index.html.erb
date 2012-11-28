@@ -27,40 +27,36 @@
     <tr>
       <th>Name</th>
       <th>E-mail</th>
+      <th>Amount Due  </th>
+      <th></th>
       <th></th>
     </tr>
-    <% @members.each do |member| %>
+    <% @consolidated_debts.each do |debt| %>
       <tr>
-        <td><%=member.firstName %> <%=member.lastName %></td>
-        <td><%=member.email %></td>
-        <% if current_user.is_head_of(@households[0]) %>
-            <td><%= link_to 'Exile', exile_household_path(@households[0], member.id), :method => :put %></td>
-        <% end %>
+        <td><%=debt[:member].full_name %></td>
+        <td><%=debt[:member].email %></td>
+        <td><% sum = (-1)*debt[:value].round(2) %>
+            <%if sum > 0 %><span class="red">$<%=sum%></span><%else%><span class="green">$<%=(-1)*sum%></span><%end%>
+        </td>
+        <td><% if sum > 0 %>Pay<%end%></td>
+        <td><% if current_user.is_head_of(@households[0]) %>
+            <%= link_to 'Exile', exile_household_path(@households[0], debt[:member].id), :method => :put %>
+        <% end %></td>
       </tr>
     <% end %>
   </table>
 <% end %>
-
-<div class="invitation new">
+<br />  
+<div class="dash_box" style="float:right;">
+    <h3>Send an Invite!</h3>
   <%= form_for(:invitation, :url => {:controller => :invitations, :action => :create}) do |f| %>
   
     <div summary="Invitation form fields">
-        <%= f.label :recipient_email, "Friend's email address" %><br />
-        <%= f.text_field(:recipient_email) %>  
-    </div>
-    
-    <div class="form-buttons">
-      <%= submit_tag("Invite!") %>
+        <%= f.text_field(:recipient_email, :placeholder => "e-mail", :size => 30) %>  
+
+      <span class="big_link"><%= submit_tag("GO", :class => "big_button") %></span
     </div>
     
   <% end %>
 </div>
-
-
-<br /><br />
-<div class="dash_box" style="float:right;">
-    <h3>Send an Invite!</h3>
-    <input type="text" name="email" placeholder="e-mail" size="30" /><a class="big_link" href="#"> GO</a></span>
 </div>
-
-

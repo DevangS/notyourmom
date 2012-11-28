@@ -30,8 +30,8 @@
 					<% @debts.each do |debt| %>
 					<li>
 					  	You owe <b><%= debt.expense.user.firstName %> <%=debt.expense.user.lastName%></b> 
-					  	<%= (debt.percentage_owed*debt.expense.price/100).round(2) %> for 
-					  	<b><%= link_to debt.expense.item,debt%></b> (<%=debt.get_share %>)
+					  	<%=debt.get_share.round(2) %> for 
+					  	<b><%= link_to debt.expense.item,debt%></b> 
 
 					</li>
 					<% end %>
