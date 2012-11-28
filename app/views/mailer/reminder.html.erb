@@ -1,0 +1,9 @@
+Hello <%= @debtor.firstName %>,
+<p>
+This is a reminder to pay your debt  of 
+$<%="%.2f" % @debt %> for the <%= @expense.item %> that
+ <%= @expense.user.firstName %> 
+bought for your household.
+</p>
+Best, <br />
+NotYourMom

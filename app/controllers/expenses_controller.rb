@@ -8,6 +8,24 @@ class ExpensesController < ApplicationController
     @expenses = Expense.where(:resolved => false, :household_id => current_user.household_id)
     @expenses_done = Expense.where(:resolved => true, :household_id => current_user.household_id)
 
+    if !params[:filter].nil?
+      case params[:filter]
+      when "7"
+        @date = Date.today - 7
+      when "30"
+        @date = Date.today.at_beginning_of_month
+      when "180"
+        @date = Date.today.at_beginning_of_month << 6
+      when "365"
+        @date = Date.today.at_beginning_of_month << 12
+      end
+
+      if !@date.nil?
+        @expenses = @expenses.where('created_at >= ?', @date)
+        @expenses_done = @expenses_done.where('created_at >= ?', @date)
+      end
+    end
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @expenses }
@@ -32,22 +50,20 @@ class ExpensesController < ApplicationController
   # GET /expenses/new.json
   def new
     @expense = Expense.new
-    @users = User.where(:household_id => current_user.household_id)
+    @users = User.where("household_id = ? AND id != ?", current_user.household_id, current_user.id)
 
     #need to do it so the debt fields appear for everyone in the household
     #right now it generates one for each member
-    split = @users.count
+    @split = 100.0 / (@users.count+1)
 
-    @expense.reminder = Reminder.new
-    @reminder = @expense.reminder
-    @reminder.expense = @expense
-    @reminder.expense_id = @expense.id
+    @expense.build_reminder(:expense => @expense, :expense_id => @expense.id)
 
     @users.each do |u|
         d = @expense.debts.build(:expense => @expense, :user => u)
         d.user_id = u.id
         d.expense_id = @expense.id
-        d.percentage_owed = 100.0  / split
+        d.percentage_owed = @split
+        d.paid = false
     end
 
 
@@ -60,6 +76,9 @@ class ExpensesController < ApplicationController
   # GET /expenses/1/edit
   def edit
     @expense = Expense.find(params[:id])
+    if @expense.reminder.blank?
+      @expense.build_reminder
+    end
   end
 
   # POST /expenses
@@ -107,8 +126,10 @@ class ExpensesController < ApplicationController
       d.destroy
     end
 
-    #TODO destory tags
-    #TODO destory comments
+    comments = Comment.where(:expense_id => @expense.id)
+    comments.each do |c|
+      c.destroy
+    end
 
     @expense.destroy
 
@@ -119,12 +140,18 @@ class ExpensesController < ApplicationController
   end
 
   def search
+    @searchterm = params[:search]
     @expenses = []
-    @tag = Tag.find_by_name( params[:search])
+    #@tag = Tag.find_by_name(params[:search])
+    @tag = Tag.where('LOWER(name) LIKE ?', "%"+params[:search].downcase+"%" )
     if ( !@tag.nil? )
-       @expenses = Expense.where(:household_id => current_user.household_id).tagged_with(@tag.name)
+      @tag.each do |t|
+        @expenses += Expense.where(:household_id => current_user.household_id).tagged_with(t.name)
+      end
     end
-    @keyword = params[:search];
+
+    @expenses += Expense.where('LOWER(item) LIKE ? AND household_id = ?', "%"+params[:search].downcase+"%", current_user.household_id)
+    @expenses.uniq!
 
     respond_to do |format|
       format.html

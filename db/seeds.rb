@@ -7,6 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 Household.delete_all
 User.delete_all
+Authentication.delete_all
 # set up notyoumom household
 notyourmom = Household.create(:name => 'NotYourMom')
 

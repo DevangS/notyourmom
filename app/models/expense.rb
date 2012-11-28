@@ -7,13 +7,13 @@ class Expense < ActiveRecord::Base
   has_many :debts, :inverse_of => :expense
   has_one :reminder, :inverse_of => :expense
 
-  accepts_nested_attributes_for :reminder, :reject_if => :no_date, :allow_destroy => true
+  accepts_nested_attributes_for :reminder
   accepts_nested_attributes_for :debts, :reject_if => :empty_Debt, :allow_destroy => true
 
   validates_presence_of :price, :item, :user, :household
 
   def no_date(r)
-    r[:date] == ""
+    r[:date].blank?
   end
 
   def empty_Debt(d)

@@ -24,4 +24,13 @@ class Mailer < ActionMailer::Base
 
     invitation.update_attribute(:sent_at, Time.now)
   end
+
+  def reminder(debtor, debt, expense)
+    @debtor = debtor
+    @debt = debt
+    @expense = expense
+    mail(:to => "cgtheresa@gmail.com",
+    :from => "debt-reminder@notyourmom.com",
+    :subject => "You have an upcoming debt to pay!")
+  end
 end

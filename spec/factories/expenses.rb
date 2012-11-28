@@ -7,8 +7,9 @@ FactoryGirl.define do
    	item "Food"
    	user
    	household
+   	resolved false
   end
   factory :invalid_expense, parent: :expense do
-    user nil
+    item nil
   end
 end
