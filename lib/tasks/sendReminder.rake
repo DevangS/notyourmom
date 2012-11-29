@@ -5,4 +5,3 @@ task :send_reminder => :environment do
 		r.send_mail()
 		end
 	end
-end
