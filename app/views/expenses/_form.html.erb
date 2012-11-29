@@ -50,7 +50,7 @@
       <%= f.fields_for :reminder do |reminder_builder| %>
       <br />
       <%= reminder_builder.label :reminder_date %>
-      <%= reminder_builder.datetime_select :date, :include_blank => true %>
+      <%= reminder_builder.text_field :date, :include_blank => true, :id => "datepicker", :size => 12 %>
       <%end%>
     </div>
 
@@ -58,7 +58,7 @@
     <div class="field">
       <p>
         <div>
-          Your equal payment slice would be: <%= @split %>
+          Your slice will be: <% if @editpage %> $<%= @split.round(2) %> <%else%> <%= @split.round(2) %>% <%end%>
         </div>
       </p>
       <%= f.fields_for :debts do |debt_builder| %>

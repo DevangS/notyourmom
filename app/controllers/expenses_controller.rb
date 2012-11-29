@@ -62,12 +62,13 @@ class ExpensesController < ApplicationController
     @split = 100.0 / (@users.count+1)
 
     @expense.build_reminder
+      @date = params[:month] ? Date.parse(params[:month]) : Date.today
 
     @users.each do |u|
         d = @expense.debts.build(:expense => @expense, :user => u)
         d.user_id = u.id
         d.expense_id = @expense.id
-        d.percentage_owed = @split
+        d.percentage_owed = @split.round(2)
         d.paid = false
     end
 
@@ -80,7 +81,10 @@ class ExpensesController < ApplicationController
 
   # GET /expenses/1/edit
   def edit
+    @editpage = true;
+    sum = Debt.where(:expense_id => params[:id]).sum(:percentage_owed)
     @expense = Expense.find(params[:id])
+    @split = ((100-sum) * @expense.price) /100
     if not @expense.reminder
       @expense.build_reminder
     end
@@ -91,8 +95,7 @@ class ExpensesController < ApplicationController
   def create
     @expense = Expense.new(params[:expense])
     #@expense.user = current_user
-    #should probably be done in new (need session)
-   
+    #should probably be done in new (need session)   
 
     respond_to do |format|
       if @expense.save
