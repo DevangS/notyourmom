@@ -7,6 +7,11 @@ class ExpensesController < ApplicationController
   def index
     @expenses = Expense.where(:resolved => false, :household_id => current_user.household_id)
     @expenses_done = Expense.where(:resolved => true, :household_id => current_user.household_id)
+    @expenses.each do |e|
+      if not e.reminder
+        e.build_reminder
+      end
+    end
 
     if !params[:filter].nil?
       case params[:filter]
@@ -25,7 +30,7 @@ class ExpensesController < ApplicationController
         @expenses_done = @expenses_done.where('created_at >= ?', @date)
       end
     end
-
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @expenses }
@@ -56,7 +61,7 @@ class ExpensesController < ApplicationController
     #right now it generates one for each member
     @split = 100.0 / (@users.count+1)
 
-    @expense.build_reminder(:expense => @expense, :expense_id => @expense.id)
+    @expense.build_reminder
 
     @users.each do |u|
         d = @expense.debts.build(:expense => @expense, :user => u)
@@ -76,7 +81,7 @@ class ExpensesController < ApplicationController
   # GET /expenses/1/edit
   def edit
     @expense = Expense.find(params[:id])
-    if @expense.reminder.blank?
+    if not @expense.reminder
       @expense.build_reminder
     end
   end

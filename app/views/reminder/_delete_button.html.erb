@@ -1,0 +1,4 @@
+<%= form_tag :controller => 'reminders', :action => 'delete_button' do %>
+	<%= hidden_field_tag :id, expense_id %>
+    <%= submit_tag "x" %> 
+<% end %>

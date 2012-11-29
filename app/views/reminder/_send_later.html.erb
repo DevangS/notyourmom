@@ -1,0 +1,6 @@
+<%= form_for(reminder, :url => url_for(:controller=> :reminders, :action => 'send_later')) do |f| %>
+	<%= f.hidden_field :id, :value => reminder.id %>
+	<%= f.hidden_field :expense_id, :value => expense_id %>
+	<%= f.date_select :date, :include_blank => true %>
+	<%= f.submit "Later" %>
+<% end %>

@@ -36,7 +36,27 @@
         <td>$<%= expense.price %></td>
         <td><% if expense.user_id == current_user.id %>You<%else%><%= expense.user.firstName %><%end%></td>
         <td><% if expense.user_id == current_user.id %><%= link_to 'Edit', edit_expense_path(expense) %> <% end %></td>
-        <td><% if expense.user_id == current_user.id %><%= link_to 'Delete', expense, confirm: 'Are you sure?', method: :delete %> <% end %></td>
+        <td>
+          <% if expense.user_id == current_user.id %><%= link_to 'Delete', expense, confirm: 'Are you sure?', method: :delete %>
+          <% elsif current_user == current_user.household.head %>
+            <% if flash[expense.id] and flash[expense.id][:notice] %>
+              <%= flash[expense.id][:notice] %>
+            <% elsif flash[expense.id] and flash[expense.id][:error] %>
+              <%= flash[expense.id][:error] %>
+            <% end %>
+            Send Reminder 
+            <%= render :partial => 'reminder/send_now', 
+            :locals => {:expense_id => expense.id} %>
+            or 
+            <%= render :partial => 'reminder/send_later', 
+            :object => expense.reminder,
+            :as => :reminder,
+            :locals => {:expense_id => expense.id} %> 
+              <%= render :partial => 'reminder/delete_button', 
+              :locals => {:expense_id => expense.id} %>
+            
+          <% end %>
+        </td>
       </tr>
     <% end %>
     </table>
