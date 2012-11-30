@@ -35,5 +35,18 @@
       <td><% if(debt.paid)%>Paid <% else%> Unpaid <%end %></td>
     </tr>
 <% end %>
+<% if @reminder != nil  %>
+    <tr> 
+      <td>
+        Has a reminder on <%= @reminder.date %>
+      </td>
+    </tr>
+<% else %>
+        <tr> 
+      <td>
+        Does not have a reminder
+      </td>
+    </tr>
+<% end %>
   </table>
   </div>

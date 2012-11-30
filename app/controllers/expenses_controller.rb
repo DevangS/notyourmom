@@ -42,7 +42,8 @@ class ExpensesController < ApplicationController
   # GET /expenses/1.json
   def show
     @expense = Expense.find(params[:id])
-    @debts = Debt.where(:expense_id => params[:id])
+    @debts = @expense.debts
+    @reminder = @expense.reminder
 
     respond_to do |format|
       format.html # show.html.erb

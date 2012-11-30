@@ -32,6 +32,7 @@ class RemindersController < ApplicationController
   # POST /reminders.json
   def create
     #params[:reminder][:date] = DateTime.parse(params[:reminder][:date])
+    puts params[:reminder][:date] + "\n\n\n\n\n\nBLAHAS\n"
     @reminder = Reminder.new(params[:reminder])
     respond_to do |format|
       if @reminder.save
