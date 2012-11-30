@@ -58,7 +58,7 @@ class ExpensesController < ApplicationController
     @users = User.where("household_id = ?", current_user.household_id)
 
     #get total number of users in the house hold 
-    @split = 100.0 / (@users.count)
+    @split = (100.0 / (@users.count)).round(2)
 
     @expense.build_reminder
       @date = params[:month] ? Date.parse(params[:month]) : Date.today
@@ -69,9 +69,11 @@ class ExpensesController < ApplicationController
         d = @expense.debts.build(:expense => @expense, :user => u)
         d.user_id = u.id
         d.expense_id = @expense.id
-        d.percentage_owed = @split.round(2)
+        d.percentage_owed = @split
         d.paid = false
     end
+
+    @payer_split = (100.0 - (@split*@users.count)).round(2) ;
 
 
     respond_to do |format|
@@ -138,6 +140,11 @@ class ExpensesController < ApplicationController
     comments = Comment.where(:expense_id => @expense.id)
     comments.each do |c|
       c.destroy
+    end
+
+    reminder = Reminder.where(:expense_id => @expense.id)
+    if reminder.nil?
+      reminder.destroy
     end
 
     @expense.destroy
