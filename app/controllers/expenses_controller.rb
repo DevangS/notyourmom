@@ -55,15 +55,16 @@ class ExpensesController < ApplicationController
   # GET /expenses/new.json
   def new
     @expense = Expense.new
-    @users = User.where("household_id = ? AND id != ?", current_user.household_id, current_user.id)
+    @users = User.where("household_id = ?", current_user.household_id)
 
-    #need to do it so the debt fields appear for everyone in the household
-    #right now it generates one for each member
-    @split = 100.0 / (@users.count+1)
+    #get total number of users in the house hold 
+    @split = 100.0 / (@users.count)
 
     @expense.build_reminder
       @date = params[:month] ? Date.parse(params[:month]) : Date.today
 
+    #remove current user from debt building
+    @users = @users.where("id != ?", current_user.id)
     @users.each do |u|
         d = @expense.debts.build(:expense => @expense, :user => u)
         d.user_id = u.id
