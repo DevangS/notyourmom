@@ -58,7 +58,9 @@
     <div class="field">
       <p>
         <div>
-          Your slice will be: <% if @editpage %> $<%= @split.round(2) %> <%else%> <%= @split.round(2) %>% <%end%>
+          Your slice will be: 
+          <% if @editpage %> $<%= @split.round(2) %> 
+          <% else %> <%= @payer_split %>% <%end%>
         </div>
       </p>
       <%= f.fields_for :debts do |debt_builder| %>
