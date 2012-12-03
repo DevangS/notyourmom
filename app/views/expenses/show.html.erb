@@ -50,12 +50,16 @@
   </div>
 
 <% if @expense.comments.any? %>
-  <ul id="comments">
+  <div id="inline-comments">
     <% @expense.comments.each do |c| %>
       <li><%= c.comment %></li>
     <% end %>
-  </ul>
+  </div>
 <% end %>
 <form id="comment-form">
-  <input type="text" placeholder="talk some shit here" />
+  <!-- Yo, this shit cray right here -->
+  <input type="text" id="comment" name="comment" placeholder="Add a comment..." />
+  <input type="hidden" name="expense_id" value="<%= @expense.id %>" />
+  <input type="hidden" name="user_id" value="<%= @user.id %>" />
+  <input type="hidden" name="id" value="" />
 </form>
