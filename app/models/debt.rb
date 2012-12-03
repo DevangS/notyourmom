@@ -9,4 +9,6 @@ class Debt < ActiveRecord::Base
   def get_share
     self.percentage_owed * self.expense.price/100
   end
+
+
 end

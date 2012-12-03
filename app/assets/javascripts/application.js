@@ -34,3 +34,7 @@ function setFocus(target) {
 function remFocus(target) {
 	$('#'+target).removeClass('expense_cmt_box_hover');
 }
+
+    $(function() {
+        $( "#datepicker" ).datepicker();
+    });
