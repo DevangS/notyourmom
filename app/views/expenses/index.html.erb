@@ -28,6 +28,7 @@
         <th>By</th>
         <th></th>
         <th></th>
+        <th width="160">Send Reminder </th> 
       </tr>
 
     <% @expenses.each do |expense| %>
@@ -47,17 +48,19 @@
               <%= flash[expense.id][:notice] %>
             <% elsif flash[expense.id] and flash[expense.id][:error] %>
               <%= flash[expense.id][:error] %>
-            <% end %>
-            Send Reminder 
-            <%= render :partial => 'reminder/send_now', 
-            :locals => {:expense_id => expense.id} %>
-            or 
-            <%= render :partial => 'reminder/send_later', 
-            :object => expense.reminder,
-            :as => :reminder,
-            :locals => {:expense_id => expense.id} %> 
+            <% end %> 
+            <% if expense.reminder.id?%>
+              <%=expense.reminder.date%>
               <%= render :partial => 'reminder/delete_button', 
+                :locals => {:expense_id => expense.id} %>
+            <%else%>
+              <!--<%= render :partial => 'reminder/send_now', 
+              :locals => {:expense_id => expense.id} %>   -->
+               <%= render :partial => 'reminder/send_later', 
+              :object => expense.reminder,
+              :as => :reminder,
               :locals => {:expense_id => expense.id} %>
+            <%end%>
         </td>
       <% end %>
       </tr>

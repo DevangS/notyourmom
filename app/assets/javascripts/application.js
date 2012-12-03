@@ -36,5 +36,5 @@ function remFocus(target) {
 }
 
     $(function() {
-        $( "#datepicker" ).datepicker();
+        $( ".datepicker" ).datepicker();
     });

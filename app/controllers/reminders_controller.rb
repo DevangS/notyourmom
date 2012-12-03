@@ -80,7 +80,6 @@ class RemindersController < ApplicationController
 
   def send_later 
     # Do an update
-    
     if not params[:reminder][:id].blank?
       @reminder = Reminder.find(params[:reminder][:id])
       expense_id = @reminder.expense_id
