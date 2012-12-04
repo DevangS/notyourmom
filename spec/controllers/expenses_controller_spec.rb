@@ -57,12 +57,14 @@ describe ExpensesController do
 		context "with valid attributes" do
 		    it "saves the new expense in the database" do
 			    expect{
-			    	post :create, expense: FactoryGirl.attributes_for(:expense)
+			    	e = FactoryGirl.build(:expense)
+			    	post :create, expense: e.attributes
 			     }.to change(Expense,:count).by(1)
 			end
 		      
 		    it "redirects to the show expense page"  do
-		      	post :create, expense: FactoryGirl.attributes_for(:expense)
+		      	e = FactoryGirl.build(:expense)
+			    post :create, expense: e.attributes
 		      	response.should redirect_to Expense.last
 		    end
 	    end
@@ -70,7 +72,8 @@ describe ExpensesController do
 	    context "with invalid attributes" do
 	      	it "does not save the new expense in the database" do
 			    expect{
-			    	post :create, expense: FactoryGirl.attributes_for(:invalid_expense)
+			    	e = FactoryGirl.build(:invalid_expense)
+			    	post :create, expense: e.attributes
 			     }.to_not change(Expense,:count)
 			end
 	      	it "re-renders the :new template"do

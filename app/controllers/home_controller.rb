@@ -1,15 +1,17 @@
 class HomeController < ApplicationController
-  def index 
-    
+  def index
     # For every expense in household that is NOT RESOLVED
 	#expenses = Expense.join(:debts).where("household_id = 1 AND resolved = FALSE")
 	if user_signed_in?	
+		# This if block is used for new users with tokens to save their household id
+		
 		
 		@head_id = Household.select("head_id").where("id = ?", current_user.household_id)
 		@house = User.where("household_id = ?", current_user.household_id)
 		@expenses = Expense.where("household_id = ? AND resolved = FALSE",current_user.household_id)
 		@debts = Debt.where(:user_id => current_user.id, :paid => false)
 		@users = User.all
+
     if current_user.household_id != nil
       @house_member = User.where(:household_id => current_user.household_id).where(['users.id <> ?', current_user.household.head_id])
     else
@@ -23,6 +25,10 @@ class HomeController < ApplicationController
       @house_head = nil
     end
 
+		if current_user.household
+			@house_head = current_user.household.head
+		end
+		
 	    respond_to do |format|
 	    	format.html # index.html.erb
 	    	if current_user.household_id != nil

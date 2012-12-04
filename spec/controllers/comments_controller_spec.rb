@@ -19,7 +19,8 @@ describe CommentsController do
 		context "with valid attributes" do
 	      	it "saves the new comment in the database" do
 			    expect{
-			    	post :create, comment: FactoryGirl.attributes_for(:comment)
+			    	c = FactoryGirl.build(:comment)
+			    	post :create, comment: c.attributes
 			     }.to change(Comment,:count).by(1)
 			end
 		      
@@ -28,7 +29,8 @@ describe CommentsController do
 	    context "with invalid attributes" do
 	      it "does not save the new comment in the database" do
 			    expect{
-			    	post :create, comment: FactoryGirl.attributes_for(:invalid_comment)
+			    	c = FactoryGirl.build(:invalid_comment)
+			    	post :create, comment: c.attributes
 			     }.to_not change(Comment,:count)
 			end
 	    end
