@@ -4,6 +4,7 @@ class Mailer < ActionMailer::Base
   def invitation(invitation, signup_url)    
     @user = User.find(invitation.sender_id)
     @signup_url = signup_url
+    @token = invitation.token
     mail(:to => invitation.recipient_email,
          :subject => "You have been Invited!"
     )

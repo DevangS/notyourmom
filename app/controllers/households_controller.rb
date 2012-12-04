@@ -5,6 +5,13 @@ class HouseholdsController < ApplicationController
   # GET /households
   # GET /households.json
   def index
+    token = session[:token]
+    if !token.blank?
+      sender_id = Invitation.find_by_token(token).sender_id     
+      current_user.household_id = User.find(sender_id).household_id
+      current_user.invitation_token = token
+      current_user.save
+    end 
     @households = Household.where(:id => current_user.household_id)
     @members = User.where("household_id = ? AND id <> ?",current_user.household_id,current_user.id)
 
@@ -129,5 +136,4 @@ class HouseholdsController < ApplicationController
       format.json { render json: @household}
     end
   end
-
 end

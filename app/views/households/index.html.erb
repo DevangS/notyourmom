@@ -4,6 +4,8 @@
   </div>
 <% end %>
 
+<%=  @token %>
+
 <% if @households.count > 0 %>
 
     <div class="right">
@@ -17,6 +19,21 @@
           <%= link_to 'Leave', leave_household_path(household) %>
     <% end %>
     </div>
+
+    <div class="invitation new">
+    <%= form_for(:invitation, :url => {:controller => :invitations, :action => :index}) do |f| %>
+  
+      <div summary="Invitation form fields">
+        <%= f.label :recipient_email, "Friend's email address" %><br />
+        <%= f.text_field(:recipient_email) %>  
+      </div>
+      <div class="form-buttons">
+        <%= submit_tag("Invite!") %>
+      </div>
+
+    <% end %>
+    </div>
+
   <br />
 <% else %>
   You are not yet part of a household. <%= link_to 'Create one', new_household_path %>?
@@ -40,27 +57,3 @@
     <% end %>
   </table>
 <% end %>
-
-<div class="invitation new">
-  <%= form_for(:invitation, :url => {:controller => :invitations, :action => :create}) do |f| %>
-  
-    <div summary="Invitation form fields">
-        <%= f.label :recipient_email, "Friend's email address" %><br />
-        <%= f.text_field(:recipient_email) %>  
-    </div>
-    
-    <div class="form-buttons">
-      <%= submit_tag("Invite!") %>
-    </div>
-    
-  <% end %>
-</div>
-
-
-<br /><br />
-<div class="dash_box" style="float:right;">
-    <h3>Send an Invite!</h3>
-    <input type="text" name="email" placeholder="e-mail" size="30" /><a class="big_link" href="#"> GO</a></span>
-</div>
-
-
