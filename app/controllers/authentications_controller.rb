@@ -4,7 +4,7 @@ class AuthenticationsController < ActionController::Base
   end
 
   def create
-      auth = request.env["omniauth.auth"]
+    auth = request.env["omniauth.auth"]
     # Try to find authentication first
     authentication = Authentication.find_by_provider_and_uid(auth['provider'], auth['uid'])
  
@@ -20,6 +20,7 @@ class AuthenticationsController < ActionController::Base
       # Authentication not found, thus a new user.
       user = User.new
       user.apply_omniauth(auth)
+     
       if user.save(:validate => false)
         flash[:notice] = "Account created and signed in successfully."
         sign_in_and_redirect(:user, user)

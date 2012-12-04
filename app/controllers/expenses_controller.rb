@@ -64,7 +64,8 @@ class ExpensesController < ApplicationController
     @split = (100.0 / (@users.count)).round(2)
 
     @expense.build_reminder
-      @date = params[:month] ? Date.parse(params[:month]) : Date.today
+      #@date = params[:month] ? Date.parse(params[:month]) : Date.today
+      @date = Date.parse(params[:date])
 
     #remove current user from debt building
     @users = @users.where("id != ?", current_user.id)
@@ -77,7 +78,6 @@ class ExpensesController < ApplicationController
     end
 
     @payer_split = (100.0 - (@split*@users.count)).round(2) ;
-
 
     respond_to do |format|
       format.html # new.html.erb
@@ -146,8 +146,8 @@ class ExpensesController < ApplicationController
     end
 
     reminder = Reminder.where(:expense_id => @expense.id)
-    if reminder.nil?
-      reminder.destroy
+    reminder.each do |r|
+      r.destroy
     end
 
     @expense.destroy

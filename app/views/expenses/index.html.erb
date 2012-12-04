@@ -26,9 +26,9 @@
         <th>Item</th>
         <th>Price</th>
         <th>By</th>
+        <th width="148">Send Reminder </th> 
         <th></th>
         <th></th>
-        <th width="160">Send Reminder </th> 
       </tr>
 
     <% @expenses.each do |expense| %>
@@ -36,29 +36,33 @@
         <td><span title="<%= expense.description %>"><%= link_to expense.item, expense %></span></td>
         <td>$<%= expense.price %></td>
         <td><% if expense.user_id == current_user.id %>You<%else%><%= expense.user.firstName %><%end%></td>
-        <td><% if expense.user_id == current_user.id %><%= link_to 'Edit', edit_expense_path(expense) %> <% end %></td>
         <td>
-          <% if expense.user_id == current_user.id %><%= link_to 'Delete', expense, confirm: 'Are you sure?', method: :delete %> 
+          <% if current_user == current_user.household.head %>
+            <% if flash[expense.id] and flash[expense.id][:notice] %>
+              <%= flash[expense.id][:notice] %>
+            <% elsif flash[expense.id] and flash[expense.id][:error] %>
+              <%= flash[expense.id][:error] %>
+            <% end %> 
+            <% if expense.reminder.date?%>
+                <%=expense.reminder.date.month %>/<%=expense.reminder.date.day %>/<%=expense.reminder.date.year %>
+                <div class="float_right" style="width:50px;">
+                  <%= render :partial => 'reminder/delete_button', 
+                  :locals => {:expense_id => expense.id} %></div>
+            <%else%>
+                <!--<%= render :partial => 'reminder/send_now', 
+                :locals => {:expense_id => expense.id} %>   -->
+                 <%= render :partial => 'reminder/send_later', 
+                :object => expense.reminder,
+                :as => :reminder,
+                :locals => {:expense_id => expense.id} %>
+            <%end%>
           <% end %>
         </td>
-      <!-- Added by Theresa please fix -->
-      <% if current_user == current_user.household.head %>
+        <td><% if expense.user_id == current_user.id %><%= link_to image_tag('icons/document_edit.png', :width => 18, :title => "Edit Expense"), edit_expense_path(expense) %> <% end %></td>
         <td>
-            Send Reminder 
-            <% if expense.reminder.id?%>
-              <%=expense.reminder.date%>
-              <%= render :partial => 'reminder/delete_button', 
-                :locals => {:expense_id => expense.id} %>
-            <%else%>
-              <!--<%= render :partial => 'reminder/send_now', 
-              :locals => {:expense_id => expense.id} %>   -->
-               <%= render :partial => 'reminder/send_later', 
-              :object => expense.reminder,
-              :as => :reminder,
-              :locals => {:expense_id => expense.id} %>
-            <%end%>
+          <% if expense.user_id == current_user.id %><%= link_to image_tag('icons/document_delete.png', :width => 18, :title => "Delete Expense"), expense, confirm: 'Are you sure?', method: :delete %> 
+          <% end %>
         </td>
-      <% end %>
       </tr>
     <% end %>
 

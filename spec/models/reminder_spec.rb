@@ -8,7 +8,4 @@ describe Reminder do
   it "is invalid without an expense" do
   	FactoryGirl.build(:reminder, expense:nil).should_not be_valid
   end
-    it "is invalid without a date" do
-  	FactoryGirl.build(:reminder, date:nil).should_not be_valid
-  end
 end
