@@ -13,7 +13,12 @@ class Expense < ActiveRecord::Base
   validates_presence_of :price, :item, :user, :household
 
   def no_date(r)
-    not (r["date(1i)"]  and r["date(2i)"] and r["date(3i)"])
+    if r["date(1i)"].blank? and r["date(2i)"].blank? and r["date(3i)"].blank?
+      r[:_delete] = 1
+      return true
+    else
+      return false
+    end
   end
 
   def empty_Debt(d)

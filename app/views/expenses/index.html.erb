@@ -43,11 +43,6 @@
       <!-- Added by Theresa please fix -->
       <% if current_user == current_user.household.head %>
         <td>
-            <% if flash[expense.id] and flash[expense.id][:notice] %>
-              <%= flash[expense.id][:notice] %>
-            <% elsif flash[expense.id] and flash[expense.id][:error] %>
-              <%= flash[expense.id][:error] %>
-            <% end %>
             Send Reminder 
             <%= render :partial => 'reminder/send_now', 
             :locals => {:expense_id => expense.id} %>
