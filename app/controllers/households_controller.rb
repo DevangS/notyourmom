@@ -15,6 +15,9 @@ class HouseholdsController < ApplicationController
     @households = Household.where(:id => current_user.household_id)
     @members = User.where("household_id = ? AND id <> ?",current_user.household_id,current_user.id)
 
+    members = User.where('id != ? AND household_id = ?', current_user.id, current_user.household_id)
+    @consolidated_debts = members.map{|member| {:member => member, :value => current_user.consolidated_debt_with(member)}}
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @households }

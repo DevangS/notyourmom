@@ -13,10 +13,20 @@ class Expense < ActiveRecord::Base
   validates_presence_of :price, :item, :user, :household
 
   def no_date(r)
-    r[:date] == ""
+    not (r["date(1i)"]  and r["date(2i)"] and r["date(3i)"])
   end
 
   def empty_Debt(d)
   	d[:percentage_owed].to_f <= 0 || d[:percentage_owed].blank?
   end
+
+  def send_reminders()
+    debts.each do |d|
+      if not d.paid
+        mail = Mailer.reminder(d.user, d.get_share, self)
+        mail.deliver
+      end
+    end
+  end
+
 end

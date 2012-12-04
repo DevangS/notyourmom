@@ -46,8 +46,23 @@
       <%= f.text_field :tag_list, :size => 50 %>
     </div>
 
+    <div class="field">
+      <%= f.fields_for :reminder do |reminder_builder| %>
+      <br />
+      <%= reminder_builder.label :reminder_date %>
+      <%= reminder_builder.date_select :date, :include_blank => true %>
+      <%end%>
+    </div>
+
     <h4>Deligate Payment Slices</h4>
     <div class="field">
+      <p>
+        <div>
+          Your slice will be: 
+          <% if @editpage %> $<%= @split? @split.round(2) : 0 %> 
+          <% else %> <%= @payer_split %>% <%end%>
+        </div>
+      </p>
       <%= f.fields_for :debts do |debt_builder| %>
         <p>
           <div style="width:360px;overflow:auto;position:relative;">

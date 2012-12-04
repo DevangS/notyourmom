@@ -1,3 +1,4 @@
+require 'date'
 class RemindersController < ApplicationController
   before_filter :authenticate_user!
 
@@ -30,8 +31,9 @@ class RemindersController < ApplicationController
   # POST /reminders
   # POST /reminders.json
   def create
+    #params[:reminder][:date] = DateTime.parse(params[:reminder][:date])
+    puts params[:reminder][:date] + "\n\n\n\n\n\nBLAHAS\n"
     @reminder = Reminder.new(params[:reminder])
-
     respond_to do |format|
       if @reminder.save
         format.html { redirect_to @reminder, notice: 'Reminder was successfully created.' }
@@ -63,11 +65,51 @@ class RemindersController < ApplicationController
   # DELETE /reminders/1.json
   def destroy
     @reminder = Reminder.find(params[:id])
+    item = @reminder.expense.item
     @reminder.destroy
+    flash[:notice] = 'Reminder for the expense ' + item + ' has been removed.'
+    redirect_to :back 
+  end
 
-    respond_to do |format|
-      format.html { redirect_to reminders_url }
-      format.json { head :no_content }
+  def send_now
+    @expense = Expense.find(params[:id])
+    @expense.send_reminders()
+    flash[@expense.id] = 'Reminder emails were successfully sent for the expense ' + @expense.item + '.'
+    redirect_to :back
+  end
+
+  def send_later 
+    # Do an update
+    if not params[:reminder][:id].blank?
+      @reminder = Reminder.find(params[:reminder][:id])
+      expense_id = @reminder.expense_id
+      params[:reminder].delete(:id)
+      if @reminder.update_attributes(params[:reminder])
+        flash[expense_id] = {:notice => 'A reminder was ' +
+          'successfully replaced.'}
+      else
+        flash[expense_id] = {:error => 'Failed to replace this ' +
+          'reminder.'}
+      end
+    # Create a new reminder
+    else
+      params[:reminder].delete(:id)
+      @reminder = Reminder.new(params[:reminder])
+      expense_id = @reminder.expense_id
+      if @reminder.save
+        flash[expense_id] = {:notice => 'Successfully created a new reminder.'}
+      else
+        flash[expense_id] = {:error => 'Failed to create a new reminder.'}
+      end
     end
+    redirect_to :back
+  end
+
+  def delete_button
+    expense = Expense.find(params[:id])
+    item = expense.item
+    expense.reminder.destroy
+    flash[expense.id] = {:notice => 'Reminder has been removed.'}
+    redirect_to :back 
   end
 end

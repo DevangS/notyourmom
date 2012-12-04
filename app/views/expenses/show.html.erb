@@ -1,7 +1,7 @@
 <h1> Expense Lookup : <%=@expense.item%></h1>
 <h3>Tags: <% @expense.tags.any? %>
       <% @expense.tags.each do |tag| %>
-          <%= link_to tag.name, tag_path(tag.id) %>
+          <%= link_to tag.name, tag_path(tag.id) %><% if tag != @expense.tags.last %>,<% end %>
 <% end %></h3>
 
 <table class="std_fmt">
@@ -32,7 +32,20 @@
     <tr>
       <td><%=debt.user.firstName%> <%=debt.user.lastName%> </td>
       <td><b>$<%=(debt.percentage_owed*debt.expense.price/100).round(2)%></b></td>
-      <td><% if(debt.paid)%>Unpaid <% else%> Paid <%end %></td>
+      <td><% if(debt.paid)%>Paid <% else%> Unpaid <%end %></td>
+    </tr>
+<% end %>
+<% if @reminder != nil  %>
+    <tr> 
+      <td>
+        Has a reminder on <%= @reminder.date %>
+      </td>
+    </tr>
+<% else %>
+        <tr> 
+      <td>
+        Does not have a reminder
+      </td>
     </tr>
 <% end %>
   </table>

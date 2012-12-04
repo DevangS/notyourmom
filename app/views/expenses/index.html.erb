@@ -1,6 +1,22 @@
-<div id="search">
-    <%= render :partial => 'expenses/searchbar' %>
+<div class="nice_box float_left">
+    <a class="big_link" href="/expenses/new">Create New Expense</a>
+  </div>
+
+<div id="search" class="float_right">
+  <%= render :partial => 'expenses/searchbar' %>
+  <%= form_tag '', :method=>:get do %>
+    <%= select_tag(:filter, 
+        options_for_select([['All',0], ['Past 7 days',7], ['This Month',30], ['Last 6 months', 180,], ['This Year',365]])) %>
+    <%= submit_tag "Filter" %> 
+  <% end %>
 </div>
+<div>
+  <% if !@date.nil? %>
+  Showing expenses since <%= @date %>
+  <% end %>
+</div>
+<br><br>
+<br><br>
 
 <h1>Outstanding Household expenses</h1>
 
@@ -12,6 +28,7 @@
         <th>By</th>
         <th></th>
         <th></th>
+        <th width="160">Send Reminder </th> 
       </tr>
 
     <% @expenses.each do |expense| %>
@@ -20,9 +37,35 @@
         <td>$<%= expense.price %></td>
         <td><% if expense.user_id == current_user.id %>You<%else%><%= expense.user.firstName %><%end%></td>
         <td><% if expense.user_id == current_user.id %><%= link_to 'Edit', edit_expense_path(expense) %> <% end %></td>
-        <td><% if expense.user_id == current_user.id %><%= link_to 'Delete', expense, confirm: 'Are you sure?', method: :delete %> <% end %></td>
+        <td>
+          <% if expense.user_id == current_user.id %><%= link_to 'Delete', expense, confirm: 'Are you sure?', method: :delete %> 
+          <% end %>
+        </td>
+      <!-- Added by Theresa please fix -->
+      <% if current_user == current_user.household.head %>
+        <td>
+            <% if flash[expense.id] and flash[expense.id][:notice] %>
+              <%= flash[expense.id][:notice] %>
+            <% elsif flash[expense.id] and flash[expense.id][:error] %>
+              <%= flash[expense.id][:error] %>
+            <% end %> 
+            <% if expense.reminder.id?%>
+              <%=expense.reminder.date%>
+              <%= render :partial => 'reminder/delete_button', 
+                :locals => {:expense_id => expense.id} %>
+            <%else%>
+              <!--<%= render :partial => 'reminder/send_now', 
+              :locals => {:expense_id => expense.id} %>   -->
+               <%= render :partial => 'reminder/send_later', 
+              :object => expense.reminder,
+              :as => :reminder,
+              :locals => {:expense_id => expense.id} %>
+            <%end%>
+        </td>
+      <% end %>
       </tr>
     <% end %>
+
     </table>
 <% else %>
     <br />
@@ -48,9 +91,4 @@
     <% end %>
     </table>
 <% end %>
-
 <br />
-<div class="dash_box" style="float:right;">
-    <br />
-    <a class="big_link" href="/expenses/new">Create New Expense</a></span>
-</div>

@@ -1,41 +1,42 @@
-<%= form_for(@user) do |f| %>
-  <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+<center>
+<p align="left">You are in household: <b><%= link_to @user.household.name, households_path %></b><br />
+  Last logged in: <%=@user.last_sign_in_at%><br /> 
+</p>
+<div style="text-align:left;width:60%;">
 
-      <ul>
-      <% @user.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+    <%= form_for(@user) do |f| %>
+      <% if @user.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+          <ul>
+          <% @user.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :firstName %><br />
-    <%= f.text_field :firstName %>
+      <div class="field">
+        <%= f.label :firstName %><br />
+        <%= f.text_field :firstName %>
+      </div>
+      <div class="field">
+        <%= f.label :lastName %><br />
+        <%= f.text_field :lastName %>
+      </div>
+      <div class="field">
+        <%= f.label :email %><br />
+        <%= f.text_field :email %>
+      </div>
+      <div class="field">
+        <%= f.label :password %><br />
+        <%= f.text_field :password %>
+      </div>
+      <div class="actions">
+        <%= f.submit %>
+      </div>
+    <% end %>
+
   </div>
-  <div class="field">
-    <%= f.label :lastName %><br />
-    <%= f.text_field :lastName %>
-  </div>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.text_field :password %>
-  </div>
-  <div class="field">
-    <%= f.label :fb_key %><br />
-    <%= f.text_field :fb_key %>
-  </div>
-  <div class="field">
-    <%= f.label :household_id %><br />
-    <%= f.number_field :household_id %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</center>

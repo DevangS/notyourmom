@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :reminder do
-    debt_id nil
+    expense
     date "2012-11-19 12:04:05"
   end
 end
