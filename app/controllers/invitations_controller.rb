@@ -25,7 +25,7 @@ class InvitationsController < ApplicationController
       if invitation.save   
         if user_signed_in?            
           Mailer.invitation(invitation, new_user_registration_url(:token => "/#{invitation.token}")).deliver
-          flash[:notice] = "Thank you invitation sent!" + invitation.token
+          flash[:notice] = "Thank you invitation sent!"
           redirect_to households_path
         else
           flash[:notice] = "Unable to send invitation, please try again"

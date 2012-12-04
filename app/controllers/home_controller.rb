@@ -1,6 +1,5 @@
 class HomeController < ApplicationController
-  def index   
-    token = session[:token]    
+  def index
     # For every expense in household that is NOT RESOLVED
 	#expenses = Expense.join(:debts).where("household_id = 1 AND resolved = FALSE")
 	if user_signed_in?	

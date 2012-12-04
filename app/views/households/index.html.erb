@@ -4,8 +4,8 @@
   </div>
 <% end %>
 
-<%=  @token %>
-
+<%= session[:token] %>
+<%= @saved %>
 <% if @households.count > 0 %>
 
     <div class="right">
