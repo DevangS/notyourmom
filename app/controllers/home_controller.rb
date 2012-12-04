@@ -12,9 +12,7 @@ class HomeController < ApplicationController
 		@expenses = Expense.where("household_id = ? AND resolved = FALSE",current_user.household_id)
 		@debts = Debt.where(:user_id => current_user.id, :paid => false)
 		@users = User.all
-<<<<<<< HEAD
-		@house_member = User.find_all_by_household_id(current_user.household_id)
-=======
+
     if current_user.household_id != nil
       @house_member = User.where(:household_id => current_user.household_id).where(['users.id <> ?', current_user.household.head_id])
     else
@@ -27,7 +25,6 @@ class HomeController < ApplicationController
     else
       @house_head = nil
     end
->>>>>>> d9922016186a7bc993f0d647df5e294b10120a0a
 
 		if current_user.household
 			@house_head = current_user.household.head
