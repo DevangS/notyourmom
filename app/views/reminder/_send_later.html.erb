@@ -3,6 +3,6 @@
 	<%= f.hidden_field :id, :value => reminder.id %>
 	<%= f.hidden_field :expense_id, :value => expense_id %>
 	<%#= f.date_select :date, :include_blank => true %>
-	<%= f.text_field :date, :class => "datepicker", :size => 12, :value => @the_date, :include_blank => true %>
-	<div class="float_right" style="width:50px;"><%= image_submit_tag "icons/go.png", :width => 15, :title => "Create Reminder" %></div>
+	<%= f.text_field :date, :class => "datepicker", :size => 12, :placeholder => "yyyy-mm-dd", :include_blank => true %>
+	<div class="float_right" style="width:20px;"><%= image_submit_tag "icons/go.png", :width => 15, :title => "Create Reminder" %></div>
     <% end %>

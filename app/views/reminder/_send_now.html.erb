@@ -1,5 +1,5 @@
 
 <%= form_tag :controller => 'reminders', :action => 'send_now' do %>
 	<%= hidden_field_tag :id, :value => expense_id %>
-    <%= submit_tag "Send Now" %> 
+	<div class="float_right" style="width:20px;"><%= image_submit_tag "icons/clock.png", :width => 15, :title => "Send Now" %></div>
 <% end %>
