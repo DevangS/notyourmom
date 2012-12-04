@@ -48,7 +48,8 @@ describe DebtsController do
 		context "with valid attributes" do
 	      	it "saves the new debt in the database" do
 			    expect{
-			    	post :create, debt: FactoryGirl.attributes_for(:debt)
+			    	d = FactoryGirl.build(:debt)
+			    	post :create, debt: d.attributes
 			     }.to change(Debt,:count).by(1)
 			end
 	    end
@@ -56,7 +57,8 @@ describe DebtsController do
 	    context "with invalid attributes" do
 	      	it "does not save the new debt in the database" do
 			    expect{
-			    	post :create, debt: FactoryGirl.attributes_for(:invalid_debt)
+			    	d = FactoryGirl.build(:invalid_debt)
+			    	post :create, debt: d.attributes
 			     }.to_not change(Debt,:count)
 			end
 	    end

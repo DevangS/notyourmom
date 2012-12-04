@@ -146,8 +146,8 @@ class ExpensesController < ApplicationController
     end
 
     reminder = Reminder.where(:expense_id => @expense.id)
-    if reminder.nil?
-      reminder.destroy
+    reminder.each do |r|
+      r.destroy
     end
 
     @expense.destroy
