@@ -4,7 +4,6 @@
   </div>
 <% end %>
 
-<%= session[:token] %>
 <%= @saved %>
 <% if @households.count > 0 %>
 
@@ -20,19 +19,29 @@
     <% end %>
     </div>
 
-    <div class="invitation new">
-    <%= form_for(:invitation, :url => {:controller => :invitations, :action => :index}) do |f| %>
-  
-      <div summary="Invitation form fields">
-        <%= f.label :recipient_email, "Friend's email address" %><br />
-        <%= f.text_field(:recipient_email) %>  
-      </div>
-      <div class="form-buttons">
-        <%= submit_tag("Invite!") %>
-      </div>
+    <% if current_user.is_head_of_house %>
+        <div class="invitation new">
+          <%= form_for(:invitation, :url => {:controller => :invitations, :action => :index}) do |f| %>
 
+              <div summary="Invitation form fields">
+                <%= f.label :recipient_email, "Friend's email address" %><br />
+                <%= f.text_field(:recipient_email) %>
+              </div>
+              <div class="form-buttons">
+                <%= submit_tag("Invite!") %>
+              </div>
+          <% end %>
+        </div>
+        <h2> Invitations Sent:</h2>
+        <% @invitations.each do |invitation| %>
+            <% if !invitation.accepted  %>
+                <%=  invitation.recipient_email %>
+                <%=  link_to 'Delete', invitation, confirm: 'Are you sure?', method: :delete %>
+            <% end %>
+        <% end %>
     <% end %>
-    </div>
+
+
 
   <br />
 <% else %>

@@ -7,7 +7,7 @@ class InvitationsController < ApplicationController
     invitation.sent_at = Time.now
 
     if !current_user.household_id.blank?
-      hoh = Household.find(current_user.household_id).head_id      
+      hoh = Household.find(current_user.household_id).head_id
     else
       flash[:notice] = "Sorry invitation not sent, you are not the head of household"
       redirect_to households_path
@@ -32,6 +32,23 @@ class InvitationsController < ApplicationController
           redirect_to households_path
         end
       end
-    end   
+    end
+  end
+
+  def destroy
+    @invitation = Invitation.find(params[:id])
+    @invitation.destroy
+    flash[:notice] = @invitation.recipient_email + " successfully uninvited"
+    redirect_to households_path
+=begin
+    invitation = Invitation.find(params[:invitation_id])
+    if(invitation.destroy)
+      flash[:notice] = invitation.recipient_email + "successfully uninvited"
+      redirect_to households_path
+    else
+      redirect_to root
+    end
+=end
+
   end
 end

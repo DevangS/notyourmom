@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121124050441) do
+ActiveRecord::Schema.define(:version => 20121204062817) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -63,8 +63,9 @@ ActiveRecord::Schema.define(:version => 20121124050441) do
     t.string   "recipient_email"
     t.string   "token"
     t.datetime "sent_at"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.boolean  "accepted",        :default => false
   end
 
   create_table "reminders", :force => true do |t|
