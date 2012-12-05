@@ -11,10 +11,12 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    invitation = Invitation.find(session[:invitation_id])
-    invitation.accepted = true
-    invitation.save
-    session[:invitation_id] = invitation.id
+    if !session[:invitation_id].blank?
+      invitation = Invitation.find(session[:invitation_id])
+      invitation.accepted = true
+      invitation.save
+      session[:invitation_id] = invitation.id
+    end
     super
   end
 
