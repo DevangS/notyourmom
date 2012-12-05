@@ -11,8 +11,8 @@ describe HouseholdsController do
 
 	describe "GET #index" do
 
-	  it "gets all of users in the current household" do
-	  	housemembers = [@user]
+	  it "gets all of other users in the current household" do
+	  	housemembers = []
 	  	3.times do 
 	  		housemembers += [FactoryGirl.create(:user, :household => @household)]
 	  	end

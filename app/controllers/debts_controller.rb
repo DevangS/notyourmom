@@ -4,7 +4,7 @@ class DebtsController < ApplicationController
   # GET /debts
   # GET /debts.json
   def index
-
+    @expenses = Expense.where(:household_id => current_user.household_id, :resolved => false)
     @debts = Debt.where(:user_id => current_user.id, :paid => false)
     @debts_paid = Debt.where(:user_id => current_user.id, :paid => true)
 
@@ -14,6 +14,7 @@ class DebtsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @debts }
+      format.json { render json: @expenses }
     end
   end
 

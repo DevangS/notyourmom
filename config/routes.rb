@@ -1,7 +1,7 @@
 Notyourmom::Application.routes.draw do
   resources :invitations
 
-  devise_for :users
+  devise_for :users, :controllers => {:registrations => "registrations"}
 
   resources :debts
   match 'debts/consolidate' => 'debts#consolidate'

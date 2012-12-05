@@ -6,10 +6,10 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= javascript_include_tag "jquery-1.8.3.min" %>
+  <%= javascript_include_tag "jquery-ui" %>
   <%= csrf_meta_tags %>
 	<link rel="stylesheet" type="text/css" href=<%= asset_path 'main.css'%>>
-	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-	
+
 	<% content_for :banner do %>
 	<div id="banner_wrapper">
 		<div id="banner">
@@ -49,12 +49,13 @@
 	    		<%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
 	    	<% else %>
 				<!-- LOGIN -->
-				<form id="login" action="/login">
+				<div id="login">
 					<b>Please log in</b> 
-					<input type="text" class="login" size="14" placeholder="e-mail" />
-					<input type="text" class="login" size="14" placeholder="password" /><br />
+					<%= resource.class.name %>
+					<%= render :partial => '/devise/sessions/new_side_bar', 
+						:object => resource, :as => :resource %>
 					<span>Not a member yet? <%= link_to "Signing up is easy!", new_user_registration_path %></span>
-				</form>
+				</div>
 			<% end %>
 		</div>
 		<div id="nav">

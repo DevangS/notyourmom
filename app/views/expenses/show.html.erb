@@ -11,7 +11,7 @@
     <th>Resolved</th>
     <th>User</th>
     <th></th>
-    <th></th>
+    <th>Reminder</th>
   </tr>
   <tr>
     <td><%= @expense.description %></td>
@@ -19,6 +19,13 @@
     <td><% if @expense.resolved %>Yes<%else%>No<%end%></td>
     <td><%= @expense.user.full_name %> </td>
     <td><% if @expense.user.id == current_user.id %><%= link_to 'Edit', edit_expense_path(@expense) %><%end%></td>
+    <td>
+      <% if @reminder != nil %>
+        <%= @reminder.date.month %>/<%= @reminder.date.day %>/<%= @reminder.date.year %>
+      <%else%>
+        None
+      <%end%>
+    </td>
   </tr>
 </table>
   <div class="float_right block"> 
@@ -35,18 +42,7 @@
       <td><% if(debt.paid)%>Paid <% else%> Unpaid <%end %></td>
     </tr>
 <% end %>
-<% if @reminder != nil  %>
-    <tr> 
-      <td>
-        Has a reminder on <%= @reminder.date %>
-      </td>
-    </tr>
-<% else %>
-        <tr> 
-      <td>
-        Does not have a reminder
-      </td>
-    </tr>
-<% end %>
   </table>
+
+<%= link_to "Back to Expenses", expenses_path %>
   </div>

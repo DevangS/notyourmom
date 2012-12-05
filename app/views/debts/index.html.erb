@@ -2,11 +2,19 @@ View <%= link_to "Consolidated Debts", households_path %>
 <h1>Outstanding Debts</h1>
 
 <% if @debts.count > 0 %>
-      <% @debts.each do |debt| %>
+      <% @expenses.each do |expense| %>
+      <% debt = expense.debts.find_by_user_id(current_user.id) # user's debt record for this expense %>
+      <% comment = expense.comments.find_by_user_id(current_user.id) # user's comment record %>
+      <% if comment == nil %>
+        <% comment = "" %>
+      <% else %>
+        <% comment = comment.comment %>
+      <% end %>
+      <% if debt != nil %>
         <div class="lg_dash_box float_left">
-          <div class="center">You owe <b><%= debt.expense.user.firstName %></b> 
-            $<%= (debt.percentage_owed*debt.expense.price/100).round(2)%> of $<%= debt.expense.price %> 
-            for <b><span title="<%= debt.expense.description %>"><%= debt.expense.item %></span></b>
+          <div class="center">You owe <b><%= expense.user.firstName %></b> 
+            $<%= (debt.percentage_owed*expense.price/100).round(2)%> of $<%= expense.price %> 
+            for <b><span title="<%= debt.expense.description %>"><%= expense.item %></span></b>
           </div>
         </div>
         <div class="float_right" style="margin-right:20px;margin-top:10px;">
@@ -15,10 +23,18 @@ View <%= link_to "Consolidated Debts", households_path %>
         </div>
         <div id="debt<%=debt.id %>" class="float_right hidden" style="width:650px;">
           <br />
-          <div class="float_left" style="margin:0 0 30px 130px;"><textarea id="box<%=debt.id %>" onfocus="setFocus('box<%=debt.id %>')" onblur="remFocus('box<%=debt.id %>')" class="expense_cmt_box"></textarea></div>
-          <div class="float_right">&nbsp;&nbsp;&nbsp;&nbsp;<input class="button big_link hand" type="button" value="POST" /></div>
-        </div> 
+          <%= form_for(:comment, :url => url_for(:controller=> :comments, :action => 'create')) do |f| %>
+            <div class="float_left" style="margin:0 0 30px 130px;">
+              <%= f.hidden_field :user_id, :value => current_user.id %>
+              <%= f.hidden_field :expense_id, :value => debt.expense_id %>
+              <%= f.text_area :comment, :value => comment, :class => "expense_cmt_box", :id => "box"+debt.id.to_s, :onfocus => "setFocus('box"+debt.id.to_s+"')", :onblur => "remFocus('box"+debt.id.to_s+"')" %>
+            </div>
+            <div class="float_right" style="width:90px;"><%= submit_tag "POST", :width => 15, :title => "Create Reminder", :class => "button big_link hand" %></div>
+              <% end %>
+        </div>     
+      <%end%>
       <% end %>
+     
 <% else %>
     <br />
     <div style="text-align:center"><span class="big_link">You do not have any outstanding debts.</span></div>

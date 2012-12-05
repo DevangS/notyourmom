@@ -1,4 +1,5 @@
-<%= form_tag :controller => 'reminders', :action => 'delete_button' do %>
-	<%= hidden_field_tag :id, expense_id %>
-    <%= submit_tag "x" %> 
-<% end %>
+
+	<%= form_tag :controller => 'reminders', :action => 'delete_button' do %>
+		<%= hidden_field_tag :id, expense_id %>
+	    <%= image_submit_tag 'icons/delete.png', :width => 15, :class => "sm_button", :title => "Delete Reminder" %> 
+	<% end %>

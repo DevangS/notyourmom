@@ -8,6 +8,13 @@
 Household.delete_all
 User.delete_all
 Authentication.delete_all
+Debt.delete_all
+Reminder.delete_all
+Invitation.delete_all
+Comment.delete_all
+Expense.delete_all
+Tag.delete_all
+
 # set up notyoumom household
 notyourmom = Household.create(:name => 'NotYourMom')
 
