@@ -2,47 +2,47 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-form {
+.ns_comments form {
     margin: 0;
     padding: 10px;
 }
 
-a {
+.ns_comments a {
     color: #3366ff;
     text-decoration: underline;
 }
 
-a:hover {
+.ns_comments a:hover {
     text-decoration: none;
 }
 
-#comment-target {
+.ns_comments #comment-target {
     background: #e1eef5;
     border: 1px solid #777;
     padding: 10px;
 }
 
-#comments {
+.ns_comments #inline-comments {
     padding: 0 10px;
 }
 
-input[type=submit] {
+.ns_comments input[type=submit] {
     display: none;
 }
 
-.centered {
+.ns_comments .centered {
     margin: 0 auto;
     width: 400px;
 }
 
-.comment {
+.ns_comments .comment {
     background: #fafafa;
     border: 1px solid #999;
     margin-top: 3px;
     padding: 5px;
 }
 
-.failedComment {
+.ns_comments .failedComment {
     background: #f7f7f7;
     border: 1px solid #999;
     margin-top: 3px;
@@ -50,6 +50,6 @@ input[type=submit] {
     padding: 5px;
 }
 
-    .failedComment .comment {
+    .ns_comments .failedComment .comment {
         margin-bottom: 5px;
     }

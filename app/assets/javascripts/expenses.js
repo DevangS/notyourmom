@@ -1,24 +1,41 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file:
-# http://jashkenas.github.com/coffee-script/
+function getCsrfToken() {
+    return $('meta[name=csrf-token]').attr('content');
+}
 
 $(function() {
-    $('form').submit(function(e) {
-        postComment($('#comment').val());
-        $('#comment').val('');
+    var ns = (function(namespace) {
+        return function(selector) {
+            return namespace + ' ' + selector;
+        }
+    })('.ns_comments');
+
+    // Fix for overzealous CSRF defense
+    $(document).ajaxSend(function(e, xhr) {
+        xhr.setRequestHeader('X-CSRF-Token', getCsrfToken());
+    });
+
+    $(ns('form')).submit(function(e) {
+        var commentField = $(ns('#comment'));
+
+        postComment(commentField.val());
+        commentField.val('');
+
         e.preventDefault();
     });
 
     function postComment(text) {
-        var commentText = text || $('#comment').val(),
+        var commentText = text || $(ns('#comment')).val(),
             comment = addLocally(commentText);
 
         $.post(
-            '/expenses',
-            $.extend({comment: commentText}, serializeForm()),
+            '/comments.json',
+            $.extend({'comment[comment]': commentText}, serializeForm()),
             function(response) {
-                $.parseJSON(response).success === false && rollBack(comment);
+                console.log($.parseJSON(reponse));
+                $.parseJSON(response).success == false && rollBack(comment);
+            },
+            function(reponse) {
+                console.log('error' + reponse);
             }
         );
     }
@@ -27,20 +44,23 @@ $(function() {
         return $('<div/>', {class: 'comment'})
             .text(commentText)
             .hide()
-            .appendTo($('#comments'))
+            .appendTo($(ns('#inline-comments')))
             .fadeIn();
     }
 
     function rollBack(comment) {
+        console.log('rollback called');
         showError(comment);
     }
 
     function serializeForm() {
-        var fields = {};
+        var fields = {
+            authenticity_token: getCsrfToken()
+        };
 
-        $('#inline-comment-form input').each(function() {
+        $(ns('#inline-comment-form input')).each(function() {
             var field = $(this);
-            if (field.attr('name') !== 'comment') {
+            if (field.attr('name') !== 'comment[comment]') {
                 fields[field.attr('name')] = field.val();
             }
         });
@@ -55,7 +75,7 @@ $(function() {
             ),
             retryLink = $('<a/>', {href: '#'}).text('Retry').click(function() {
                 postComment(comment.text());
-                comment.closest('.failedComment').fadeOut().remove();
+                comment.closest(ns('.failedComment')).fadeOut().remove();
             });
 
         comment.replaceWith(errorWrapper.append(message).append(retryLink));

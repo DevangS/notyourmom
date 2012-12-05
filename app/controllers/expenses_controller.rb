@@ -46,6 +46,7 @@ class ExpensesController < ApplicationController
     @expense = Expense.find(params[:id])
     @debts = @expense.debts
     @reminder = @expense.reminder
+    @user = current_user
     # @inline_comment_form = render_to_string 'comments/inline'
 
     respond_to do |format|

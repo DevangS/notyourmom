@@ -28,14 +28,14 @@
     </td>
   </tr>
 </table>
-  <div class="float_right block">
+<div class="float_right block">
   <table class="debt_box">
     <tr>
       <th></th>
       <th></th>
       <th></th>
     </tr>
-<% @debts.each do |debt| %>
+    <% @debts.each do |debt| %>
     <tr>
       <td><%=debt.user.firstName%> <%=debt.user.lastName%></td>
       <td><b>
@@ -43,23 +43,25 @@
       </b></td>
       <td><% if(debt.paid)%>Paid <% else%> Unpaid <%end %></td>
     </tr>
-<% end %>
+    <% end %>
   </table>
+</div>
+
+<div class="ns_comments">
+  <div id="inline-comments">
+  <% if @expense.comments.any? %>
+    <% @expense.comments.each do |c| %>
+      <div class="comment"><%= c.comment %></div>
+    <% end %>
+  <% end %>
+  </div>
+<form id="inline-comment-form">
+  <!-- Yo, this shit cray right here -->
+  <input type="text" id="comment" name="comment[comment]" placeholder="Add a comment..." />
+  <input type="hidden" name="comment[expense_id]" value="<%= @expense.id %>" />
+  <input type="hidden" name="comment[user_id]" value="<%= @user.id %>" />
+  <input type="hidden" name="authenticity_token" value=""/>
+</form>
+</div>
 
 <%= link_to "Back to Expenses", expenses_path %>
-  </div>
-
-<% if @expense.comments.any? %>
-  <div id="inline-comments">
-    <% @expense.comments.each do |c| %>
-      <li><%= c.comment %></li>
-    <% end %>
-  </div>
-<% end %>
-<form id="comment-form">
-  <!-- Yo, this shit cray right here -->
-  <input type="text" id="comment" name="comment" placeholder="Add a comment..." />
-  <input type="hidden" name="expense_id" value="<%= @expense.id %>" />
-  <input type="hidden" name="user_id" value="<%= @user.id %>" />
-  <input type="hidden" name="id" value="" />
-</form>

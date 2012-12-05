@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
   before_filter :authenticate_user!
+  skip_before_filter :verify_authenticity_token
 
   # GET /comments
   # GET /comments.json
@@ -48,15 +49,17 @@ class CommentsController < ApplicationController
   # POST /comments
   # POST /comments.json
   def create
+    puts('>>> PARAMETERS: ' + params[:comment].inspect)
+    puts 'fucking print this what the hell'
     @comment = Comment.new(params[:comment])
 
     respond_to do |format|
-      if @comment.save
+      if false and @comment.save
         format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
         format.json { render json: @comment, status: :created, location: @comment }
       else
         format.html { render action: "new" }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
+        format.json { render json: {success: false}, status: :unprocessable_entity }
       end
     end
   end
