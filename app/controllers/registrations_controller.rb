@@ -14,8 +14,13 @@ class RegistrationsController < Devise::RegistrationsController
     if !session[:invitation_id].blank?
       invitation = Invitation.find(session[:invitation_id])
       invitation.accepted = true
-      invitation.save
-      session[:invitation_id] = invitation.id
+      if invitation.save
+        #session[:invitation_id] = invitation.id
+        reset_session
+      else
+        flash[:notice] = "Signup failed please try again"
+        redirect_to new_user_registration_path
+      end
     end
     super
   end
