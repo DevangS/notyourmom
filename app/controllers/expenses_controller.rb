@@ -65,7 +65,11 @@ class ExpensesController < ApplicationController
 
     @expense.build_reminder
       #@date = params[:month] ? Date.parse(params[:month]) : Date.today
-      @date = Date.parse(params[:date])
+      if params[:date]
+        @date = Date.parse(params[:date])
+      else
+        @data = Date.today
+      end
 
     #remove current user from debt building
     @users = @users.where("id != ?", current_user.id)
