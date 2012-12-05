@@ -17,7 +17,7 @@
   <tr>
     <td><%= @debt.expense.item %></td>
     <td><%= @debt.expense.description %></td>
-    <td>$<%= @debt.expense.price %></td>
+    <td>$<%= number_with_precision(@debt.expense.price, :precision => 2) %></td>
     <td><%= @debt.percentage_owed %>%</td>
     <td><%= @debt.user.full_name %></td>
     <td><%= @debt.paid %></td>

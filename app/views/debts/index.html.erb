@@ -1,4 +1,4 @@
-View <%= link_to "Consolidated Debts", households_path %> 
+View <%= link_to "Consolidated Debts", households_path %>
 <h1>Outstanding Debts</h1>
 
 <% if @debts.count > 0 %>
@@ -12,8 +12,8 @@ View <%= link_to "Consolidated Debts", households_path %>
       <% end %>
       <% if debt != nil %>
         <div class="lg_dash_box float_left">
-          <div class="center">You owe <b><%= expense.user.firstName %></b> 
-            $<%= (debt.percentage_owed*expense.price/100).round(2)%> of $<%= expense.price %> 
+          <div class="center">You owe <b><%= expense.user.firstName %></b>
+            $<%= number_with_precision(debt.percentage_owed*expense.price/100, :precision => 2)%> of $<%= number_with_precision(expense.price, :precision => 2) %>
             for <b><span title="<%= debt.expense.description %>"><%= expense.item %></span></b>
           </div>
         </div>
@@ -31,10 +31,10 @@ View <%= link_to "Consolidated Debts", households_path %>
             </div>
             <div class="float_right" style="width:90px;"><%= submit_tag "POST", :width => 15, :title => "Create Reminder", :class => "button big_link hand" %></div>
               <% end %>
-        </div>     
+        </div>
       <%end%>
       <% end %>
-     
+
 <% else %>
     <br />
     <div style="text-align:center"><span class="big_link">You do not have any outstanding debts.</span></div>
@@ -49,8 +49,8 @@ View <%= link_to "Consolidated Debts", households_path %>
       <div id="debtsPaid" class="hidden">
       <% @debts_paid.each do |debt| %>
         <div class="lg_dash_box float_left">
-          <div class="center">You owe <b><%= debt.expense.user.firstName %></b> 
-            $<%= (debt.percentage_owed*debt.expense.price/100).round(2)%> of $<%= debt.expense.price %> 
+          <div class="center">You owed <b><%= debt.expense.user.firstName %></b>
+            $<%= number_with_precision(debt.percentage_owed*debt.expense.price/100, :precision => 2) %> of $<%= debt.expense.price %>
             for <b><span title="<%= debt.expense.description %>"><%= debt.expense.item %></span></b>
           </div>
         </div>

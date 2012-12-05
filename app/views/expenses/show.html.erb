@@ -15,7 +15,7 @@
   </tr>
   <tr>
     <td><%= @expense.description %></td>
-    <td>$<%= @expense.price %></td>
+    <td>$<%= number_with_precision(@expense.price, :precision => 2) %></td>
     <td><% if @expense.resolved %>Yes<%else%>No<%end%></td>
     <td><%= @expense.user.full_name %> </td>
     <td><% if @expense.user.id == current_user.id %><%= link_to 'Edit', edit_expense_path(@expense) %><%end%></td>
@@ -28,7 +28,7 @@
     </td>
   </tr>
 </table>
-  <div class="float_right block"> 
+  <div class="float_right block">
   <table class="debt_box">
     <tr>
       <th></th>
@@ -37,8 +37,10 @@
     </tr>
 <% @debts.each do |debt| %>
     <tr>
-      <td><%=debt.user.firstName%> <%=debt.user.lastName%> </td>
-      <td><b>$<%=(debt.percentage_owed*debt.expense.price/100).round(2)%></b></td>
+      <td><%=debt.user.firstName%> <%=debt.user.lastName%></td>
+      <td><b>
+        $<%= number_with_precision(debt.percentage_owed*debt.expense.price/100, :precision => 2) %>
+      </b></td>
       <td><% if(debt.paid)%>Paid <% else%> Unpaid <%end %></td>
     </tr>
 <% end %>
