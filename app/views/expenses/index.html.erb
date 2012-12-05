@@ -39,11 +39,6 @@
         <td><% if expense.user_id == current_user.id %>You<%else%><%= expense.user.firstName %><%end%></td>
         <td>
           <% if current_user == current_user.household.head %>
-            <% if flash[expense.id] and flash[expense.id][:notice] %>
-              <%= flash[expense.id][:notice] %>
-            <% elsif flash[expense.id] and flash[expense.id][:error] %>
-              <%= flash[expense.id][:error] %>
-            <% end %>
             <% if expense.reminder.date?%>
                 <%=expense.reminder.date.year %>-<%=expense.reminder.date.month %>-<%=expense.reminder.date.day %>
                 <div class="float_right" style="width:20px;">

@@ -23,8 +23,10 @@
   <div><%= f.label :password_confirmation %><br />
   <%= f.password_field :password_confirmation %></div>
 
-  <%= f.hidden_field :invitation_token, :value => @token %>
-  <%= f.hidden_field :household_id, :value => @household_id %>
+  <% if !@token.blank? && !@household_id.blank? %>
+    <%= f.hidden_field :invitation_token, :value => @token %>
+    <%= f.hidden_field :household_id, :value => @household_id %>
+  <% end %>
   
   <div><%= f.submit "Sign up" %></div>
 <% end %>
