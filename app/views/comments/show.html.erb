@@ -1,20 +1,19 @@
+<h1> Comment Expense </h1>
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Comment:</b>
-  <%= @comment.comment %>
-</p>
 
-<p>
-  <b>Expense:</b>
-  <%= @comment.expense.item %>
-</p>
-
-<p>
-  <b>User:</b>
-  <%= @comment.user.full_name %>
-</p>
-
-
+<table class="std_fmt">
+	<tr>
+		<th> Comment </th>
+		<th> Expense </th>
+		<th> User </th>
+	</tr>
+	<tr> 
+		<td> <%= @comment.comment %> </td>
+		<td> <%= @comment.expense.item %> </td>
+		<td> <%= @comment.user.full_name %> </td>
+	</th>
+</table>
+<br>
 <%= link_to 'Edit', edit_comment_path(@comment) %> |
 <%= link_to 'Back', comments_path %>

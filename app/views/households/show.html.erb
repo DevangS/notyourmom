@@ -1,19 +1,51 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Name:</b><br/>
-  <%= @household.name %><br/>
-  <b>House Members:</b><br/>
-  <% @household.users.each do |user| %>
-     <%= user.full_name %><br/>
-  <% end %>
-  <b>Expenses:</b><br/>
-  <% @household.expenses.each do |expense| %>
-  	<%= expense.price.to_s + " " + expense.item + " " + expense.created_at.to_s %> <br/>
-  <% end %>
-  <b>Head of Household:</b><br/>
-  <%= @household.head.full_name %>
-</p>
+<h1> Household of <%= @household.name %> </h1>
+
+<table class="std_fmt">
+    <tr>
+      <th> Head of House <th>
+    </tr>
+    <tr>
+      <td>
+        <%= @household.head.full_name %>
+      </td>
+    </tr>
+</table>
+
+<br >
+
+<table class="std_fmt">
+    <tr>
+      <th> House Members <th>
+    </tr>
+        <% @household.users.each do |user| %>
+      <tr>
+        <td>
+          <%= user.full_name %>
+        </td>
+      </tr>
+        <% end %>
+</table>
+
+<br>
+
+<table class="std_fmt">
+    <tr>
+      <th> Expense </th>
+      <th> Price </th>
+      <th> Created at </th>
+    </tr>
+    <% @household.expenses.each do |expense| %>
+    <tr>
+      <td> <%= expense.item %> </td>
+      <td> <%= expense.price.to_s %> </td>
+      <td> <%= expense.created_at.to_s %> </td>        
+    </tr>
+        <% end %>
+</table>
+<br>
+
 
 <% if current_user.is_head_of_house %>
     <%= link_to 'Edit', edit_household_path(@household) %> |
