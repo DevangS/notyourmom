@@ -23,7 +23,7 @@
           </tr>
           <tr>
             <td><%= link_to expense.item, expense %></td>
-            <td>$<%= expense.price %></td>
+            <td>$<%= "%.2f" % expense.price %></td>
             <td><% if expense.resolved %>Yes<%else%>No<%end%></td>
             <td><%= expense.user.full_name %> </td>
             <td><% if expense.user.id == current_user.id %><%= link_to 'Edit', edit_expense_path(expense) %><%end%></td>
@@ -39,7 +39,7 @@
             <% expense.comments.each do |comment| %>
             <tr>
               <td colspan="4"><span class="name_text"><%= comment.user.full_name %></span>: <i>"<%= comment.comment %>"</i> </td>
-              <td><% if current_user.id == comment.user_id %><%= link_to 'Delete', comment, confirm: 'Are you sure?', method: :delete %> <%end%></td>
+              <td><% if current_user.id == comment.user_id %><%= link_to 'Edit', edit_comment_path(comment)%> <%= link_to 'Delete', comment, confirm: 'Are you sure?', method: :delete %> <%end%></td>
             </tr>
             <% end %>
           </table>
