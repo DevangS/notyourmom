@@ -49,9 +49,17 @@
 
 <div class="ns_comments">
   <div id="inline-comments">
+    <h2>Comments</h2>
   <% if @expense.comments.any? %>
-    <% @expense.comments.each do |c| %>
-      <div class="comment"><%= c.comment %></div>
+    <% @expense.comments.each do |comment| %>
+      <div class="comment">
+        <div class="comment-author">
+          <%= comment.user.full_name %>
+        </div>
+        <div class="comment-text">
+          <%= comment.comment %>
+        </div>
+      </div>
     <% end %>
   <% end %>
   </div>
@@ -63,5 +71,22 @@
   <input type="hidden" name="authenticity_token" value=""/>
 </form>
 </div>
+
+<script type="text/template" id="comment-template">
+  <div class="comment">
+    <div class="comment-author">
+      <%= @user.full_name %>
+    </div>
+    <div class="comment-text">
+      {text}
+    </div>
+  </div>
+</script>
+
+<script type="text/template" id="rejected-comment-template">
+  <div class="failedComment">
+    <span class="uhoh">Your comment failed to send. Heads will roll for this.</span>
+  </div>
+</script>
 
 <%= link_to "Back to Expenses", expenses_path %>

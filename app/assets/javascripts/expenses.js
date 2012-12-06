@@ -1,3 +1,7 @@
+/**
+ *  * This is the worst JS you've ever seen.
+ */
+
 function getCsrfToken() {
     return $('meta[name=csrf-token]').attr('content');
 }
@@ -9,7 +13,8 @@ $(function() {
         }
     })('.ns_comments');
 
-    // Fix for overzealous CSRF defense
+    // Fix for CSRF defense issue. We need to send this header with AJAX
+    // form submissions.
     $(document).ajaxSend(function(e, xhr) {
         xhr.setRequestHeader('X-CSRF-Token', getCsrfToken());
     });
@@ -24,28 +29,32 @@ $(function() {
     });
 
     function postComment(text) {
+        console.log('postComment');
         var commentText = text || $(ns('#comment')).val(),
             comment = addLocally(commentText);
 
-        $.post(
-            '/comments.json',
-            $.extend({'comment[comment]': commentText}, serializeForm()),
-            function(response) {
-                console.log($.parseJSON(reponse));
-                $.parseJSON(response).success == false && rollBack(comment);
-            },
-            function(reponse) {
-                console.log('error' + reponse);
+        $.ajax({
+            url: '/comments.json',
+            type: 'POST',
+            data: $.extend(
+                {'comment[comment]': commentText},
+                serializeForm()
+            ),
+            error: function(jqxhr, textStatus, errorThrown) {
+                rollBack(comment);
             }
-        );
+        });
     }
 
     function addLocally(commentText) {
-        return $('<div/>', {class: 'comment'})
-            .text(commentText)
-            .hide()
-            .appendTo($(ns('#inline-comments')))
-            .fadeIn();
+        console.log('addLocally');
+        var template = $('#comment-template')
+            .html()
+            .replace('{text}', commentText);
+        console.log(template);
+
+
+        return $(template).hide().appendTo($(ns('#inline-comments'))).fadeIn();
     }
 
     function rollBack(comment) {
@@ -68,7 +77,12 @@ $(function() {
         return fields;
     }
 
-    function showError(comment) {
+/*    function showError(comment) {
+        var errorTemplate = $($('#rejected-comment-template').html());
+
+        errorTemplate.find('.failedComment').prepend(comment);
+        errorTemplate.append
+
         var errorWrapper = $('<div/>', {class: 'failedComment'}),
             message = $('<span/>', {class: 'uhoh'}).text(
                 'Your comment failed to send. Heads will roll for this.'
@@ -80,5 +94,37 @@ $(function() {
 
         comment.replaceWith(errorWrapper.append(message).append(retryLink));
         errorWrapper.prepend(comment);
+    }*/
+
+    function showError(comment) {
+        console.log('showError');
+        var errorTemplate = $($('#rejected-comment-template').html()),
+            retryLink = $('<a/>', {href: '#'}).text('Click to retry').click(
+                function() {
+                    var commentText = comment.find('.comment-text').text();
+
+                    $(this).closest(ns('.failedComment')).fadeOut(
+                        'fast',
+                        function() {
+                            $(this).remove();
+                            postComment(commentText);
+                        }
+                    );
+
+                    return false;
+                }
+            ),
+            commentContents = comment.clone();
+
+        errorTemplate.append(retryLink);
+        errorTemplate.prepend(commentContents);
+        comment.replaceWith(errorTemplate);
+
+/*        comment.replaceWith(
+            errorTemplate
+                .append(retryLink)
+                .find('.failedComment')
+                .prepend(commentContents)
+        );*/
     }
 });

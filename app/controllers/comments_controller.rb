@@ -49,12 +49,10 @@ class CommentsController < ApplicationController
   # POST /comments
   # POST /comments.json
   def create
-    puts('>>> PARAMETERS: ' + params[:comment].inspect)
-    puts 'fucking print this what the hell'
     @comment = Comment.new(params[:comment])
 
     respond_to do |format|
-      if false and @comment.save
+      if @comment.save
         format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
         format.json { render json: @comment, status: :created, location: @comment }
       else
