@@ -32,13 +32,14 @@
               </div>
           <% end %>
         </div>
-        <h2> Invitations Sent:</h2>
+        <% if !@invitations.nil? %><h3> Invitations Sent</h3>
         <% @invitations.each do |invitation| %>
             <% if !invitation.accepted  %>
                 <%=  invitation.recipient_email %>
                 <%=  link_to 'Delete', invitation, confirm: 'Are you sure?', method: :delete %>
             <% end %>
             <br />
+        <% end %>
         <% end %>
     <% end %>
 
@@ -50,6 +51,7 @@
 <% end %>
 
 <% if @members.length > 0 %>
+  <h3> Housemembers </h3>
   <table class="std_fmt">
     <tr>
       <th>Name</th>
