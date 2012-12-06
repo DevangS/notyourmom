@@ -38,3 +38,14 @@ function remFocus(target) {
     $(function() {
         $(".datepicker").datepicker({dateFormat: 'yy-mm-dd'});
     });
+
+
+function updateUserDebtSlice() {
+	var debtSlices = document.getElementsByClassName("debtSliceField");
+	var userDebtSlice = 100;
+	$.each( debtSlices, function() {
+		userDebtSlice -= this.value;
+	});
+	userDebtSlice = Math.round(userDebtSlice*100)/100 //rounding
+	document.getElementById("userDebt").innerHTML = userDebtSlice+"%";
+}
