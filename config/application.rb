@@ -70,7 +70,7 @@ module Notyourmom
         :request_specs => true
         g.fixture_replacement :factory_girl, :dir => "spec/factories"
     end
-
+=begin
     config.action_mailer.default_url_option = { :host => 'notyourmom.heroku.com' }
     config.action_mailer.delivery_method = :smtp 
     config.action_mailer.perform_deliveries = true 
@@ -86,5 +86,7 @@ module Notyourmom
         :user_name => ENV['GMAIL_SMTP_USER'],
         :password  => ENV['GMAIL_SMTP_PASSWORD']
     }
-  end
+
+=end
+ end
 end

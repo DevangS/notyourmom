@@ -17,12 +17,15 @@ Notyourmom::Application.configure do
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
 
+  config.action_mailer.default_url_options = { :host => 'notyourmom.herokuapp.com' }
+
   # Define the delivery method : SMTP  
-  config.action_mailer.raise_delivery_errors = true
+  # config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
 
   # ActionMailer settings
+=begin
   ActionMailer::Base.smtp_settings = {
   :address  => "smtp.gmail.com",
   :port  => 587,
@@ -31,7 +34,16 @@ Notyourmom::Application.configure do
   :user_name => ENV['GMAIL_SMTP_USER'],
   :password  => ENV['GMAIL_SMTP_PASSWORD']
   }
-
+=end
+  config.action_mailer.smtp_settings = {
+    address: "smtp.gmail.com",
+    port: 587,
+    domain: "notyourmom.herokuapp.com",
+    authentication: "plain",
+    enable_starttls_auto: true,
+    user_name: ENV["GMAIL_SMTP_USERNAME"],
+    password: ENV["GMAIL_SMTP_PASSWORD"]
+  }
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
