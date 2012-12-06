@@ -52,12 +52,18 @@
     <h2>Comments</h2>
   <% if @expense.comments.any? %>
     <% @expense.comments.each do |comment| %>
-      <div class="comment">
+      <div class="comment"
+        data-id="<%= comment.id %>"
+        data-user-id="<%= comment.user.id %>"
+        >
         <div class="comment-author">
           <%= comment.user.full_name %>
         </div>
         <div class="comment-text">
           <%= comment.comment %>
+        </div>
+        <div class="controls">
+          <a href="#">Edit</a> &middot; <a href="#">Delete</a>
         </div>
       </div>
     <% end %>
@@ -80,6 +86,9 @@
     <div class="comment-text">
       {text}
     </div>
+    <div class="controls">
+      <a href="#">Edit</a> &middot; <a href="#">Delete</a>
+    </div>
   </div>
 </script>
 
@@ -87,6 +96,12 @@
   <div class="failedComment">
     <span class="uhoh">Your comment failed to send. Heads will roll for this.</span>
   </div>
+</script>
+
+<!-- This is incredibly bad but we need to hack this up right now -->
+<script type="text/javascript">
+  env && env.set('expense-id', <%= @expense.id %>)
+      && env.set('current-user-id', <%= @user.id %>);
 </script>
 
 <%= link_to "Back to Expenses", expenses_path %>

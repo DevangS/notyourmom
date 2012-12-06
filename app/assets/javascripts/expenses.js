@@ -6,6 +6,20 @@ function getCsrfToken() {
     return $('meta[name=csrf-token]').attr('content');
 }
 
+var env = (function() {
+    store = {};
+
+    return {
+        set: function(key, value) {
+            store[key] = value;
+            return true;
+        },
+        get: function(key) {
+            return store[key];
+        }
+    };
+})();
+
 $(function() {
     var ns = (function(namespace) {
         return function(selector) {
@@ -13,10 +27,37 @@ $(function() {
         }
     })('.ns_comments');
 
+    function isOwnComment($commentNode) {
+        return $commentNode.attr('data-user-id') == env.get('current-user-id');
+    }
+
     // Fix for CSRF defense issue. We need to send this header with AJAX
     // form submissions.
     $(document).ajaxSend(function(e, xhr) {
         xhr.setRequestHeader('X-CSRF-Token', getCsrfToken());
+    });
+
+    // Hover and click behavior for comment controls
+    function enableControls($comment) {
+        var $this = $comment;
+
+        if (isOwnComment($this)) {
+            $this.hover(
+                function() {
+                    $this.find('.controls').show();
+                },
+                function() {
+                    $this.find('.controls').hide();
+                }
+            ).find('.controls').each(function() {
+                $(this).find('a')
+                    .first().unbind('click').click(makeEditable)
+                    .next().unbind('click').click(requestDelete);
+            });
+        }
+    }
+    $(ns('.comment')).each(function() {
+        enableControls($(this));
     });
 
     $(ns('form')).submit(function(e) {
@@ -29,7 +70,6 @@ $(function() {
     });
 
     function postComment(text) {
-        console.log('postComment');
         var commentText = text || $(ns('#comment')).val(),
             comment = addLocally(commentText);
 
@@ -42,23 +82,30 @@ $(function() {
             ),
             error: function(jqxhr, textStatus, errorThrown) {
                 rollBack(comment);
+            },
+            success: function(response) {
+                console.log(response);
+                comment
+                    .attr('data-id', response.id)
+                    .attr('data-user-id', response.user_id);
+                enableControls($(comment));
             }
         });
     }
 
     function addLocally(commentText) {
-        console.log('addLocally');
         var template = $('#comment-template')
-            .html()
-            .replace('{text}', commentText);
-        console.log(template);
+                .html().replace('{text}', commentText),
+            comment = $(template);
 
+        comment.find('.controls a')
+            .first().click(makeEditable)
+            .next().click(requestDelete);
 
-        return $(template).hide().appendTo($(ns('#inline-comments'))).fadeIn();
+        return comment.hide().appendTo($(ns('#inline-comments'))).fadeIn();
     }
 
     function rollBack(comment) {
-        console.log('rollback called');
         showError(comment);
     }
 
@@ -76,25 +123,6 @@ $(function() {
 
         return fields;
     }
-
-/*    function showError(comment) {
-        var errorTemplate = $($('#rejected-comment-template').html());
-
-        errorTemplate.find('.failedComment').prepend(comment);
-        errorTemplate.append
-
-        var errorWrapper = $('<div/>', {class: 'failedComment'}),
-            message = $('<span/>', {class: 'uhoh'}).text(
-                'Your comment failed to send. Heads will roll for this.'
-            ),
-            retryLink = $('<a/>', {href: '#'}).text('Retry').click(function() {
-                postComment(comment.text());
-                comment.closest(ns('.failedComment')).fadeOut().remove();
-            });
-
-        comment.replaceWith(errorWrapper.append(message).append(retryLink));
-        errorWrapper.prepend(comment);
-    }*/
 
     function showError(comment) {
         console.log('showError');
@@ -119,12 +147,81 @@ $(function() {
         errorTemplate.append(retryLink);
         errorTemplate.prepend(commentContents);
         comment.replaceWith(errorTemplate);
+    }
 
-/*        comment.replaceWith(
-            errorTemplate
-                .append(retryLink)
-                .find('.failedComment')
-                .prepend(commentContents)
-        );*/
+    function requestDelete() {
+        var comment = $(this).closest('.comment');
+
+        comment.fadeOut('fast', function() {
+            comment.hide();
+        });
+
+        $.ajax({
+            url: '/comments/' + comment.attr('data-id'),
+            type: 'POST',
+            data: {
+                id: comment.attr('data-id'),
+                '_method': 'delete'
+            },
+            error: function() {
+                comment.fadeIn('fast', function() {
+                    comment.show();
+                });
+            },
+            success: function() {
+                comment.remove();
+            }
+        });
+
+        return false;
+    }
+
+    function makeEditable() {
+        function cancelEditing() {
+            commentText
+                .text(initialText)
+                .removeAttr('contenteditable')
+                .blur();
+        }
+
+        var comment = $(this).closest('.comment'),
+            commentText = $(this).parent().siblings('.comment-text'),
+            initialText = $.trim(commentText.text());
+
+        console.log('attr is', commentText.attr('contenteditable'))
+        if (commentText.attr('contenteditable') !== undefined) {
+            console.log('canceled');
+            cancelEditing();
+            return;
+        }
+
+        commentText
+            .attr('contenteditable', true)
+            .focus()
+            .keydown(function(e) {
+                if (e.keyCode === 13) {
+                    // Enter key pressed
+                    commentText.removeAttr('contenteditable');
+                    $.ajax({
+                        url: '/comments/' + comment.attr('data-id'),
+                        type: 'POST',
+                        data: {
+                            'comment[comment]': $.trim($(this).text()),
+                            'comment[user_id]': comment.attr('data-user-id'),
+                            'comment[expense_id]': env.get('expense-id'),
+                            '_method': 'put'
+                        },
+                        error: function() {
+                            commentText.text(initialText);
+                        }
+                    });
+                }
+                else if (e.keyCode === 27) {
+                    // Esc key pressed
+                    cancelEditing();
+                }
+            });
+
+        return false;
     }
 });
