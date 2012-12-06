@@ -18,7 +18,6 @@ View <%= link_to "Consolidated Debts", households_path %>
           </div>
         </div>
         <div class="float_right" style="margin-right:20px;margin-top:10px;">
-            <a href="#">Pay</a>&nbsp;&nbsp;or&nbsp;&nbsp;
             <span id="text<%=debt.id %>" class="hand" onclick="toggleComment('<%=debt.id %>')">Contest</span>
         </div>
         <div id="debt<%=debt.id %>" class="float_right hidden" style="width:650px;">
