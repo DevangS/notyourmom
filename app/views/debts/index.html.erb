@@ -13,7 +13,7 @@ View <%= link_to "Consolidated Debts", households_path %>
       <% if debt != nil %>
         <div class="lg_dash_box float_left">
           <div class="center">You owe <b><%= expense.user.firstName %></b> 
-            $<%= (debt.percentage_owed*expense.price/100).round(2)%> of $<%= expense.price %> 
+            $<%= "%.2f" % (debt.percentage_owed*expense.price/100).round(2)%> of $<%="%.2f" % expense.price %> 
             for <b><span title="<%= debt.expense.description %>"><%= expense.item %></span></b>
           </div>
         </div>
@@ -50,7 +50,7 @@ View <%= link_to "Consolidated Debts", households_path %>
       <% @debts_paid.each do |debt| %>
         <div class="lg_dash_box float_left">
           <div class="center">You owe <b><%= debt.expense.user.firstName %></b> 
-            $<%= (debt.percentage_owed*debt.expense.price/100).round(2)%> of $<%= debt.expense.price %> 
+            $<%="%.2f" % (debt.percentage_owed*debt.expense.price/100).round(2)%> of $<%= "%.2f" % debt.expense.price %> 
             for <b><span title="<%= debt.expense.description %>"><%= debt.expense.item %></span></b>
           </div>
         </div>

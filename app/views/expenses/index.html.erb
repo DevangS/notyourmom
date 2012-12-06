@@ -35,7 +35,7 @@
     <% @expenses.each do |expense| %>
       <tr>
         <td><span title="<%= expense.description %>"><%= link_to expense.item, expense %></span></td>
-        <td>$<%= expense.price %></td>
+        <td>$<%= "%.2f" % expense.price %></td>
         <td><% if expense.user_id == current_user.id %>You<%else%><%= expense.user.firstName %><%end%></td>
         <td>
           <% if current_user == current_user.household.head %>
