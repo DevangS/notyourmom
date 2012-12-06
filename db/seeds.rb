@@ -41,6 +41,11 @@ scott = User.create(:firstName => :scott, :lastName => :ngo,
 	:email =>'sn@doodle.com', :household_id => notyourmom.id, 
 	:password => "password", :password_confirmation => "password")
 
+
+# set up tanya as head
+notyourmom.update_attributes(:head_id => tanya.id)
+
+
 #Cleaning supplies 50, split evently, by tanya
 cleaning_supp = Expense.create(
 	:user_id => tanya.id, 
@@ -53,23 +58,23 @@ cleaning_supp = Expense.create(
 debt00 = Debt.create(
 	:expense_id => cleaning_supp.id, 
 	:user_id => devang.id,
-	:percentage_owed =>10,
-	:paid => false,)
+	:percentage_owed =>20,
+	:paid => false)
 debt01 = Debt.create(
 	:expense_id => cleaning_supp.id, 
 	:user_id => scott.id,
-	:percentage_owed =>10,
-	:paid => false,) 
+	:percentage_owed =>20,
+	:paid => false) 
 debt02 = Debt.create(
 	:expense_id => cleaning_supp.id, 
 	:user_id => helen.id,
-	:percentage_owed =>10,
-	:paid => false,) 
+	:percentage_owed =>20,
+	:paid => false) 
 debt03 = Debt.create(
 	:expense_id => cleaning_supp.id, 
 	:user_id => bulat.id,
-	:percentage_owed =>10,
-	:paid => false,) 
+	:percentage_owed =>20,
+	:paid => false) 
 
 #Booze, $100 50% split with scott
 booze = Expense.create(
@@ -84,70 +89,154 @@ debt10 = Debt.create(
 	:expense_id => booze.id, 
 	:user_id => devang.id,
 	:percentage_owed =>50,
-	:paid => false,)
+	:paid => false)
 
 #weed
 weed = Expense.create(
-	:user_id => tanya.id, 
+	:user_id => scott.id, 
 	:resolved => false,
 	:item => 'weed', 
 	:price => 100.00, 
-	:household_id => tanya.household_id,
+	:household_id => scott.household_id,
 	:description =>'awww yeaah',
-	:created_at => DateTime.parse(20.days.ago.to_s)
+	:created_at => DateTime.parse(20.days.ago.to_s))
 debt00 = Debt.create(
 	:expense_id => weed.id, 
 	:user_id => devang.id,
-	:percentage_owed =>10,
-	:paid => false,)
+	:percentage_owed =>20,
+	:paid => false)
 debt01 = Debt.create(
 	:expense_id => weed.id, 
-	:user_id => scott.id,
-	:percentage_owed =>10,
-	:paid => false,) 
+	:user_id => tanya.id,
+	:percentage_owed =>20,
+	:paid => false) 
 debt02 = Debt.create(
 	:expense_id => weed.id, 
 	:user_id => helen.id,
-	:percentage_owed =>10,
-	:paid => false,) 
+	:percentage_owed =>20,
+	:paid => false) 
 debt03 = Debt.create(
 	:expense_id => weed.id, 
 	:user_id => bulat.id,
-	:percentage_owed =>10,
-	:paid => false,) 
+	:percentage_owed =>20,
+	:paid => false) 
 
-#weed2
+#weed2 2 months ago
 weed = Expense.create(
-	:user_id => tanya.id, 
-	:resolved => false,
+	:user_id => scott.id, 
+	:resolved => true,
 	:item => 'weed', 
 	:price => 100.00, 
-	:household_id => tanya.household_id,
+	:household_id => scott.household_id,
 	:description =>'awww yeaah',
-	:created_at => DateTime.parse(13.days.ago.to_s)
+	:created_at => DateTime.parse(2.months.ago.to_s))
 debt00 = Debt.create(
 	:expense_id => weed.id, 
 	:user_id => devang.id,
-	:percentage_owed =>10,
-	:paid => false,)
+	:percentage_owed =>20,
+	:paid => true)
 debt01 = Debt.create(
 	:expense_id => weed.id, 
-	:user_id => scott.id,
-	:percentage_owed =>10,
-	:paid => false,) 
+	:user_id => tanya.id,
+	:percentage_owed =>20,
+	:paid => true) 
 debt02 = Debt.create(
 	:expense_id => weed.id, 
 	:user_id => helen.id,
-	:percentage_owed =>10,
-	:paid => false,) 
+	:percentage_owed =>20,
+	:paid => false) 
 debt03 = Debt.create(
 	:expense_id => weed.id, 
 	:user_id => bulat.id,
-	:percentage_owed =>10,
-	:paid => false,) 
+	:percentage_owed =>20,
+	:paid => true) 
 
+#plates
+exp = Expense.create(
+	:user_id => helen.id, 
+	:resolved => false,
+	:item => 'paper plates', 
+	:price => 10.00, 
+	:household_id => helen.household.id,
+	:description =>'for the party on friday',
+	:created_at => DateTime.parse(2.months.ago.to_s))
+debt00 = Debt.create(
+	:expense_id => exp.id, 
+	:user_id => devang.id,
+	:percentage_owed =>20,
+	:paid => true)
+debt01 = Debt.create(
+	:expense_id => exp.id, 
+	:user_id => scott.id,
+	:percentage_owed =>20,
+	:paid => true) 
+debt02 = Debt.create(
+	:expense_id => exp.id, 
+	:user_id => scott.id,
+	:percentage_owed =>20,
+	:paid => true) 
+debt03 = Debt.create(
+	:expense_id => exp.id, 
+	:user_id => bulat.id,
+	:percentage_owed =>20,
+	:paid => true) 
 
+#kitchen towels
+exp = Expense.create(
+	:user_id => helen.id, 
+	:resolved => false,
+	:item => 'kitchen towels', 
+	:price => 15.00, 
+	:household_id => helen.household.id,
+	:description =>'so we don\'t waste paper towels',
+	:created_at => DateTime.parse(5.days.ago.to_s))
+debt00 = Debt.create(
+	:expense_id => exp.id, 
+	:user_id => devang.id,
+	:percentage_owed =>20,
+	:paid => true)
+debt01 = Debt.create(
+	:expense_id => exp.id, 
+	:user_id => scott.id,
+	:percentage_owed =>20,
+	:paid => true) 
+debt02 = Debt.create(
+	:expense_id => exp.id, 
+	:user_id => scott.id,
+	:percentage_owed =>20,
+	:paid => true) 
+debt03 = Debt.create(
+	:expense_id => exp.id, 
+	:user_id => bulat.id,
+	:percentage_owed =>20,
+	:paid => false) 
 
-
-# set up tanya as head
-notyourmom.update_attributes(:head_id => tanya.id)
+#bread
+exp = Expense.create(
+	:user_id => helen.id, 
+	:resolved => false,
+	:item => 'bread for the house', 
+	:price => 25.00, 
+	:household_id => helen.household.id,
+	:description =>'I prefer rice',
+	:created_at => DateTime.parse(19.days.ago.to_s))
+debt00 = Debt.create(
+	:expense_id => exp.id, 
+	:user_id => devang.id,
+	:percentage_owed =>20,
+	:paid => true)
+debt01 = Debt.create(
+	:expense_id => exp.id, 
+	:user_id => scott.id,
+	:percentage_owed =>20,
+	:paid => true) 
+debt02 = Debt.create(
+	:expense_id => exp.id, 
+	:user_id => scott.id,
+	:percentage_owed =>20,
+	:paid => false) 
+debt03 = Debt.create(
+	:expense_id => exp.id, 
+	:user_id => bulat.id,
+	:percentage_owed =>20,
+	:paid => true) 

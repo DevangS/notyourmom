@@ -48,13 +48,13 @@
 				Welcome <%=current_user.firstName %>! <br />
 	    		<%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
 	    	<% else %>
-				<!-- LOGIN -->
+				<!-- LOGIN 
 				<div id="login">
 					<%= render :partial => '/devise/sessions/new_side_bar', 
 						:object => resource, :as => :resource %>
 					<span>Not a member yet? <%= link_to "Signing up is easy!", new_user_registration_path %>   or   
 						<%= link_to "Sign in with Facebook", "/auth/facebook" %></span>
-				</div>
+				</div>-->
 			<% end %>
 		</div>
 		<div id="nav">
