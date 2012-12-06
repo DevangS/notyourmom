@@ -20,6 +20,11 @@ class AuthenticationsController < ActionController::Base
       # Authentication not found, thus a new user.
       user = User.new
       user.apply_omniauth(auth)
+
+      household_id = Invitation.find_by_recipient_email(user.email).sender.household.id
+      if household_id
+        user.household_id = household_id
+      end
      
       if user.save(:validate => false)
         flash[:notice] = "Account created and signed in successfully."

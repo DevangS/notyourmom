@@ -78,31 +78,30 @@ class RemindersController < ApplicationController
   end
 
   def send_later 
-    render :text => params.to_yaml
     # Do an update
-    #if not params[:reminder][:id].blank?
-    #  @reminder = Reminder.find(params[:reminder][:id])
-    #  expense_id = @reminder.expense_id
-    #  params[:reminder].delete(:id)
-    #  if @reminder.update_attributes(params[:reminder])
-    #    flash[expense_id] = {:notice => 'A reminder was ' +
-    #      'successfully replaced.'}
-    #  else
-    #    flash[expense_id] = {:error => 'Failed to replace this ' +
-    #      'reminder.'}
-    #  end
-    ## Create a new reminder
-    #else
-    #  params[:reminder].delete(:id)
-    #  @reminder = Reminder.new(params[:reminder])
-    #  expense_id = @reminder.expense_id
-    #  if @reminder.save
-    #    flash[expense_id] = {:notice => 'Successfully created a new reminder.'}
-    #  else
-    #    flash[expense_id] = {:error => 'Failed to create a new reminder.'}
-    #  end
-    #end
-    #redirect_to :back
+    if not params[:reminder][:id].blank?
+      @reminder = Reminder.find(params[:reminder][:id])
+      expense_id = @reminder.expense_id
+      params[:reminder].delete(:id)
+      if @reminder.update_attributes(params[:reminder])
+        flash[expense_id] = {:notice => 'A reminder was ' +
+          'successfully replaced.'}
+      else
+        flash[expense_id] = {:error => 'Failed to replace this ' +
+          'reminder.'}
+      end
+    # Create a new reminder
+    else
+      params[:reminder].delete(:id)
+      @reminder = Reminder.new(params[:reminder])
+      expense_id = @reminder.expense_id
+      if @reminder.save
+        flash[expense_id] = {:notice => 'Successfully created a new reminder.'}
+      else
+        flash[expense_id] = {:error => 'Failed to create a new reminder.'}
+      end
+    end
+    redirect_to :back
   end
 
   def delete_button
