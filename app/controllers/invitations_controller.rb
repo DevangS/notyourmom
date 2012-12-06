@@ -23,9 +23,11 @@ class InvitationsController < ApplicationController
       redirect_to households_path
     else
       if invitation.save   
-        if user_signed_in?            
-          Mailer.invitation(invitation, new_user_registration_url(:token => "/#{invitation.token}")).deliver
-          flash[:notice] = "Thank you invitation sent!"
+        if user_signed_in?  
+          invitation_url = "http://notyourmom.heroku.com #{invitation.token}"         
+          # Mailer.invitation(invitation, new_user_registration_url(:token => "/#{invitation.token}")).deliver
+          Mailer.invitation(invitation).deliver
+          flash[:notice] = "Thank you invitation sent!" + invitation_url
           redirect_to households_path
         else
           flash[:notice] = "Unable to send invitation, please try again"
