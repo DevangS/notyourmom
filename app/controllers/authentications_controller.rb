@@ -21,8 +21,9 @@ class AuthenticationsController < ActionController::Base
       user = User.new
       user.apply_omniauth(auth)
 
-      household_id = Invitation.find_by_recipient_email(user.email).sender.household.id
-      if household_id
+      invite = Invitation.find_by_recipient_email(user.email)
+      if invite
+        household_id = invite.sender.household.id
         user.household_id = household_id
       end
      
