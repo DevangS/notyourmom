@@ -1,3 +1,93 @@
 // Place all the styles related to the Expenses controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.ns_comments {
+    clear: both;
+}
+
+.ns_comments form {
+    margin: 10px 0 10px 0;
+}
+
+.ns_comments a {
+    color: #3366ff;
+    text-decoration: underline;
+}
+
+.ns_comments a:hover {
+    text-decoration: none;
+}
+
+.ns_comments #comment-target {
+    background: #e1eef5;
+    border: 1px solid #d0d0d0;
+}
+
+.ns_comments #inline-comments {
+    margin-top: 110px;
+}
+
+.ns_comments #inline-comments h2 {
+    background: #52abe8;
+    border: 1px solid #d0d0d0;
+    color: #fff;
+    font-size: 9pt;
+    font-weight: normal;
+    margin: 0;
+    padding: 7px;
+}
+
+.ns_comments input[type=submit] {
+    display: none;
+}
+
+.ns_comments .centered {
+    margin: 0 auto;
+    width: 400px;
+}
+
+.ns_comments .comment {
+    background: #fafafa;
+    border: 1px solid #d0d0d0;
+    font-size: 12px;
+    margin-top: 3px;
+    padding: 5px;
+    position: relative;
+    right: 0;
+    top: 0;
+}
+
+.ns_comments .comment-author {
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.ns_comments .failedComment {
+    background: #f7f7f7;
+    border: 1px solid #999;
+    margin-top: 3px;
+    padding: 5px;
+}
+
+    .ns_comments .failedComment .comment {
+        margin-bottom: 5px;
+    }
+
+    .ns_comments .failedComment a {
+        color: #52abe8;
+    }
+
+.ns_comments .controls {
+    display: none;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+.ns_comments div[contenteditable=true] {
+    background: #fff;
+    border: 1px solid #777;
+    outline: none;
+    padding: 5px;
+}

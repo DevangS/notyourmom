@@ -1,4 +1,4 @@
-View <%= link_to "Consolidated Debts", households_path %> 
+View <%= link_to "Consolidated Debts", households_path %>
 <h1>Outstanding Debts</h1>
 
 <% if @debts.count > 0 %>
@@ -12,13 +12,12 @@ View <%= link_to "Consolidated Debts", households_path %>
       <% end %>
       <% if debt != nil %>
         <div class="lg_dash_box float_left">
-          <div class="center">You owe <b><%= expense.user.firstName %></b> 
-            $<%= "%.2f" % (debt.percentage_owed*expense.price/100).round(2)%> of $<%="%.2f" % expense.price %> 
+          <div class="center">You owe <b><%= expense.user.firstName %></b>
+            $<%= "%.2f" % (debt.percentage_owed*expense.price/100).round(2)%> of $<%="%.2f" % expense.price %>
             for <b><span title="<%= debt.expense.description %>"><%= expense.item %></span></b>
           </div>
         </div>
         <div class="float_right" style="margin-right:20px;margin-top:10px;">
-            <a href="#">Pay</a>&nbsp;&nbsp;or&nbsp;&nbsp;
             <span id="text<%=debt.id %>" class="hand" onclick="toggleComment('<%=debt.id %>')">Contest</span>
         </div>
         <div id="debt<%=debt.id %>" class="float_right hidden" style="width:650px;">
@@ -31,10 +30,10 @@ View <%= link_to "Consolidated Debts", households_path %>
             </div>
             <div class="float_right" style="width:90px;"><%= submit_tag "POST", :width => 15, :title => "Create Reminder", :class => "button big_link hand" %></div>
               <% end %>
-        </div>     
+        </div>
       <%end%>
       <% end %>
-     
+
 <% else %>
     <br />
     <div style="text-align:center"><span class="big_link">You do not have any outstanding debts.</span></div>
@@ -49,8 +48,8 @@ View <%= link_to "Consolidated Debts", households_path %>
       <div id="debtsPaid" class="hidden">
       <% @debts_paid.each do |debt| %>
         <div class="lg_dash_box float_left">
-          <div class="center">You owe <b><%= debt.expense.user.firstName %></b> 
-            $<%="%.2f" % (debt.percentage_owed*debt.expense.price/100).round(2)%> of $<%= "%.2f" % debt.expense.price %> 
+          <div class="center">You owe <b><%= debt.expense.user.firstName %></b>
+            $<%="%.2f" % (debt.percentage_owed*debt.expense.price/100).round(2)%> of $<%= "%.2f" % debt.expense.price %>
             for <b><span title="<%= debt.expense.description %>"><%= debt.expense.item %></span></b>
           </div>
         </div>

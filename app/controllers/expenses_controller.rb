@@ -34,7 +34,6 @@ class ExpensesController < ApplicationController
       end
     end
 
-    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @expenses }
@@ -48,6 +47,8 @@ class ExpensesController < ApplicationController
     @expense = Expense.find(params[:id])
     @debts = @expense.debts
     @reminder = @expense.reminder
+    @comments = @expense.comments
+    @user = current_user
 
     respond_to do |format|
       format.html # show.html.erb
@@ -62,7 +63,7 @@ class ExpensesController < ApplicationController
     @expense = Expense.new
     @users = User.where("household_id = ?", current_user.household_id)
 
-    #get total number of users in the house hold 
+    #get total number of users in the house hold
     @split = (100.0 / (@users.count)).round(2)
 
     @expense.build_reminder
@@ -101,7 +102,7 @@ class ExpensesController < ApplicationController
   # POST /expenses.json
   def create
     @expense = Expense.new(params[:expense])
-    @expense.user = current_user  
+    @expense.user = current_user
 
     respond_to do |format|
       if @expense.save
@@ -111,7 +112,7 @@ class ExpensesController < ApplicationController
           params[:expense][:reminder_attributes][:expense_id] = @expense.id.to_s
           @expense.reminder = Reminder.new(params[:expense][:reminder_attributes])
         end
-        
+
         format.html { redirect_to @expense, notice: 'Expense was successfully created.' }
         format.json { render json: @expense, status: :created, location: @expense }
       else

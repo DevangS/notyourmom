@@ -9,7 +9,7 @@ class HouseholdsController < ApplicationController
 
     members = User.where('id != ? AND household_id = ?', current_user.id, current_user.household_id)
     @consolidated_debts = members.map{|member| {:member => member, :value => current_user.consolidated_debt_with(member)}}
-    @invitations = Invitation.where("sender_id = ?", current_user.id)
+    @invitations = Invitation.where("sender_id = ? AND accepted = FALSE", current_user.id)
 
     respond_to do |format|
       format.html # index.html.erb
