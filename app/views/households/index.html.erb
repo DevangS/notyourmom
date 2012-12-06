@@ -63,7 +63,7 @@
         <td><%=debt[:member].full_name %></td>
         <td><%=debt[:member].email %></td>
         <td><% sum = (-1)*debt[:value].round(2) %>
-            <%if sum > 0 %><span class="red">$<%=sum%></span><%else%><span class="green">$<%=(-1)*sum%></span><%end%>
+            <%if sum > 0 %><span class="red">$<%="%.2f" % sum%></span><%else%><span class="green">$<%="%.2f" % ((-1)*sum) %></span><%end%>
         </td>
         <td><% if sum > 0 %>Pay<%end%></td>
         <td><% if current_user.is_head_of(@households[0]) %>

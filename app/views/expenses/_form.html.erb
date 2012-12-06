@@ -55,13 +55,15 @@
       <%end%>
     </div>
 
-    <h4>Deligate Payment Slices</h4>
+    <h4>Delegate Payment Slices</h4>
     <div class="field">
       <p>
         <div>
           Your slice will be: 
-          <% if @editpage %> $<%= @split? @split.round(2) : 0 %> 
-          <% else %> <%= @payer_split %>% <%end%>
+          <span id="userDebt">
+            <% if @editpage %> $<%= @split? @split.round(2) : 0 %> 
+            <% else %> <%= @payer_split %>% <%end%> 
+          </span>
         </div>
       </p>
       <%= f.fields_for :debts do |debt_builder| %>
@@ -71,7 +73,7 @@
               <b><%= debt_builder.object.user.full_name %></b>
               <%= debt_builder.hidden_field :user_id %> 
               owes 
-              <%= debt_builder.text_field :percentage_owed, :size => 5 %>%
+              <%= debt_builder.text_field :percentage_owed, :size => 5 , :onchange=>"updateUserDebtSlice()", :class=>"debtSliceField"%>%
             </div>
             <div style="float:right;position:absolute;right:0;">
               <%= debt_builder.label :paid %>
