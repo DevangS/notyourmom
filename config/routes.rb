@@ -24,7 +24,7 @@ Notyourmom::Application.routes.draw do
 
   match '/reminders/send_now' => 'reminders#send_now'
   match '/reminders/send_later' => 'reminders#send_later'
-  match '/reminder/delete_button' => 'reminders#delete_button'
+  match '/reminders/delete_button' => 'reminders#delete_button'
   resources :reminders
 
   get "home/index"
