@@ -27,7 +27,7 @@
 					<% @debts.each do |debt| %>
 					<li>
 					  	You owe <b><%= debt.expense.user.firstName %> <%=debt.expense.user.lastName%></b> 
-					  	<%=debt.get_share.round(2) %> for 
+					  	<%= "%.2f" % debt.get_share.round(2) %> for 
 					  	<b><%= link_to debt.expense.item,debt%></b> 
 
 					</li>
@@ -69,7 +69,7 @@
 		<p align="left">
 			<% @expenses.each do |expense| %>
 				<% if expense.user_id == @current_user.id %>
-				<b>$<%=expense.price%></b> FOR <span class="item" title="<%=expense.description%>"><%=expense.item%></span> on <%=expense.created_at.to_s[0,10]%> <br />
+				<b>$<%= "%.2f" % expense.price%></b> FOR <span class="item" title="<%=expense.description%>"><%=expense.item%></span> on <%=expense.created_at.to_s[0,10]%> <br />
 				<% end %>
 			<% end %>
 		</p>

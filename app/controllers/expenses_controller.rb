@@ -15,6 +15,7 @@ class ExpensesController < ApplicationController
       end
     end
 
+
     if !params[:filter].nil?
       case params[:filter]
       when "7"
@@ -32,6 +33,7 @@ class ExpensesController < ApplicationController
         @expenses_done = @expenses_done.where('created_at >= ?', @date)
       end
     end
+
     
     respond_to do |format|
       format.html # index.html.erb
@@ -164,7 +166,7 @@ class ExpensesController < ApplicationController
   end
 
   def search
-    @searchterm = params[:search]
+    @keyword = params[:search]
     @expenses = []
     #@tag = Tag.find_by_name(params[:search])
     @tag = Tag.where('LOWER(name) LIKE ?', "%"+params[:search].downcase+"%" )

@@ -3,20 +3,22 @@
   </div>
 
 <div id="search" class="float_right">
-  <%= render :partial => 'expenses/searchbar' %>
-  <%= form_tag '', :method=>:get do %>
+  <%= render :partial => 'searchbar' %> 
+  <%= form_tag '', :method =>:get do %>
     <%= select_tag(:filter, 
-        options_for_select([['All',0], ['Past 7 days',7], ['This Month',30], ['Last 6 months', 180,], ['This Year',365]])) %>
+        options_for_select([['All', ], ['Past 7 days',7], ['This Month',30], ['Last 6 months', 180,], ['This Year',365]]),) %>
     <%= submit_tag "Filter" %> 
   <% end %>
 </div>
+
+<br><br>
+<br><br>
+
 <div>
   <% if !@date.nil? %>
   Showing expenses since <%= @date %>
   <% end %>
 </div>
-<br><br>
-<br><br>
 
 <h1>Outstanding Household expenses</h1>
 
@@ -38,7 +40,7 @@
         <td>$<%= "%.2f" % expense.price %></td>
         <td><% if expense.user_id == current_user.id %>You<%else%><%= expense.user.firstName %><%end%></td>
         <td>
-          <% if current_user == current_user.household.head %>
+          <% if current_user == current_user.household.head && !expense.reminder.nil? %>
 
             <% if expense.reminder.date?%>
                 <%=expense.reminder.date.year %>-<%=expense.reminder.date.month %>-<%=expense.reminder.date.day %>
