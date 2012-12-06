@@ -18,7 +18,7 @@ Notyourmom::Application.configure do
   config.action_mailer.raise_delivery_errors = false
 
   # Define the default url
-  # config.action_mailer.default_url_option = { :host => 'localhost:3000' }
+  config.action_mailer.default_url_option = { :host => 'notyourmom.heroku.com' }
 
   # Define the delivery method : SMTP  
   config.action_mailer.raise_delivery_errors = true
