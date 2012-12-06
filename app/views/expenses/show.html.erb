@@ -15,7 +15,7 @@
   </tr>
   <tr>
     <td><%= @expense.description %></td>
-    <td>$<%= @expense.price %></td>
+    <td>$<%= "%.2f" % @expense.price %></td>
     <td><% if @expense.resolved %>Yes<%else%>No<%end%></td>
     <td><%= @expense.user.full_name %> </td>
     <td><% if @expense.user.id == current_user.id %><%= link_to 'Edit', edit_expense_path(@expense) %><%end%></td>
@@ -38,7 +38,7 @@
 <% @debts.each do |debt| %>
     <tr>
       <td><%=debt.user.firstName%> <%=debt.user.lastName%> </td>
-      <td><b>$<%=(debt.percentage_owed*debt.expense.price/100).round(2)%></b></td>
+      <td><b>$<%= "%.2f" % (debt.percentage_owed*debt.expense.price/100).round(2)%></b></td>
       <td><% if(debt.paid)%>Paid <% else%> Unpaid <%end %></td>
     </tr>
 <% end %>
