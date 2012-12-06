@@ -87,5 +87,6 @@ module Notyourmom
         :password  => ENV['GMAIL_SMTP_PASSWORD']
     }
 =end
+
   end
 end
