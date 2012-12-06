@@ -1,5 +1,12 @@
 <center>
+<% if !@user.household_id.nil? %>
+
 <p align="left">You are in household: <b><%= link_to @user.household.name, households_path %></b><br />
+%>
+<% else %>
+<p align="left">You are not yet part of a household. <%= link_to 'Create one', new_household_path %>?</p>
+<% end %>
+
   Last logged in: <%=@user.last_sign_in_at%><br /> 
 </p>
 <div style="text-align:left;width:60%;">

@@ -50,11 +50,10 @@
 	    	<% else %>
 				<!-- LOGIN -->
 				<div id="login">
-					<b>Please log in</b> 
-					<%= resource.class.name %>
 					<%= render :partial => '/devise/sessions/new_side_bar', 
 						:object => resource, :as => :resource %>
-					<span>Not a member yet? <%= link_to "Signing up is easy!", new_user_registration_path %></span>
+					<span>Not a member yet? <%= link_to "Signing up is easy!", new_user_registration_path %>   or   
+						<%= link_to "Sign in with Facebook", "/auth/facebook" %></span>
 				</div>
 			<% end %>
 		</div>
