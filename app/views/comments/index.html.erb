@@ -7,10 +7,6 @@
 
   <% @expenses.each do |expense| %>
     <% if expense.comments.count > 0 %>
-        <h3>Tags: <% expense.tags.any? %>
-              <% expense.tags.each do |tag| %>
-                  <%= link_to tag.name, tag_path(tag.id) %><% if tag != expense.tags.last %>,<% end %>
-        <% end %></h3>
 
         <table class="std_fmt">
           <tr>
