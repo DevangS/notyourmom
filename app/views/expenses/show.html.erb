@@ -28,12 +28,14 @@
     </td>
   </tr>
 </table>
+<br>
+<h3> Debts Owed </h3>
   <div class="float_right block"> 
-  <table class="debt_box">
+  <table class="debt_box std_fmt">
     <tr>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>User</th>
+      <th>Amount Owed</th>
+      <th>Pay Status</th>
     </tr>
 <% @debts.each do |debt| %>
     <tr>
@@ -43,6 +45,7 @@
     </tr>
 <% end %>
   </table>
+  <br>
 
 <%= link_to "Back to Expenses", expenses_path %>
   </div>
