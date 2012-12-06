@@ -24,7 +24,6 @@
   <%= f.password_field :password_confirmation %></div>
 
   <% if !@token.blank? && !@household_id.blank? %>
-    <%= f.hidden_field :invitation_token, :value => @token %>
     <%= f.hidden_field :household_id, :value => @household_id %>
   <% end %>
   
