@@ -6,7 +6,7 @@ class ExpensesController < ApplicationController
   # GET /expenses.json
   def index
     time = Time.new
-    @the_date = time.month.to_s + "/" + time.day.to_s + "/" + time.year.to_s
+    @the_date = time.year.to_s + '-' +time.month.to_s + "-" + time.day.to_s
     @expenses = Expense.where(:resolved => false, :household_id => current_user.household_id)
     @expenses_done = Expense.where(:resolved => true, :household_id => current_user.household_id)
     @expenses.each do |e|
@@ -65,7 +65,11 @@ class ExpensesController < ApplicationController
 
     @expense.build_reminder
       #@date = params[:month] ? Date.parse(params[:month]) : Date.today
-      @date = Date.parse(params[:date])
+      if params[:date]
+        @date = Date.parse(params[:date])
+      else
+        @data = Date.today
+      end
 
     #remove current user from debt building
     @users = @users.where("id != ?", current_user.id)
