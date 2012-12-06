@@ -2,8 +2,12 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.ns_comments {
+    clear: both;
+}
+
 .ns_comments form {
-    margin: 10px 0 0 0;
+    margin: 10px 0 10px 0;
 }
 
 .ns_comments a {
@@ -17,11 +21,11 @@
 
 .ns_comments #comment-target {
     background: #e1eef5;
-    border: 1px solid #777;
+    border: 1px solid #d0d0d0;
 }
 
 .ns_comments #inline-comments {
-    margin-top: 20px;
+    margin-top: 110px;
 }
 
 .ns_comments #inline-comments h2 {
@@ -45,11 +49,13 @@
 
 .ns_comments .comment {
     background: #fafafa;
-    border: 1px solid #999;
+    border: 1px solid #d0d0d0;
     font-size: 12px;
     margin-top: 3px;
     padding: 5px;
     position: relative;
+    right: 0;
+    top: 0;
 }
 
 .ns_comments .comment-author {
