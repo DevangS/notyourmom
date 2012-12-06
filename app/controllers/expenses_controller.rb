@@ -15,6 +15,7 @@ class ExpensesController < ApplicationController
       end
     end
 
+
     if !params[:filter].nil?
       case params[:filter]
       when "7"
@@ -46,8 +47,8 @@ class ExpensesController < ApplicationController
     @expense = Expense.find(params[:id])
     @debts = @expense.debts
     @reminder = @expense.reminder
+    @comments = @expense.comments
     @user = current_user
-    # @inline_comment_form = render_to_string 'comments/inline'
 
     respond_to do |format|
       format.html # show.html.erb
@@ -67,11 +68,6 @@ class ExpensesController < ApplicationController
 
     @expense.build_reminder
       #@date = params[:month] ? Date.parse(params[:month]) : Date.today
-      if params[:date]
-        @date = Date.parse(params[:date])
-      else
-        @data = Date.today
-      end
 
     #remove current user from debt building
     @users = @users.where("id != ?", current_user.id)
@@ -106,11 +102,17 @@ class ExpensesController < ApplicationController
   # POST /expenses.json
   def create
     @expense = Expense.new(params[:expense])
-    #@expense.user = current_user
-    #should probably be done in new (need session)
+    @expense.user = current_user
 
     respond_to do |format|
       if @expense.save
+        date = params[:expense][:reminder_attributes][:date]
+        if not date.blank?
+          params[:expense][:reminder_attributes][:date] = Date.parse(date).to_s
+          params[:expense][:reminder_attributes][:expense_id] = @expense.id.to_s
+          @expense.reminder = Reminder.new(params[:expense][:reminder_attributes])
+        end
+
         format.html { redirect_to @expense, notice: 'Expense was successfully created.' }
         format.json { render json: @expense, status: :created, location: @expense }
       else
@@ -165,7 +167,7 @@ class ExpensesController < ApplicationController
   end
 
   def search
-    @searchterm = params[:search]
+    @keyword = params[:search]
     @expenses = []
     #@tag = Tag.find_by_name(params[:search])
     @tag = Tag.where('LOWER(name) LIKE ?', "%"+params[:search].downcase+"%" )

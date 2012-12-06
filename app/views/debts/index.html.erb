@@ -13,12 +13,11 @@ View <%= link_to "Consolidated Debts", households_path %>
       <% if debt != nil %>
         <div class="lg_dash_box float_left">
           <div class="center">You owe <b><%= expense.user.firstName %></b>
-            $<%= number_with_precision(debt.percentage_owed*expense.price/100, :precision => 2)%> of $<%= number_with_precision(expense.price, :precision => 2) %>
+            $<%= "%.2f" % (debt.percentage_owed*expense.price/100).round(2)%> of $<%="%.2f" % expense.price %>
             for <b><span title="<%= debt.expense.description %>"><%= expense.item %></span></b>
           </div>
         </div>
         <div class="float_right" style="margin-right:20px;margin-top:10px;">
-            <a href="#">Pay</a>&nbsp;&nbsp;or&nbsp;&nbsp;
             <span id="text<%=debt.id %>" class="hand" onclick="toggleComment('<%=debt.id %>')">Contest</span>
         </div>
         <div id="debt<%=debt.id %>" class="float_right hidden" style="width:650px;">
@@ -49,8 +48,8 @@ View <%= link_to "Consolidated Debts", households_path %>
       <div id="debtsPaid" class="hidden">
       <% @debts_paid.each do |debt| %>
         <div class="lg_dash_box float_left">
-          <div class="center">You owed <b><%= debt.expense.user.firstName %></b>
-            $<%= number_with_precision(debt.percentage_owed*debt.expense.price/100, :precision => 2) %> of $<%= debt.expense.price %>
+          <div class="center">You owe <b><%= debt.expense.user.firstName %></b>
+            $<%="%.2f" % (debt.percentage_owed*debt.expense.price/100).round(2)%> of $<%= "%.2f" % debt.expense.price %>
             for <b><span title="<%= debt.expense.description %>"><%= debt.expense.item %></span></b>
           </div>
         </div>

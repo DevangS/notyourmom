@@ -24,21 +24,27 @@
           <%= form_for(:invitation, :url => {:controller => :invitations, :action => :index}) do |f| %>
 
               <div summary="Invitation form fields">
-                <%= f.label :recipient_email, "Friend's email address" %><br />
-                <%= f.text_field(:recipient_email) %>
+                <%= f.text_field :recipient_email, :placeholder => "Friend's email"%>
               </div>
               <div class="form-buttons">
                 <%= submit_tag("Invite!") %>
               </div>
           <% end %>
         </div>
-        <h2> Invitations Sent:</h2>
-        <% @invitations.each do |invitation| %>
-            <% if !invitation.accepted  %>
-                <%=  invitation.recipient_email %>
-                <%=  link_to 'Delete', invitation, confirm: 'Are you sure?', method: :delete %>
+        <% if @invitations.count > 0 %>
+          <h3> Invitations Sent</h3>
+          <table class="std_fmt">
+            <tr>
+              <th>Recipient</th>
+              <th> </th>
+            </tr>
+            <% @invitations.each do |invitation| %>
+              <tr>
+                <td> <%=  invitation.recipient_email %> </td>
+                <td><%= link_to 'Revoke Invite', invitation, confirm: 'Are you sure?', method: :delete %> </td>
+            </tr>
             <% end %>
-            <br />
+          </table>
         <% end %>
     <% end %>
 
@@ -50,12 +56,12 @@
 <% end %>
 
 <% if @members.length > 0 %>
+  <h3> Housemembers </h3>
   <table class="std_fmt">
     <tr>
       <th>Name</th>
       <th>E-mail</th>
-      <th>Amount Due  </th>
-      <th></th>
+      <th>Amount Due</th>
       <th></th>
     </tr>
     <% @consolidated_debts.each do |debt| %>
@@ -63,9 +69,8 @@
         <td><%=debt[:member].full_name %></td>
         <td><%=debt[:member].email %></td>
         <td><% sum = (-1)*debt[:value].round(2) %>
-            <%if sum > 0 %><span class="red">$<%=sum%></span><%else%><span class="green">$<%=(-1)*sum%></span><%end%>
+            <%if sum > 0 %><span class="red">$<%="%.2f" % sum%></span><%else%><span class="green">$<%="%.2f" % ((-1)*sum) %></span><%end%>
         </td>
-        <td><% if sum > 0 %>Pay<%end%></td>
         <td><% if current_user.is_head_of(@households[0]) %>
             <%= link_to 'Exile', exile_household_path(@households[0], debt[:member].id), :method => :put %>
         <% end %></td>

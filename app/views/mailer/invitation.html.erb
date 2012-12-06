@@ -2,4 +2,4 @@ Welcome to "NotYourMom.com!" <br /><br />
 
 <%= @user.firstName %> <%= @user.lastName %> has requested you sign up for their household!
 <!-- This will provide link in email when actual url is placed here -->
-Please follow this link: <%= url_for(:host => "localhost:3000", :controller => :registrations, :action => :new, :token => @token) %>
+Please follow this link: <%= url_for(:host => "notyourmom.heroku.com", :controller => :registrations, :action => :new, :token => @token) %>
