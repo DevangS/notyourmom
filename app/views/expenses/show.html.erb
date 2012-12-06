@@ -47,5 +47,22 @@
   </table>
   <br>
 
+<% if @comments.count > 0 %>
+  <h3> Comments </h3>
+  <table class="std_fmt">
+    <tr>
+      <th> User </th>
+      <th> Comment </th>
+    </tr>
+    <% @comments.each do |c| %>
+      <tr>
+        <td><%= c.user.full_name %> </td>
+        <td><%= c.comment %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+
+<br>
 <%= link_to "Back to Expenses", expenses_path %>
   </div>

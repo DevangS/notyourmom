@@ -48,7 +48,8 @@ class ExpensesController < ApplicationController
     @expense = Expense.find(params[:id])
     @debts = @expense.debts
     @reminder = @expense.reminder
-
+    @comments = @expense.comments
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @expense }

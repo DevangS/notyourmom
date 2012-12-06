@@ -24,22 +24,27 @@
           <%= form_for(:invitation, :url => {:controller => :invitations, :action => :index}) do |f| %>
 
               <div summary="Invitation form fields">
-                <%= f.label :recipient_email, "Friend's email address" %><br />
-                <%= f.text_field(:recipient_email) %>
+                <%= f.text_field :recipient_email, :placeholder => "Friend's email"%>
               </div>
               <div class="form-buttons">
                 <%= submit_tag("Invite!") %>
               </div>
           <% end %>
         </div>
-        <% if !@invitations.nil? %><h3> Invitations Sent</h3>
-        <% @invitations.each do |invitation| %>
-            <% if !invitation.accepted  %>
-                <%=  invitation.recipient_email %>
-                <%=  link_to 'Delete', invitation, confirm: 'Are you sure?', method: :delete %>
+        <% if @invitations.count > 0 %>
+          <h3> Invitations Sent</h3>
+          <table class="std_fmt">
+            <tr>
+              <th>Recipient</th>
+              <th> </th>
+            </tr>
+            <% @invitations.each do |invitation| %>
+              <tr>
+                <td> <%=  invitation.recipient_email %> </td>
+                <td><%= link_to 'Revoke Invite', invitation, confirm: 'Are you sure?', method: :delete %> </td>
+            </tr>
             <% end %>
-            <br />
-        <% end %>
+          </table>
         <% end %>
     <% end %>
 
@@ -56,7 +61,7 @@
     <tr>
       <th>Name</th>
       <th>E-mail</th>
-      <th>Amount Due  </th>
+      <th>Amount Due</th>
       <th></th>
       <th></th>
     </tr>

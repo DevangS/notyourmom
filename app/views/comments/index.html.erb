@@ -4,7 +4,6 @@
 
 <br /><br /><br />
 <h1>Listing contested expenses</h1>
-
   <% @expenses.each do |expense| %>
     <% if expense.comments.count > 0 %>
 
@@ -26,12 +25,7 @@
           </tr>
         </table>
           <div class=" block"> 
-          <table class="debt_box">
-            <tr>
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
+          <table class="std_fmt">
             <% expense.comments.each do |comment| %>
             <tr>
               <td colspan="4"><span class="name_text"><%= comment.user.full_name %></span>: <i>"<%= comment.comment %>"</i> </td>
@@ -41,6 +35,7 @@
           </table>
           </div>
     <% end %>
+    <br>
   <% end %>
 
     <% if @comments.count == 0 %>
