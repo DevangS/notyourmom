@@ -1,5 +1,2 @@
 == Documentation 
 https://github.com/DevangS/notyourmom/wiki
-
-== Deployment
-http://notyourmom.heroku.com
